@@ -29,7 +29,7 @@
                                                     [(ngModel)]="oldTeachnicalEndDate"
                                                     (input)="inputChangeHandler($event,'technicalBidEndDate')"
                                                     [disabled]="getInputDisableStatus('oldTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_CURRENT_TECHNICAL_BID_CLOSING_DATE_ENABLED)"
-                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                     (ngModelChange)="onDateChange($event,'oldTeachnicalEndDate')"
                                                     (input)="inputChangeHandler($event,'oldTeachnicalEndDate')"
                                                     [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -51,7 +51,7 @@
                                                     #longDate [(ngModel)]="technicalBidEndDate"
                                                     [disabled]="getInputDisableStatus('isTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_NEW_TECHNICAL_BID_CLOSING_DATE_ENABLED)"
                                                     format="dd-MMM-yyyy hh:mm a"
-                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                     (ngModelChange)="onDateChange($event,'technicalBidEndDate')"
                                                     (input)="inputChangeHandler($event,'technicalBidEndDate')"
                                                     [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -74,7 +74,7 @@
                                                     [ngClass]="getErrorMessage('oldPriceEndDate')?  'border-danger':''"
                                                     #longDate format="dd-MMM-yyyy hh:mm a" [(ngModel)]="oldPriceEndDate"
                                                     [disabled]="getInputDisableStatus('oldPriceBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_CURRENT_PRICE_BID_CLOSING_DATE_ENABLED)"
-                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                     (ngModelChange)="onDateChange($event,'oldPriceEndDate')"
                                                     (input)="inputChangeHandler($event,'oldPriceEndDate')"
                                                     [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -98,7 +98,7 @@
                                                     #longDate [(ngModel)]="priceBidEndDate"
                                                     [disabled]="getInputDisableStatus('isPriceBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_NEW_PRICE_BID_CLOSING_DATE_ENABLED)"
                                                     format="dd-MMM-yyyy hh:mm a"
-                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                     (ngModelChange)="onDateChange($event,'priceBidEndDate')"
                                                     (input)="inputChangeHandler($event,'priceBidEndDate')"
                                                     [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -120,7 +120,7 @@
                                                         [ngClass]="getErrorMessage('oldTnCClosingTime')?  'border-danger':''"
                                                         formControlName="oldTnCClosingTime" #longDate
                                                         format="dd-MMM-yyyy hh:mm "
-                                                        [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                        [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                         [disabledDates]="disabledDates"></kendo-datetimepicker>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@
                                                     <kendo-datetimepicker class="border  form-control"
                                                         [ngClass]="getErrorMessage('updateTaCClosingDate')?  'border-danger':''"
                                                         formControlName="updateTaCClosingDate" #longDate
-                                                        format="dd-MMM-yyyy hh:mm"                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                        format="dd-MMM-yyyy hh:mm"                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                                         (ngModelChange)="onDateChange($event,'updateTaCClosingDate')"
                                                         (input)="inputChangeHandler($event,'updateTaCClosingDate')"
                                                         [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -198,7 +198,7 @@
                                             [disabled]="getInputDisableStatus('isTechnicalBidStartDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_START_DATE_ENABLED)"
                                             (ngModelChange)="onDateChange($event,'technicalBidStartDate')"
                                             (input)="inputChangeHandler($event,'technicalBidStartDate')"
-                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                             [disabledDates]="disabledDates"></kendo-datetimepicker>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                         <kendo-datetimepicker class="border  form-control"
                                             [ngClass]="getErrorMessage('technicalBidEndDate')?  'border-danger':''"
                                             #longDate format="dd-MMM-yyyy hh:mm a" [(ngModel)]="technicalBidEndDate"
-                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                             [disabled]="getInputDisableStatus('isTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_END_DATE_ENABLED)"
                                             (ngModelChange)="onDateChange($event,'technicalBidEndDate')"
                                             (input)="inputChangeHandler($event,'technicalBidEndDate')"
@@ -236,7 +236,7 @@
                                             [ngClass]="getErrorMessage('priceBidStartDate')?  'border-danger':''"
                                             format="dd-MMM-yyyy hh:mm a" #longDate [(ngModel)]="priceBidStartDate"
                                             [disabled]="getInputDisableStatus('isPriceBidStartDisabled') ||  !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_PRICE_BID_START_DATE_ENABLED)"
-                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                             (ngModelChange)="onDateChange($event,'priceBidStartDate')"
                                             (input)="inputChangeHandler($event,'priceBidStartDate')"
                                             [disabledDates]="disabledDates"></kendo-datetimepicker>
@@ -256,7 +256,7 @@
                                             format="dd-MMM-yyyy hh:mm a" [(ngModel)]="priceBidEndDate"
                                             (ngModelChange)="onDateChange($event,'priceBidEndDate')"
                                             (input)="inputChangeHandler($event,'priceBidEndDate')"
-                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                                             [disabledDates]="disabledDates"></kendo-datetimepicker>
                                     </div>
                                 </div>

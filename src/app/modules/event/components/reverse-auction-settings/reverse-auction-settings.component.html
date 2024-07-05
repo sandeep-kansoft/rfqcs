@@ -152,7 +152,7 @@
                         <kendo-datetimepicker class="border  form-control"  [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_AUCTION_START_DATE_GLOBAL_ENABLED)"
                             #longDate format="dd-MMM-yyyy hh:mm a"
                             [(ngModel)]="AuctionStartDate"
-                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '', millisecond: '' }"
                             [disabledDates]="disabledDates"></kendo-datetimepicker>
                     </div>
                 </div> 
@@ -288,7 +288,7 @@
                             <div class="form-check form-switch form-check-custom form-check-solid">
                                 <div class=" ">
                                     <input type="number" (input)="ceilingValueChangehandler(rowIndex)" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_CEILING_PRICE_ITEM_LEVEL_ENABLED)"
-                                        [(ngModel)]="dataItem.ceilingValue" class="form-control form-control-lg" [ngClass]="IsCeilingPriceError && (dataItem.ceilingValue=='' ||dataItem.ceilingValue==0)?'border border-danger':'' " />
+                                        [(ngModel)]="dataItem.ceilingValue" class="form-control form-control-lg" [ngClass]="IsCeilingPriceError && (dataItem.ceilingValue == '' ||dataItem.ceilingValue == 0 )?'border border-danger':'' " />
                                 </div>
                             </div>
                         </div>

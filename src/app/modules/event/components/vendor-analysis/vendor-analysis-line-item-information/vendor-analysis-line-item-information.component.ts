@@ -4,7 +4,6 @@ import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { FilterDescriptor, SortDescriptor, State, filterBy, orderBy, process } from '@progress/kendo-data-query';
-// import { EventService } from 'ag-grid-community';
 import { BehaviorSubject } from 'rxjs';
 import { PrResponseDto } from 'src/app/modules/purchase-requisition/purchase-requisition';
 import { PurchaseRequistionServiceService } from 'src/app/modules/purchase-requisition/purchase-requistion-service.service';
