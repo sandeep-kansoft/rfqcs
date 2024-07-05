@@ -1,0 +1,16 @@
+<app-toaster aria-live="polite" aria-atomic="true"></app-toaster>
+<app-global-loader></app-global-loader>
+
+<div id="splash-screen" class="splash-screen"> <img src="./assets/media/wonder/RED-LOGO-BG-Horizontal-transprant.png" alt="Metronic logo" />     
+  <span>Loading ...</span>
+</div>
+<!-- <div *ngIf="!loginDisplay">
+    <button (click)="loginRedirect()">Login using Redirect</button>
+    <button (click)="loginPopup()">Login using Popup</button>
+</div>
+<div *ngIf="loginDisplay">
+    <button (click)="logout()">Logout using Redirect</button>
+    <button (click)="logout(true)">Logout using Popup</button>
+</div> -->
+
+<router-outlet></router-outlet>

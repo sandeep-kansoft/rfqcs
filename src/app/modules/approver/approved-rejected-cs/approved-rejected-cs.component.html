@@ -1,0 +1,326 @@
+<!----------------------->
+<!----------------------->
+<!-- Page Title starts -->
+<!----------------------->
+<!----------------------->
+<div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="container-xxl d-flex flex-stack px-0">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                Approve/Rejected-CS
+            </h1>
+            <!--end::Title-->
+        </div>
+        <!--end::Page title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+            <!--begin::Filter menu-->
+            <div class="m-0">
+                <!--begin::Menu toggle-->
+    
+                <!--end::Menu toggle-->
+                <!--begin::Menu 1-->
+                <a (click)="openFilterDrawer()" class="btn btn-sm btn-secondary btn-active-light-primary ms-2"
+                    id="filter2-toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                    <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    Filter
+                </a>
+                <!--end::Menu 1-->
+            </div>
+    
+    
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+
+<!----------------------->
+<!----------------------->
+<!-- Page Title ends -->
+<!----------------------->
+<!----------------------->
+
+
+<div class="card over-view-box">
+    <div class="card-body  pt-3 cs-kendo-grid">
+        <div class="filter-pills-mobile">
+            <span *ngIf="customFilter.dateRangeSelected?.days!==0" class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+                {{customFilter.dateRangeSelected?.rangeName}}
+                <span *ngIf="!customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+                    <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+            <span *ngIf="customFilter.dateRangeSelected?.days===0" class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill">
+                {{customFilter.dateRangeSelected?.startDate | date:'dd MMM YYYY'}} - {{customFilter.dateRangeSelected?.endDate | date:'dd MMM YYYY'}}<span
+                    class="badge badge-circle ms-2">
+                    <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+        </div>
+
+
+                <!-- <div>
+                    <div class="d-flex align-items-center ">
+                        <span class="svg-icon svg-icon-2 position-absolute ms-3"
+                            [inlineSVG]="'./assets/media/svg/search.svg'">
+
+                        </span>
+                        <input _type="text" id="" placeholder="Search"
+                            class="form-control form-control-solid border-body w-100px btn btn-sm ps-10"
+                            style="background-color: #f1f1f1;">
+                    </div>
+                </div> -->
+                <!-- </div> -->
+                <!-- <div class=" excel-export mb-3">
+                <button type="button" kendoGridExcelCommand class="btn btn-light-success btn-sm"
+                    icon="file-excel">Export</button>
+            </div> -->
+                <!-- </div> -->
+
+
+
+        <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+            [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+            [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                pageSizes:true,
+                 info: true
+                }" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChanges($event)" >
+
+
+                    <ng-template kendoGridToolbarTemplate>
+                        <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+
+                            <app-filter-view *ngIf="refreshComponent" [customFilter]="customFilter" (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                            (closeFilterEmitter)="closeFilter()"></app-filter-view>
+                            <div class="d-flex align-items-end align-self-end excel-export">
+                                <button type="button" kendoGridExcelCommand class="btn btn-light-success btn-sm"
+                                    icon="file-excel">Export</button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <!-- Kendo Default Loader -->
+                    <ng-template kendoGridLoadingTemplate>
+                        <app-wonder-loader></app-wonder-loader>
+                    </ng-template>
+                    <!-- Kendo End Default Loader -->
+
+
+                    <kendo-grid-column [filterable]="true" filter="numeric" [columnMenu]="false"
+                        [headerClass]="headerStyle" field="SrNo" title="#" [width]="80">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1 === 0 ? '':
+                            rowIndex+1}}</ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="Review" title="Action"
+                        [width]="80">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <div container="body ">
+                                    <div class="button_class d-flex justify-content-between">
+                                <div  class="justify-content-center align-items-center" >
+                                    <a (click)='showReviewModel(item)' class="cursor-pointer text-blue" title="Review">
+                                        <span class="svg-icon m-0 text-blue">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                                                text-rendering="geometricPrecision" image-rendering="optimizeQuality
+                     " fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 498.93">
+                                                <path fill="currentcolor"
+                                                    d="M389.76 0c33.74 0 64.31 13.69 86.42 35.8C498.31 57.92 512 88.5 512 122.24c0 33.75-13.69 64.33-35.8 86.44-22.13 22.12-52.7 35.82-86.44 35.82-33.71 0-64.27-13.68-86.4-35.82-22.19-22.2-35.86-52.76-35.86-86.44 0-33.74 13.69-64.32 35.82-86.44C325.43 13.69 356.01 0 389.76 0zM127.13 93.07 45.4 179.44h81.73V93.07zM0 195.82c0-1.15.15-2.27.41-3.35.13-3.14 1.36-6.27 3.69-8.73L128.47 52.32c2.31-4.18 6.78-7.01 11.9-7.01h113.41c-4.87 8.6-8.97 17.7-12.16 27.2h-87.3v120.52c0 7.5-6.09 13.59-13.59 13.59H27.2v265.11h392.02V275.68c9.4-1.8 18.49-4.44 27.21-7.83V471.9c0 7.39-3.05 14.15-7.93 19.05-4.96 4.94-11.72 7.98-19.11 7.98H27.04c-7.43 0-14.21-3.06-19.09-7.94C3.07 486.1 0 479.32 0 471.9V195.82zm324.89 79.39c7.53 0 13.66 6.05 13.66 13.52s-6.13 13.52-13.66 13.52H121.54c-7.54 0-13.66-6.05-13.66-13.52s6.12-13.52 13.66-13.52h203.35zm0 91.23c7.53 0 13.66 6.05 13.66 13.52s-6.13 13.52-13.66 13.52H121.54c-7.54 0-13.66-6.05-13.66-13.52s6.12-13.52 13.66-13.52h203.35zM392.8 58.61l16.07 37.58 40.7 3.64c1.83.15 3.13 1.72 2.99 3.55-.09.88-.47 1.63-1.12 2.19l-30.81 26.89 9.11 39.87c.41 1.78-.71 3.51-2.48 3.93-.89.18-1.82 0-2.52-.47l-35.02-20.91-35.11 21a3.24 3.24 0 0 1-4.47-1.12c-.48-.75-.56-1.63-.39-2.43l9.11-39.87-30.81-26.89c-1.36-1.16-1.49-3.27-.33-4.62a3.45 3.45 0 0 1 2.33-1.08l40.62-3.63 16.06-37.63c.71-1.68 2.62-2.43 4.3-1.73.84.33 1.45.98 1.77 1.73z" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div ngbDropdown autoClose="'outside'" container="body" class="d-flex justify-content-end align-items-end">
+                                    <button class="btn btn-sm pr-1 px-2 py-1" ngbDropdownToggle data-bs-auto-close="outside"
+                                      type="button">
+                                      <svg width="4" height="15" viewBox="0 0 4 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                          d="M2 4C2.39556 4 2.78224 3.8827 3.11114 3.66294C3.44004 3.44318 3.69639 3.13082 3.84776 2.76537C3.99914 2.39992 4.03874 1.99778 3.96157 1.60982C3.8844 1.22186 3.69392 0.865492 3.41421 0.585787C3.13451 0.306082 2.77814 0.115601 2.39018 0.0384303C2.00222 -0.0387401 1.60009 0.000866562 1.23463 0.152242C0.869182 0.303617 0.556825 0.559962 0.337062 0.88886C0.117299 1.21776 1.07779e-06 1.60444 1.07779e-06 2C1.07779e-06 2.53043 0.210715 3.03914 0.585788 3.41421C0.960861 3.78929 1.46957 4 2 4ZM2 14C1.60444 14 1.21776 14.1173 0.888861 14.3371C0.559963 14.5568 0.303617 14.8692 0.152242 15.2346C0.000866562 15.6001 -0.0387401 16.0022 0.0384303 16.3902C0.115601 16.7781 0.306083 17.1345 0.585788 17.4142C0.865493 17.6939 1.22186 17.8844 1.60982 17.9616C1.99778 18.0387 2.39992 17.9991 2.76537 17.8478C3.13082 17.6964 3.44318 17.44 3.66294 17.1111C3.8827 16.7822 4 16.3956 4 16C4 15.4696 3.78929 14.9609 3.41421 14.5858C3.03914 14.2107 2.53043 14 2 14ZM2 7C1.60444 7 1.21776 7.1173 0.888861 7.33706C0.559963 7.55682 0.303617 7.86918 0.152242 8.23463C0.000866562 8.60009 -0.0387401 9.00222 0.0384303 9.39018C0.115601 9.77814 0.306083 10.1345 0.585788 10.4142C0.865493 10.6939 1.22186 10.8844 1.60982 10.9616C1.99778 11.0387 2.39992 10.9991 2.76537 10.8478C3.13082 10.6964 3.44318 10.44 3.66294 10.1111C3.8827 9.78224 4 9.39556 4 9C4 8.46957 3.78929 7.96086 3.41421 7.58579C3.03914 7.21071 2.53043 7 2 7Z"
+                                          fill="black" />
+                                      </svg>
+                                    </button>
+                                    <ul class="dropdown-menu" ngbDropdownMenu>
+                                      <li *ngFor="let value of actionOptions(item)" ngbDropdownItem>
+                                        <a (click)="onModelClicked(value, item)" class="dropdown-item pt-0 pb-0 mt-0 mb-0 show-pointer">
+                                          {{ value }}
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </div>
+                            </ng-container>
+
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="awardNo"
+                        title="CS No" [width]="100">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <a (click)="onCsClick(item)" class="color-secondary text-center">{{item.awardNo}}</a>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="eventCode"
+                        title="RFQ/Auction No." [width]="150">
+                        <ng-template kendoGridHeaderTemplate>
+                            <ng-container>
+                                <div data-toggle="tooltip" title="RFQ/Auction No.">
+                                    RFQ/Auction No.
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="responseStatus"
+                        title="CS Status" [width]="120">
+                        <ng-template kendoGridHeaderTemplate>
+                            <ng-container>
+                                <div data-toggle="tooltip" title="CS Status">
+                                    CS Status
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <span [ngClass]="showBadgeStatusColorClass(item.responseStatus)"
+                                    class="badge ">{{item.responseStatus}}</span>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" title="Level" field="level" [width]="210">
+ </kendo-grid-column> -->
+
+                    <kendo-grid-column [headerClass]="headerStyle" title="Buyer Name" field="buyer" [width]="190">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="cS_CreationDate" format="dd-MMM-yyyy"
+                        filter="date" [width]="XtraLargeColumnWidth" title="CS Creation Date">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.cS_CreationDate | date: 'dd-MMM-yyyy H:mm'}}
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="vendor" [headerClass]="headerStyle" [width]="180" title="Vendor Name">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="vendorRank" [headerClass]="headerStyle" [width]="150" title="Vendor Rank">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="vendorReason" [headerClass]="headerStyle" [width]="200" title="Vendor Reason">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="grandTotal" [headerClass]="headerStyle" [width]="LargeColumnWidth"
+                        title="total value">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="pR_NUM" title="PR no"
+                        [width]="columnWidth"></kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="prppoAmount" title="PR/PPO value"
+                        [width]="180"></kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="project name"
+                        [width]="MediumColumnWidth"></kendo-grid-column>
+
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="site" title="site name" [width]="250">
+
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="department" title="department"
+                        [width]="240"></kendo-grid-column>
+
+
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false"
+                        [headerClass]="headerStyle" title="Document" [width]="150">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <span *ngIf="item.docPath" (click)="getCsDocumentUrl(item)"
+                                class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                                <!-- download-svg -->
+                                <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-3 text-blue"
+                                    title="Download"></span>
+                            </span>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!--
+            <kendo-grid-column [headerClass]="headerStyle" field="pR_VALUE" title="PR Value"
+                [width]="MediumColumnWidth"></kendo-grid-column> -->
+                    <kendo-grid-excel [fetchData]="allData" fileName="Approved/Rejected-cs.xlsx">
+
+                    </kendo-grid-excel>
+
+        </kendo-grid>
+
+</div>
+</div>
+<!-- Pr line Model Start -->
+<div class="modal bg-white fade" tabindex="-1" id="kt_modal_2">
+    <div class="modal-dialog modal-fullscreen p-9">
+        <div class="modal-content shadow-none">
+            <div class="modal-header">
+                <h5 class="modal-title">PR Line Item for PR :PR23014419</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+                <!--end::Close-->
+            </div>
+        </div>
+
+        <!-- Pr line Model Start -->
+        <div class="modal bg-white fade" tabindex="-1" id="kt_modal_2">
+            <div class="modal-dialog modal-fullscreen p-9">
+                <div class="modal-content shadow-none">
+                    <div class="modal-header">
+                        <h5 class="modal-title">PR Line Item for PR :PR23014419</h5>
+
+                        <!--begin::Close-->
+                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Pr line Model End -->

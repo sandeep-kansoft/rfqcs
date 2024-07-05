@@ -1,0 +1,74 @@
+ <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+                            [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                            [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                              pageSizes:true,
+                             info: true
+                              }" [sortable]="{
+                      allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                      
+                            <ng-template  class="p-0" kendoGridToolbarTemplate>
+                              <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                                <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+                              </div>
+                            </ng-template>
+                      
+                            <ng-template kendoGridLoadingTemplate>
+                              <app-wonder-loader></app-wonder-loader>
+                            </ng-template>
+                           
+                      
+                            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                              [width]="ExtraSmallColumnWidth">
+                              <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                                }}</ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-command-column *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_TRANSFER_BUYER_TAB_SELECT)" [headerClass]="headerStyle" title="select" [columnMenu]="false" [width]="50">
+                              <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                                <ng-container>
+                                  <div autoClose="'outside'" container="body">
+                      
+                                    <div class="form-check form-switch form-check-custom form-check-solid justify-content-center ">
+                                      <input class="form-check-input h-20px w-30px " type="checkbox" [disabled]="!checkPermission(permissionEnum.DASHBOARD_COLLABORATION_TRANSFER_BUYER_TAB_SELECT_ENABLED)"
+                                        (change)="checkBoxSelectedHandler(item,rowIndex)" [(ngModel)]="item.isEnabled"
+                                        style="border:1px solid #d3d3d3;" />
+                      
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </ng-template>
+                            </kendo-grid-command-column>
+                         
+                      
+                            <kendo-grid-column [filterable]="true" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+                              field="name" title="Buyer Name" [width]="140">
+                            </kendo-grid-column>
+                      
+                      
+                           
+                      
+                            <kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field=""
+                              title="Department Name" [width]="300">
+                      
+                            </kendo-grid-column>
+                            <!-- <kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field="eventTypeName"
+                              title="Event Type" [width]="170">
+                      
+                            </kendo-grid-column>
+                      
+                            <kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field="cretaedDate"
+                              format="dd-MMM-yyyy" filter="date" [width]="XtraLargeColumnWidth" title="Created Date">
+                              <ng-template kendoGridCellTemplate let-dataItem>
+                                {{dataItem.cretaedDate | date: 'dd-MMM-yyyy H:mm'}}
+                              </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field="bidClosingDate"
+                              format="dd-MMM-yyyy" filter="date" [width]="XtraLargeColumnWidth" title="Bid closing Date">
+                              <ng-template kendoGridCellTemplate let-dataItem>
+                                {{dataItem.bidClosingDate | date: 'dd-MMM-yyyy H:mm'}}
+                              </ng-template>
+                            </kendo-grid-column>
+                       -->
+                      
+                           
+                      
+                          </kendo-grid>

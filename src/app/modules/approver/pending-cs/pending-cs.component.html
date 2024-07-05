@@ -1,0 +1,346 @@
+<!----------------------->
+<!----------------------->
+<!-- Page Title starts -->
+<!----------------------->
+<!----------------------->
+<div *ngIf="!isViewCsOpen">
+  <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="container-xxl d-flex flex-stack px-0">
+      <!--begin::Page title-->
+      <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+        <!--begin::Title-->
+        <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+          Pending CS
+        </h1>
+        <!--end::Title-->
+      </div>
+      <!--end::Page title-->
+      <!--begin::Actions-->
+      <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+        <!--begin::Filter menu-->
+        <div class="m-0">
+            <!--begin::Menu toggle-->
+
+            <!--end::Menu toggle-->
+            <!--begin::Menu 1-->
+            <a (click)="openFilterDrawer()" class="btn btn-sm btn-secondary btn-active-light-primary ms-2"
+                id="filter2-toggle">
+                <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                            fill="currentColor"></path>
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+                Filter
+            </a>
+            <!--end::Menu 1-->
+        </div>
+
+
+    </div>
+      <!--end::Actions-->
+    </div>
+    <!--end::Toolbar container-->
+  </div>
+
+  <!----------------------->
+  <!----------------------->
+  <!-- Page Title ends -->
+  <!----------------------->
+  <!----------------------->
+
+  <div class="card over-view-box">
+    <div class="card-body pt-3 cs-kendo-grid">
+      <div class="filter-pills-mobile">
+        <span *ngIf="customFilter.dateRangeSelected?.days!==0" class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+            {{customFilter.dateRangeSelected?.rangeName}}
+            <span *ngIf="!customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+                <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                        <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                            fill="currentColor" />
+                        <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                            fill="currentColor" />
+                    </svg>
+                </span>
+            </span>
+        </span>
+        <span *ngIf="customFilter.dateRangeSelected?.days===0" class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill">
+            {{customFilter.dateRangeSelected?.startDate | date:'dd MMM YYYY'}} - {{customFilter.dateRangeSelected?.endDate | date:'dd MMM YYYY'}}<span
+                class="badge badge-circle ms-2">
+                <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                        <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                            fill="currentColor" />
+                        <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                            fill="currentColor" />
+                    </svg>
+                </span>
+            </span>
+        </span>
+    </div>
+      <!-- <div class="d-flex justify-content-between">
+        <div class="d-flex mb-3">
+          <div>
+            <div class="d-flex align-items-center">
+              <span class="svg-icon svg-icon-2 position-absolute ms-3" [inlineSVG]="'./assets/media/svg/search.svg'">
+              </span>
+              <input _type="text" id="" placeholder="Search"
+                class="form-control form-control-solid border-body w-100px btn btn-sm ps-10"
+                style="background-color: #f1f1f1" />
+            </div>
+          </div>
+        </div>
+        <div class="excel-export">
+          <button type="button" kendoGridExcelCommand class="btn btn-light-success btn-sm" icon="file-excel">
+            Export
+          </button>
+        </div>
+      </div> -->
+
+      <!-- <div class="filter-pills-mobile">
+        <span *ngIf="customFilter.dateRangeSelected?.days !== 0"
+          class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+          {{ customFilter.dateRangeSelected?.rangeName }}
+          <span *ngIf="!customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+            <span class="svg-icon svg-icon-1 me-0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                  fill="currentColor" />
+                <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                  fill="currentColor" />
+              </svg>
+            </span>
+          </span>
+        </span>
+        <span *ngIf="customFilter.dateRangeSelected?.days === 0"
+          class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill">
+          {{
+          customFilter.dateRangeSelected?.startDate | date : "dd MMM YYYY"
+          }}
+          - {{ customFilter.dateRangeSelected?.endDate | date : "dd MMM YYYY"
+          }}<span class="badge badge-circle ms-2">
+            <span class="svg-icon svg-icon-1 me-0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                  fill="currentColor" />
+                <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                  fill="currentColor" />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </div> -->
+
+      <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true, sort: true }"
+        [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+          pageSizes: true,
+          info: true
+        }" [sortable]="{
+          allowUnsort: true,
+          mode: 'multiple'
+        }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+        <ng-template kendoGridToolbarTemplate>
+          <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+            <app-filter-view *ngIf="refreshComponent" [customFilter]="customFilter" (onFilterAllFieldEmitter)="onFilterAllField($event)"
+            (closeFilterEmitter)="closeFilter()"></app-filter-view>
+
+            <!-- <div class="d-flex excel-export">
+                  <button type="button" (click)="goToCreateRfq()" class="btn btn-light-success btn-sm"
+                      icon="file-excel">Create RFQ / Auction</button>
+              </div> -->
+          </div>
+        </ng-template>
+
+        <ng-template kendoGridLoadingTemplate>
+          <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <kendo-grid-column [filterable]="true" filter="numeric" [columnMenu]="false" [headerClass]="headerStyle"
+          field="SrNo" title="#" [width]="80">
+          <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1 === 0 ? '':
+            rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Action" [width]="130">
+          <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+            <ng-container>
+              <div container="body ">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <!-- <a (click)="viewCsButtonHandle(item)">View CS</a> -->
+
+                    <span style="cursor: pointer;" (click)="showRemarkModel(item,true)" title="Approve"
+                      class="svg-icon svg-icon-2 text-success me-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"
+                        id="approve">
+                        <path fill="currentcolor" d="M18.7,7.2c-0.4-0.4-1-0.4-1.4,0l-7.5,7.5l-3.1-3.1c0,0,0,0,0,0c-0.4-0.4-1-0.4-1.4,0c-0.4,0.4-0.4,1,0,1.4l3.8,3.8
+                        c0.2,0.2,0.4,0.3,0.7,0.3c0.3,0,0.5-0.1,0.7-0.3l8.2-8.2C19.1,8.2,19.1,7.6,18.7,7.2z"></path>
+                      </svg></span>
+
+
+                    <span style="cursor: pointer;" (click)="showRemarkModel(item,false)"
+                      class="svg-icon svg-icon-2 text-danger me-2" title="Reject">
+                      <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-danger  m-0 "></span>
+                    </span>
+
+
+                    <span style="cursor: pointer;" class="svg-icon m-0 text-blue me-2"
+                      (click)="viewCsButtonHandle(item)" title="View CS">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view">
+                        <g data-name="32. Veiw">
+                          <path fill="currentcolor"
+                            d="M23.91 11.58C21.94 7.31 17.5 3 12 3S2.06 7.31.09 11.58a1.025 1.025 0 0 0 0 .84C2.06 16.69 6.5 21 12 21s9.94-4.31 11.91-8.58a1.025 1.025 0 0 0 0-.84ZM12 17a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z">
+                          </path>
+                          <circle fill="currentcolor" cx="12" cy="12" r="3"></circle>
+                        </g>
+                      </svg>
+                    </span>
+
+
+                  </div>
+                  <div ngbDropdown autoClose="'outside'" container="body">
+                    <button class="btn btn-sm pr-1 px-2 py-1" ngbDropdownToggle data-bs-auto-close="outside"
+                      type="button">
+                      <svg width="4" height="15" viewBox="0 0 4 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M2 4C2.39556 4 2.78224 3.8827 3.11114 3.66294C3.44004 3.44318 3.69639 3.13082 3.84776 2.76537C3.99914 2.39992 4.03874 1.99778 3.96157 1.60982C3.8844 1.22186 3.69392 0.865492 3.41421 0.585787C3.13451 0.306082 2.77814 0.115601 2.39018 0.0384303C2.00222 -0.0387401 1.60009 0.000866562 1.23463 0.152242C0.869182 0.303617 0.556825 0.559962 0.337062 0.88886C0.117299 1.21776 1.07779e-06 1.60444 1.07779e-06 2C1.07779e-06 2.53043 0.210715 3.03914 0.585788 3.41421C0.960861 3.78929 1.46957 4 2 4ZM2 14C1.60444 14 1.21776 14.1173 0.888861 14.3371C0.559963 14.5568 0.303617 14.8692 0.152242 15.2346C0.000866562 15.6001 -0.0387401 16.0022 0.0384303 16.3902C0.115601 16.7781 0.306083 17.1345 0.585788 17.4142C0.865493 17.6939 1.22186 17.8844 1.60982 17.9616C1.99778 18.0387 2.39992 17.9991 2.76537 17.8478C3.13082 17.6964 3.44318 17.44 3.66294 17.1111C3.8827 16.7822 4 16.3956 4 16C4 15.4696 3.78929 14.9609 3.41421 14.5858C3.03914 14.2107 2.53043 14 2 14ZM2 7C1.60444 7 1.21776 7.1173 0.888861 7.33706C0.559963 7.55682 0.303617 7.86918 0.152242 8.23463C0.000866562 8.60009 -0.0387401 9.00222 0.0384303 9.39018C0.115601 9.77814 0.306083 10.1345 0.585788 10.4142C0.865493 10.6939 1.22186 10.8844 1.60982 10.9616C1.99778 11.0387 2.39992 10.9991 2.76537 10.8478C3.13082 10.6964 3.44318 10.44 3.66294 10.1111C3.8827 9.78224 4 9.39556 4 9C4 8.46957 3.78929 7.96086 3.41421 7.58579C3.03914 7.21071 2.53043 7 2 7Z"
+                          fill="black" />
+                      </svg>
+                    </button>
+                    <ul class="dropdown-menu" ngbDropdownMenu>
+                      <li *ngFor="let value of actionOptions(item)" ngbDropdownItem>
+                        <a (click)="onModelClicked(value, item)" class="dropdown-item pt-0 pb-0 mt-0 mb-0 show-pointer">
+                          {{ value }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+        </kendo-grid-command-column>
+
+        <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="awardNo"
+          title="CS No" [width]="100">
+
+
+          <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+              <a (click)="onCsClick(item)" class="color-secondary text-center">{{item.awardNo}}</a>
+            </ng-container>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="eventCode" title="RFQ/Auction No."
+          [width]="120">
+        </kendo-grid-column>
+
+        <!-- <kendo-grid-column
+          [headerClass]="headerStyle"
+          title="Level"
+          field="level"
+          [width]="210"
+        >
+        </kendo-grid-column> -->
+
+        <kendo-grid-column [headerClass]="headerStyle" title="Buyer Name" field="buyer" [width]="210">
+        </kendo-grid-column>
+
+
+        <kendo-grid-column [headerClass]="headerStyle" field="cS_CreationDate" format="dd-MMM-yyyy" filter="date"
+          [width]="XtraLargeColumnWidth" title="CS Creation Date">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.cS_CreationDate | date: 'dd-MMM-yyyy H:mm'}}
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="vendor" [headerClass]="headerStyle" [width]="180" title="Vendor Name">
+        </kendo-grid-column>
+        <kendo-grid-column field="vendorRank" [headerClass]="headerStyle" [width]="150" title="Vendor Rank">
+        </kendo-grid-column>
+        <kendo-grid-column field="vendorReason" [headerClass]="headerStyle" [width]="200" title="Vendor Reason">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="grandTotal" [headerClass]="headerStyle" [width]="LargeColumnWidth"
+          title="total value">
+        </kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" field="pR_NUM" title="PR no"
+          [width]="columnWidth"></kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" field="prppoAmount" title="PR/PPO value"
+          [width]="180"></kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="project name"
+          [width]="280"></kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" field="site" title="site name" [width]="250">
+        </kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" field="department" title="department"
+          [width]="240"></kendo-grid-column>
+        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+          title="Document" [width]="150">
+          <ng-template kendoGridCellTemplate let-item>
+            <span *ngIf="item.docPath" (click)="getCsDocumentUrl(item)"
+              class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+              <!-- download-svg -->
+              <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-3 text-blue"
+                title="Download"></span>
+            </span>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid>
+    </div>
+  </div>
+
+  <!-- Pr line Model Start -->
+  <div class="modal bg-white fade" tabindex="-1" id="kt_modal_2">
+    <div class="modal-dialog modal-fullscreen p-9">
+      <div class="modal-content shadow-none">
+        <div class="modal-header">
+          <h5 class="modal-title">PR Line Item for PR :PR23014419</h5>
+
+          <!--begin::Close-->
+          <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+          <!--end::Close-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Pr line Model End -->
+</div>
+
+<div *ngIf="isViewCsOpen">
+  <br>
+  <div class="d-block me-2">
+    <a (click)="backbuttonclicked()" class="btn btn-sm btn-light me-3" title="Back">
+      <span ng-reflect-inline-s-v-g="../../../../assets/media/wonde" class="justify-content-center svg-icon "><svg
+          xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+          class="bi bi-arrow-left">
+          <path _ngcontent-ity-c379="" fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0
+          1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
+        </svg></span>
+      Back
+    </a>
+  </div>
+
+  <br>
+  <div>
+    <app-view-cs [csId]="csId" [collaboratorPermission]="currentCollaboratorPermission"
+      [rfqDetail]="rfqDetail"></app-view-cs>
+  </div>
+</div>

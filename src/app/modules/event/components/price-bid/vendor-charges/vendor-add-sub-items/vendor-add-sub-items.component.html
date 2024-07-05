@@ -1,0 +1,180 @@
+<!-- <div class="container-fluid overflow-auto"><div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">Sub Items</h3>
+    </div>
+    <!-- <div class="card-title m-0">
+        <span (click)="closeModel()" class="justify-content-center "
+            [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+    </div> -->
+    <div (click)="closeModel()" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+        aria-label="Close">
+        <span class="svg-icon svg-icon-1 m-0">
+            <!-- close-svg -->
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  m-0"> </span>
+            <!-- close-svg -->
+
+        </span>
+    </div>
+</div>
+<!-- Item Technical Parameter start -->
+<div class="modal-body">
+    <kendo-grid class="fixed-header" [data]="gridView" [loading]="isLoading" [pageSize]="gridState.take" [skip]="gridState.skip" [groupable]="true"
+        [sort]="gridState.sort" [pageable]="true" [reorderable]="true" [resizable]="true" [sortable]="true" (dataStateChange)="onStateChange($event)"
+        (edit)="editHandler($event)" (cancel)="cancelHandler($event)" (save)="saveHandler($event)"
+        (add)="addHandler($event)" [navigable]="true">
+
+        <kendo-grid-column field="sno" title="#" [width]="50">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column *ngIf="actionCondition()" title="Action" [width]="80">
+            <ng-template kendoGridCellTemplate let-isNew="isNew">
+                <div class="d-flex justify-content-center">
+                    <button kendoGridEditCommand type="button"
+                        class="border-0 bg-opacity-0 bg-img-none shadow-none me-0 cursor-pointer-imp me-2" title="Edit">
+                        <!-- [primary]="true" -->
+
+                        <!-- edit-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue  m-0"> </span>
+                        <!-- edit-svg -->
+                    </button>
+
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button kendoGridSaveCommand type="button"
+                        class="bg-img-none shadow-none border-0 me-0 bg-opacity-0 cursor-pointer-imp" title="Add">
+
+
+                        <!-- add-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon text-blue  m-0"> </span>
+                        <!-- add-svg -->
+                    </button>
+                    <button kendoGridCancelCommand type="button"
+                        class="bg-img-none shadow-none border-0 bg-opacity-0 me-0 cursor-pointer-imp"
+                        title="Discard change">
+                        <!-- close-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-primary  m-0"> </span>
+                        <!-- close-svg -->
+
+                        <!-- {{ isNew ? 'Discard changes' :
+                'Cancel'
+                }} -->
+                        <!-- close-svg -->
+                        <!-- <span *ngIf="isNew" [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-blue  m-0"> </span> -->
+                        <!-- close-svg -->
+                    </button>
+                </div>
+            </ng-template>
+        </kendo-grid-command-column>
+
+        <kendo-grid-column field="itemCode" title="Item Code" [width]="100">
+
+        </kendo-grid-column>
+
+
+        <kendo-grid-column field="itemName" title="Item Name" [width]="350" [minResizableWidth]="350">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column field="uom" title="UOM" [width]="70">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column field="quantity" title="Quantity" [width]="100">
+
+        </kendo-grid-column>
+        <kendo-grid-column field="buyerRemark" title="Buyer Remark" [width]="120">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column *ngIf="checkValidationCondition()"   title="Auction Information" [width]="250">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <div class=" main-column-class pricebid-box">
+                        <div class="d-flex row-class">
+                            <label>Ceiling Value : </label>
+                            <div class="d-flex word-break">
+                                {{item.ceilingPrice}}
+                            </div>
+                        </div>
+                        <div class="d-flex row-class">
+                            <label>Bid Decrement : </label>
+                            <div class="d-flex word-break">
+                                {{item.bidDecrement}}
+                            </div>
+                        </div>
+                        <div class="d-flex row-class">
+                            <label>Bid Decrement Percent : </label>
+                            <div class="d-flex word-break">
+                                {{item.bidDecrementPercent}}
+                            </div>
+                        </div>
+                     
+                    </div>
+
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="rate" title="Rate" [width]="100">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.rate" class="form-control form-control-lg" name="Rate"
+                        type="number" required></kendo-textbox> -->
+
+                        <input   type="number" class="form-control form-control-lg" [(ngModel)]="dataItem.rate"
+                            required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="vendorRemark" title="Vendor Remark" [width]="130">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.remarks" class="form-control form-control-lg"
+                        name="Remarks" required></kendo-textbox> -->
+
+                        <input type="text" class="form-control form-control-lg" [(ngModel)]="dataItem.vendorRemark"
+                            required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+    </kendo-grid>
+</div>
+
+<div class="modal-footer">
+    <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+        <button type="button" (click)="closeModel()" class="btn me-5 btn-light btn-sm ">Cancel</button>
+        <!-- <button  id="submitbtn"
+            (click)="saveButtonClicked()" class="btn btn-sm btn-submit">
+            <span class="indicator-label">
+                Save changes
+            </span>
+            <span class="indicator-progress">
+                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button> -->
+
+
+        <button (click)="saveButtonClicked()" *ngIf="actionCondition()" type="submit" class="btn btn-submit btn-sm">
+            <ng-container *ngIf="saveLoader">
+                <span class="indicator-progress" [style.display]="'block'">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </ng-container>
+            <ng-container *ngIf="!saveLoader">
+                <span class="indicator-label">Submit</span>
+            </ng-container>
+        </button>
+    </div>
+
+
+</div>
+
+<!-- </div></div> -->

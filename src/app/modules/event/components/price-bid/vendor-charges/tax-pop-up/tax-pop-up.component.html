@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h3 class="card-title align-items-start flex-column">
+    <span class="card-label fw-bolder fs-3 mb-1">HSN</span>
+  </h3>
+  <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+    <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ms-2">
+
+      <!-- close-svg -->
+      <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0"> </span>
+      <!-- close-svg -->
+
+
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+
+  <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="false"
+    [data]="gridViewTaxCharge" [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="false"
+    [resizable]="false" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{pageSizes: true,info: true}"
+    [sortable]="{allowUnsort: true,mode: 'multiple'}" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+
+    <ng-template kendoGridToolbarTemplate class="ps-0 ">
+      <div class="cs-kend-grid-toolbar d-block d-sm-flex align-items-center mb-3">
+        <div class="d-flex align-items-center my-1">
+          <input type="text" (input)="onFilterAllField($event)" placeholder="Enter HSN Code"
+            class="w-250px form-control form-control-lg me-2" [value]="otherCode" />
+        </div>
+
+        <div *ngIf="showButton" class="d-flex align-items-center my-1">
+          <input (input)="taxChangeHandler($event)" type="number"  placeholder="Enter Tax"
+            class="w-150px form-control form-control-lg me-2" [value]="otherTax" />
+        </div>
+
+        <div *ngIf="showButton" class="d-flex excel-export">
+          <button type="button" (click)="saveOtherTaxData()" class="btn btn-primary btn-sm"
+            icon="file-excel">Save</button>
+        </div>
+
+      </div>
+
+    </ng-template>
+
+    <!-- Kendo Default Loader -->
+    <ng-template kendoGridLoadingTemplate>
+      <div *ngIf="loading">
+        <app-wonder-loader></app-wonder-loader>
+      </div>
+    </ng-template>
+    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#" [width]="30">
+      <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-command-column [headerClass]="headerStyle" title="Select" [columnMenu]="false" [width]="80">
+      <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+        <ng-container>
+          <div autoClose="'outside'" container="body">
+
+            <div class="form-check form-switch form-check-custom form-check-solid justify-content-center ">
+              <input class="form-check-input h-20px w-30px " type="checkbox"
+                (change)="checkBoxSelectedHandler(item,rowIndex)" [(ngModel)]="item.isEnabled"
+                style="border:1px solid #d3d3d3;" />
+              <!-- <label class="form-check-label" for="flexSwitch20x30">
+                         
+                      </label> -->
+            </div>
+          </div>
+        </ng-container>
+      </ng-template>
+    </kendo-grid-command-column>
+
+
+    <kendo-grid-column [filterable]="false" [columnMenu]="false" cell [headerClass]="headerStyle" field="code"
+      title="Code" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [filterable]="false" [columnMenu]="false" [headerClass]="headerStyle" field="cgst" title="CGST"
+      [width]="70"></kendo-grid-column>
+    <kendo-grid-column [filterable]="false" [columnMenu]="false" [headerClass]="headerStyle" field="sgst" title="SGST"
+      [width]="70"></kendo-grid-column>
+    <kendo-grid-column [filterable]="false" [columnMenu]="false" [headerClass]="headerStyle" field="igst" title="IGST"
+      [width]="70"></kendo-grid-column>
+    <kendo-grid-column [filterable]="false" [columnMenu]="false" [headerClass]="headerStyle" field="tax" title="TAX"
+      [width]="70"></kendo-grid-column>
+  </kendo-grid>
+</div>

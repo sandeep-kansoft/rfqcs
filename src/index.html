@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Wonder Cement</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="./assets/media/wonder/favicon.png" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
+  <!-- SPLASH SCREEN-->
+  <link rel="stylesheet" id="layout-styles-anchor" href="./assets/splash-screen.css" />
+  <!-- <link rel="stylesheet" id="layout-styles-anchor" href="./print.css"   media="print"/> -->
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+
+  <!-- Script provided by wonder team -->
+  <script type="text/javascript" src="https://assets.freshservice.com/widget/freshwidget.js"></script>
+  <script type="text/javascript">
+    FreshWidget.init("", { "queryString": "&widgetType=popup", "utf8": "✓", "widgetType": "popup", "buttonType": "text", "buttonText": "Helpdesk", "buttonColor": "white", "buttonBg": "#c90c0f", "alignment": "2", "offset": "235px", "formHeight": "500px", "url": "https://helpdesk.wondercement.com" });
+  </script>
+  <!-- Script provided by wonder team -->
+
+  <script src="assets/plugins/global/plugins.bundle.js"></script>
+</head>
+
+<body root id="kt_body" class="mat-typography">
+  <!-- <body root id="kt_body" class="mat-typography" direction="rtl" dir="rtl" style="direction: rtl"></body> -->
+  <!--begin::Theme mode setup on page load-->
+  <script>
+    if (document.documentElement) {
+      var defaultThemeMode = "system";
+
+      var hasKTName = document.body.hasAttribute("data-kt-name");
+      var lsKey = "kt_" + (hasKTName ? name + "_" : "") + "theme_mode_value"
+      var themeMode = localStorage.getItem(lsKey);
+      if (!themeMode) {
+        if (defaultThemeMode === "system") {
+          themeMode =
+            window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        } else {
+          themeMode = defaultThemeMode;
+        }
+      }
+
+      document.documentElement.setAttribute("data-bs-theme", themeMode);
+    }
+  </script>
+  <!--end::Theme mode setup on page load-->
+  <!-- <div id="splash-screen" class="splash-screen">
+    <img src="./assets/media/wonder/RED-LOGO-BG-Horizontal-transprant.png" alt="Metronic logo" />
+    <span>Loading ...</span>
+  </div> -->
+</body>
+
+</html>

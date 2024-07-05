@@ -1,0 +1,444 @@
+<div class=" mb-3  d-flex align-items-center flex-wrap">
+  <div class="d-flex align-items-center">
+
+
+    <div class="example-config ">
+      <button kendoButton (click)="pdf.saveAs(getPdfFileName())" class="btn btn-sm btn-light-success"> Save As PDF...
+      </button>
+    </div>
+    <div class="ms-5 me-5">
+      <select [(ngModel)]="selectedPaperSize" class="form-control selectpicker py-2 px-3" class="form-select py-2 fs-6"
+        aria-label="Select tempalte">
+        <option value="A2">A2</option>
+        <option value="A3">A3</option>
+        <option value="A4">A4</option>
+        <option value="B3">B3</option>
+
+
+        <!-- <option value="A0">A0</option>
+        <option value="A1">A1</option> -->
+
+      </select>
+    </div>
+
+
+    <div class="form-check form-check-custom form-check-solid form-check-sm">
+      <input [(ngModel)]="isLandScape" class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+      <label class="form-check-label" for="flexRadioLg">
+        Landscape
+      </label>
+    </div>
+  </div>
+  <div *ngIf="roundSelectionCondition()" class="d-md-flex ms-3  align-items-center">
+    <div class="multiple-select-box ">
+      <select2  placeholder="Select Round" [(ngModel)]="selectRoundList" [multiple]="true" [overlay]="overlay"
+        [data]="dropList" class="select-tec form-control px-2"  resettable id="selec2-1">
+      </select2>
+    </div>
+    <button (click)="roundFilter()" class="btn ms-md-5 mt-3 mt-md-0 btn-sm btn-light-blue" id="filter2-toggle"> Apply
+    </button>
+  </div>
+</div>
+
+<kendo-pdf-export #pdf [landscape]="isLandScape" [paperSize]="selectedPaperSize" margin="1cm" class="pdf-box">
+  <div *ngIf="rfqDetail" class="card mb-1">
+    <div class="card-body pt-0 pb-0">
+      <div class="d-flex flex-wrap flex-sm-nowrap">
+        <div class="flex-grow-1">
+          <div class="d-md-flex justify-content-between mt-2 align-items-center">
+            <h4 class="text-gray-800 ">COST COMPARISON REPORT</h4>
+            <img alt="Logo" src="./assets/media/wonder/RED-LOGO-BG-Horizontal-transprant.png"
+              class="h-50px app-sidebar-logo-default theme-light-show">
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center flex-wrap mb-0 pb-0 pt-0">
+            <div class="d-flex flex-wrap mt-2">
+              <div class="me-5 mb-2">
+                <div class="d-flex  me-2">
+                  <div class="symbol symbol-25px me-3">
+                    <div class="symbol-label bg-light-info">
+                      <span class="svg-icon svg-icon-danger svg-icon-2 me-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path opacity="0.3"
+                            d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                            fill="#f1416c" />
+                          <path
+                            d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                            fill="#f1416c" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="fs-6 text-dark fw-bold">Round</div>
+                    <div class="d-flex align-items-center fs-6 text-muted fw-bold">{{rfqDetail.eventRound}}<div
+                        *ngIf="rfqDetail?.eventType!='1'" class="">
+                        <span *ngIf="rfqDetail.eventType=='3'" class="svg-icon svg-icon-muted svg-icon-1">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="currentColor" />
+                            <path
+                              d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z"
+                              fill="currentColor" />
+                          </svg>
+                        </span>
+                        <span *ngIf="rfqDetail?.eventType=='2'" class="svg-icon svg-icon-muted svg-icon-1">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1"
+                              transform="rotate(-180 18 13)" fill="currentColor" />
+                            <path
+                              d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
+                              fill="currentColor" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="me-5 mb-2">
+                <div class="d-flex  me-2">
+                  <div class="symbol symbol-25px me-3">
+                    <div class="symbol-label bg-light-danger">
+                      <span class="svg-icon svg-icon-warning svg-icon-2 me-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M22 12C22 12.9 21.9 13.8 21.7 14.6L5 4.89999C6.8 3.09999 9.3 2 12 2C17.5 2 22 6.5 22 12Z"
+                            fill="#ffc700" />
+                          <path opacity="0.3"
+                            d="M3.7 17.5C2.6 15.9 2 14 2 12C2 9.20003 3.1 6.70002 5 4.90002L9.3 7.40002V14.2L3.7 17.5ZM17.2 12L5 19.1C6.8 20.9 9.3 22 12 22C16.6 22 20.5 18.8 21.7 14.6L17.2 12Z"
+                            fill="#ffc700" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="fs-6 text-dark fw-bold">RFQ Number</div>
+                    <div class="fs-6 text-muted fw-bold">{{rfqDetail.eventNo}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="me-5 mb-2">
+                <div class="d-flex align-items-center  me-2">
+                  <div class="symbol symbol-25px me-3">
+                    <div class="symbol-label bg-light-danger">
+                      <span class="svg-icon svg-icon-info svg-icon-2 me-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M6.5 11C8.98528 11 11 8.98528 11 6.5C11 4.01472 8.98528 2 6.5 2C4.01472 2 2 4.01472 2 6.5C2 8.98528 4.01472 11 6.5 11Z"
+                            fill="#7239ea" />
+                          <path opacity="0.3"
+                            d="M13 6.5C13 4 15 2 17.5 2C20 2 22 4 22 6.5C22 9 20 11 17.5 11C15 11 13 9 13 6.5ZM6.5 22C9 22 11 20 11 17.5C11 15 9 13 6.5 13C4 13 2 15 2 17.5C2 20 4 22 6.5 22ZM17.5 22C20 22 22 20 22 17.5C22 15 20 13 17.5 13C15 13 13 15 13 17.5C13 20 15 22 17.5 22Z"
+                            fill="#7239ea" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+
+
+                    <div class="fs-6 text-muted fw-bold">{{rfqDetail.eventTitle}}</div>
+                  </div>
+                  <!--end::Title-->
+                </div>
+              </div>
+              <div class="me-5 mb-2">
+                <div class="d-flex  me-2">
+                  <div class="symbol symbol-25px me-3">
+                    <div class="symbol-label bg-light-danger">
+                      <span class="svg-icon svg-icon-muted svg-icon-2 me-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path opacity="0.3"
+                            d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z"
+                            fill="currentColor" />
+                          <path
+                            d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z"
+                            fill="#525252" />
+                          <path
+                            d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z"
+                            fill="#525252" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+
+                    <div class="fs-6 text-dark fw-bold">Bid Start Date <span
+                        class="fs-6 text-muted fw-bold">{{rfqDetail.bidStartTime | date :'dd-MMM-yyyy'}}</span> </div>
+                    <div class="fs-6  text-dark fw-bold ">Bid Closing Date <span
+                        class="fs-6 text-muted fw-bold">{{rfqDetail.bidClosing | date :'dd-MMM-yyyy'}}</span> </div>
+
+                    <!-- <div class="fs-7  text-dark  fw-bold">BCD Date -<span
+                        class="fs-7 text-muted fw-bold">20/02/2023</span> </div> -->
+                  </div>
+                  <!--end::Title-->
+                </div>
+              </div>
+              <!--end::Col-->
+            </div>
+            <!-- <div>
+              <img alt="Logo" src="./assets/media/logos/default.svg"
+                class="h-50px app-sidebar-logo-default theme-light-show">
+            </div> -->
+
+            <!--end::User-->
+            <!--begin::Actions-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!--
+    <kendo-grid class="fixed-header " [loading]="vendorBidLoader" [groupable]="false" [data]="vendorDetailGrid"
+      [group]="vendorDetailState.group" [filter]="vendorDetailState.filter" [filterable]="false" [reorderable]="true"
+      [resizable]="true" [skip]="vendorDetailState.skip" [pageSize]="vendorDetailState.take" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="vendorDetailState.sort">
+
+      <kendo-grid-column headerClass=" " class="text-capitalize  " field="value" [sticky]="true" [columnMenu]="false"
+        title="Comparision" [width]="200">
+      </kendo-grid-column>
+
+
+      <kendo-grid-column *ngFor="let vendorItem of vendorDetailList" [title]="vendorItem.vendorName" [width]="150">
+        <ng-template kendoGridCellTemplate let-item>
+          <ng-container>
+            <p>{{getComparisionVendorParam(item,vendorItem.bidRound)}}</p>
+          </ng-container>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3,4,5]" [width]="150">
+      </kendo-grid-column>
+
+
+
+
+
+
+    </kendo-grid> -->
+
+
+  <div *ngIf="vendorGridCondition()" class="border rounded comparison-box group-box-pdf p-2 mt-1">
+    <!-- <h3 class="mt-0 d-inline-block pb-1 fs-6 mb-0 text-gray-700 fw-normal "> Vendor Bid Comparision </h3> -->
+    <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="vendorComparisonGrid"
+      [group]="vendorComparisionState.group" [filter]="vendorComparisionState.filter" [filterable]="false"
+      [reorderable]="true" [resizable]="true" [skip]="vendorComparisionState.skip"
+      [pageSize]="vendorComparisionState.take" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="vendorComparisionState.sort">
+
+      <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false" title="Vendor Bid Comparision"
+        [width]="comparisionWidth">
+        <ng-template kendoGridCellTemplate let-item>
+          <ng-container>
+            <div class="text-start"> {{item.value}} </div>
+          </ng-container>
+        </ng-template>
+      </kendo-grid-command-column>
+
+      <kendo-grid-column-group *ngFor="let vendorItem of vendorComparisionBidData" class="text-wrap "
+        [title]="getTitleName(vendorItem)">
+
+        <!-- <ng-template kendoGridColumnGroupHeaderTemplate let-columns="columns">
+          <ng-container>
+            <div class=" d-flex justify-content-between">
+              <p>{{columns.vendorName}}</p>
+              <p>{{columns.vendorCode}}</p>
+              <p>{{columns.vendorEmail}}</p>
+              <p>{{columns.vendorPhone}}</p>
+              <p>{{columns.vendorCity}}</p>
+            </div>
+
+
+          </ng-container>
+        </ng-template> -->
+        <!-- <ng-template kendoGridColumnGroupHeaderTemplate let-columns="columns">
+          <div style="height: 80px">
+          </div>
+        </ng-template> -->
+        <kendo-grid-column [hidden]="hiddenColumns.indexOf(bidRounds.roundName) > -1" [title]="bidRounds.roundName"
+          *ngFor="let bidRounds of vendorItem.vendorBidRound" [width]="roundWidth">
+          <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+              <div>{{getComparisionVendorParam(item,bidRounds.comparisonVendorParams)}}</div>
+            </ng-container>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+      <kendo-grid-column-group title="">
+        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+      <kendo-grid-column-group title="">
+        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+
+
+    </kendo-grid>
+  </div>
+  <div *ngIf="rfqDetail" class="g-5 summary-tabs">
+    <!-- <div class=" me-0 d-md-flex align-items-center">
+      <div class=" border mt-0 me-md-5 p-2">
+        <div class="w-300px ">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class=" align-items-center">
+              <span class="text-gray-800 fw-bold fs-4 ">Highest bid</span>
+              <span class="text-gray-600  d-block">Abhishek Enterprises</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class=" fw-bolder d-block text-gray-800 fs-4 lh-1 ls-n1">58745</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" border mt-2 mt-md-0 p-2">
+        <div class="w-300px ">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class=" align-items-center">
+              <span class="text-gray-800 fw-bold fs-4 ">Lowest bid</span>
+              <span class="text-gray-600  d-block">Abhishek Enterprises</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class=" fw-bolder d-block text-gray-800 fs-4 lh-1 ls-n1">2045</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    <!-- <div class="col-md-2 col-6 mt-0 pe-0" id="pr">
+        <div class="card px-3 py-3 mb-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="">
+              <span class="text-info fw-semibold fs-7">PR</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class="text-info fw-bolder d-block fs-3 lh-1 ls-n1">{{rfqDetail?.pr}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-6 mt-0 pe-0">
+        <div class="card px-3 py-3 mb-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <span class="text-danger fw-semibold fs-7">Value</span>
+              <span class="text-gray-600 ms-2 fs-8">(INR)</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class="text-danger fw-bolder d-block fs-3 lh-1 ls-n1">{{rfqDetail?.eventValue}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-6 mt-0 pe-0" id="sku">
+        <div class="card px-3 py-3 mb-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="">
+              <span class="text-dark fw-semibold fs-7">SKU</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class="text-dark fw-bolder d-block fs-3 lh-1 ls-n1">{{rfqDetail?.eventLine}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-6 mt-0 pe-0">
+        <div class="card px-3 py-3 mb-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="m-0 text-right d-flex align-items-center">
+              <span class="text-success fw-semibold fs-7">Savings</span>
+              <span class="text-gray-600 ms-2 fs-8">(INR)</span>
+            </div>
+            <div class="m-0 text-right">
+              <span class="text-success fw-bolder d-block fs-3 lh-1 ls-n1">{{rfqDetail?.saving}}</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    <!-- </div> -->
+  </div>
+  <div class="border rounded comparison-box p-2 mt-0">
+    <!-- <h3 class="mt-0 d-inline-block pb-1 fs-6 mb-0 text-gray-700 fw-normal">Line Item Information</h3> -->
+    <!-- <div *ngFor="let itemBid of itemBidComparisonsList;let i=index" class="accordion-item">
+        <h2 class="accordion-header" [id]="'kt_accordion_1_header_'+i">
+          <button class="accordion-button mt-5 fs-4 fw-semibold " aria-expanded="false" type="button"
+            data-bs-toggle="collapse" data-bs-target="#kt_acy_11" aria-controls="kt_">
+            <div class="fs-6 fw-semibold">
+              <div class="d-flex mb-1">
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold">
+                    <span class="text-gray-400 me-3">Code</span>000002
+                  </div>
+                </div>
+                <span class="vertical-line-seperator me-3 ms-3"></span>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold">
+                    <span class="text-gray-400 me-3">Qty</span>22
+                  </div>
+                </div>
+                <span class="vertical-line-seperator me-3 ms-3"></span>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold">
+                    <span class="text-gray-400 me-3">UOM</span>NOS
+                  </div>
+
+                </div>
+              </div>
+              <p class="text-gray-700 mb-1 mt-1">FREIGHT-LIME STONE (RAIL)</p>
+            </div>
+          </button>
+        </h2>
+        <div [id]="'kt_accordion_1_header_'+i" class="accordion-collapse collapse show">
+          <div class="accordion-body px-0 comparison-box">
+            <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }" [groupable]="false" [data]="itemBid.comparisonParamList" [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+           allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+              <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false" title="Comparison" [width]="180">
+                <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                    <div class="text-start"> item value </div>
+                  </ng-container>
+                </ng-template>
+              </kendo-grid-command-column>
+              <kendo-grid-column-group [width]="300" *ngFor="let vendorItem of itemBid.vendorBidComparisons" [title]="vendorItem.vendorName">
+                <kendo-grid-column [title]="bidRounds.roundName" [width]="100" *ngFor="let bidRounds of vendorItem.bidRounds">
+                  <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                      <div>Round</div>
+                    </ng-container>
+                  </ng-template>
+                </kendo-grid-column>
+              </kendo-grid-column-group>
+            </kendo-grid>
+          </div>
+        </div>
+      </div> -->
+    <app-pdf-tab-line-information [csId]="csId" [rfqDetail]="rfqDetail" [hiddenColumns]="hiddenColumns"
+      [isExpandAll]="true"></app-pdf-tab-line-information>
+    <!-- <div class="bg-light-blue p-3 mt-5  w-200px ms-auto">
+      <div class="d-flex justify-content-between p-4">
+        <span class="fw-bold ">Item Level Total - </span>
+        <span class="text-dark fw-bold">08765</span>
+      </div>
+    </div> -->
+  </div>
+  <div class="border rounded comparison-box p-2 mt-0">
+    <!-- <h3 class="mt-0 d-inline-block pb-1 fs-6 mb-0 text-gray-700 fw-normal "> Header Information </h3> -->
+    <app-pdf-tab-header-information [csId]="csId" [rfqDetail]="rfqDetail" [hiddenColumns]="hiddenColumns"
+      [isExpandAll]="true"></app-pdf-tab-header-information>
+    <!-- <div class="bg-light-blue p-3 mt-5  w-200px ms-auto">
+      <div class="d-flex justify-content-between p-4">
+        <span class="fw-bold ">Grand Total - </span>
+        <span class="text-dark fw-bold">0875565</span>
+      </div>
+    </div> -->
+  </div>
+
+
+</kendo-pdf-export>
+
+
+

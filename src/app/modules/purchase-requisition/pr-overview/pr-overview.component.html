@@ -1,0 +1,340 @@
+<!----------------------->
+<!----------------------->
+<!-- Page Title starts -->
+<!----------------------->
+<!----------------------->
+<div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="container-xxl d-flex flex-stack px-0">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                My PR
+            </h1>
+            <!--end::Title-->
+        </div>
+        <!--end::Page title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+            <!--begin::Filter menu-->
+            <div class="m-0">
+                <!--begin::Menu toggle-->
+
+                <!--end::Menu toggle-->
+                <!--begin::Menu 1-->
+                <a (click)="openFilterDrawer()" class="btn btn-sm btn-secondary btn-active-light-primary ms-2"
+                    id="filter2-toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                    <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    Filter
+                </a>
+                <!--end::Menu 1-->
+            </div>
+            <!--end::Filter menu-->
+            <!--begin::Primary button-->
+            <!-- <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">
+          Create        </a> -->
+            <!--end::Primary button-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+
+<!----------------------->
+<!----------------------->
+<!-- Page Title ends -->
+<!----------------------->
+<!----------------------->
+
+
+<div class="card over-view-box">
+    <div class="card-body p-9 pt-3 cs-kendo-grid">
+        <div class="filter-pills-mobile">
+            <span *ngIf="customFilter.dateRangeSelected?.days!==0" class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+                {{customFilter.dateRangeSelected?.rangeName}}
+                <span *ngIf="customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+                    <span (click)="closeFilter('')" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+            <span *ngIf="customFilter.dateRangeSelected?.days===0" class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill">
+                {{customFilter.dateRangeSelected?.startDate | date:'dd MMM YYYY'}} - {{customFilter.dateRangeSelected?.endDate | date:'dd MMM YYYY'}}<span
+                    class="badge badge-circle ms-2">
+                    <span (click)="closeFilter('')" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+        </div>
+
+        <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+            [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+            [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                                pageSizes:true,
+                                info: true
+                            }" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+            <ng-template kendoGridToolbarTemplate>
+                <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+
+                    <app-filter-view *ngIf="refreshComponent" [customFilter]="customFilter"
+                        (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                        (closeFilterEmitter)="closeFilter($event)"></app-filter-view>
+                    <div class="d-flex align-items-end align-self-end excel-export">
+                        <button type="button" kendoGridExcelCommand class="btn btn-light-success btn-sm"
+                            icon="file-excel">Export</button>
+                    </div>
+                </div>
+
+            </ng-template>
+            <!-- Kendo Default Loader -->
+            <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+            </ng-template>
+            <!-- Kendo End Default Loader -->
+            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate
+                    let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="actions"
+                [width]="100">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <div class="button_class d-flex justify-content-between">
+                            <div>
+                                <button (click)="confirmationModalForRfqCreate(item)" class="btn btn-sm  px-0 py-1"
+                                    type="button" data-bs-auto-close="outside" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Create RFQ">
+                                    <svg *ngIf="item.isEventCreation" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16 2H8C4 2 2 4 2 8V21C2 21.55 2.45 22 3 22H16C20 22 22 20 22 16V8C22 4 20 2 16 2Z"
+                                            stroke="#f1bc00" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M12.9098 7.84003L7.71979 13.03C7.51979 13.23 7.3298 13.62 7.2898 13.9L7.0098 15.88C6.9098 16.6 7.40979 17.1 8.12979 17L10.1098 16.72C10.3898 16.68 10.7798 16.49 10.9798 16.29L16.1698 11.1C17.0598 10.21 17.4898 9.17003 16.1698 7.85003C14.8498 6.52003 13.8098 6.94003 12.9098 7.84003Z"
+                                            stroke="#f1bc00" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12.1699 8.58002C12.6099 10.15 13.8399 11.39 15.4199 11.83"
+                                            stroke="#f1bc00" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                    <svg *ngIf="!item.isEventCreation" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16 2H8C4 2 2 4 2 8V21C2 21.55 2.45 22 3 22H16C20 22 22 20 22 16V8C22 4 20 2 16 2Z"
+                                            stroke="#808080" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M12.9098 7.84003L7.71979 13.03C7.51979 13.23 7.3298 13.62 7.2898 13.9L7.0098 15.88C6.9098 16.6 7.40979 17.1 8.12979 17L10.1098 16.72C10.3898 16.68 10.7798 16.49 10.9798 16.29L16.1698 11.1C17.0598 10.21 17.4898 9.17003 16.1698 7.85003C14.8498 6.52003 13.8098 6.94003 12.9098 7.84003Z"
+                                            stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12.1699 8.58002C12.6099 10.15 13.8399 11.39 15.4199 11.83"
+                                            stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                </button>
+                                <button id="kt_drawer_example_basic_button" (click)="openAuctionDrawer(item  )"
+                                    class="btn btn-sm  px-2 py-1" type="button" data-bs-auto-close="outside"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Create Auction">
+                                    <svg  *ngIf="item.isEventCreation" _ngcontent-urs-c636="" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path _ngcontent-urs-c636="" d="M20.0105 18.5101L15.0605 13.5601"
+                                            stroke="#f1416c" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path _ngcontent-urs-c636=""
+                                            d="M15.0602 13.56L11.5202 17.1C10.7402 17.88 9.47024 17.88 8.69024 17.1L4.45023 12.86C3.67023 12.08 3.67023 10.81 4.45023 10.03L11.5202 2.96C12.3002 2.18 13.5702 2.18 14.3502 2.96L18.5902 7.20002C19.3702 7.98002 19.3702 9.25001 18.5902 10.03L15.0602 13.56Z"
+                                            stroke="#f1416c" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path _ngcontent-urs-c636="" d="M2 21H8" stroke="#f1416c" stroke-width="1.5"
+                                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                        <path _ngcontent-urs-c636="" d="M6.56055 7.92004L13.6306 14.99" stroke="#f1416c"
+                                            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+                                    <svg  *ngIf="!item.isEventCreation" _ngcontent-urs-c636="" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path _ngcontent-urs-c636="" d="M20.0105 18.5101L15.0605 13.5601"
+                                            stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path _ngcontent-urs-c636=""
+                                            d="M15.0602 13.56L11.5202 17.1C10.7402 17.88 9.47024 17.88 8.69024 17.1L4.45023 12.86C3.67023 12.08 3.67023 10.81 4.45023 10.03L11.5202 2.96C12.3002 2.18 13.5702 2.18 14.3502 2.96L18.5902 7.20002C19.3702 7.98002 19.3702 9.25001 18.5902 10.03L15.0602 13.56Z"
+                                            stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path _ngcontent-urs-c636="" d="M2 21H8" stroke="#808080" stroke-width="1.5"
+                                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                        <path _ngcontent-urs-c636="" d="M6.56055 7.92004L13.6306 14.99" stroke="#808080"
+                                            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+
+                                </button>
+                            </div>
+                            <div ngbDropdown autoClose="'outside'" container="body">
+
+                                <button ngbDropdownToggle class="btn btn-sm  pr-1 px-2 py-1" type="button"
+                                    data-bs-auto-close="outside">
+                                    <svg width="4" height="15" viewBox="0 0 4 18" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2 4C2.39556 4 2.78224 3.8827 3.11114 3.66294C3.44004 3.44318 3.69639 3.13082 3.84776 2.76537C3.99914 2.39992 4.03874 1.99778 3.96157 1.60982C3.8844 1.22186 3.69392 0.865492 3.41421 0.585787C3.13451 0.306082 2.77814 0.115601 2.39018 0.0384303C2.00222 -0.0387401 1.60009 0.000866562 1.23463 0.152242C0.869182 0.303617 0.556825 0.559962 0.337062 0.88886C0.117299 1.21776 1.07779e-06 1.60444 1.07779e-06 2C1.07779e-06 2.53043 0.210715 3.03914 0.585788 3.41421C0.960861 3.78929 1.46957 4 2 4ZM2 14C1.60444 14 1.21776 14.1173 0.888861 14.3371C0.559963 14.5568 0.303617 14.8692 0.152242 15.2346C0.000866562 15.6001 -0.0387401 16.0022 0.0384303 16.3902C0.115601 16.7781 0.306083 17.1345 0.585788 17.4142C0.865493 17.6939 1.22186 17.8844 1.60982 17.9616C1.99778 18.0387 2.39992 17.9991 2.76537 17.8478C3.13082 17.6964 3.44318 17.44 3.66294 17.1111C3.8827 16.7822 4 16.3956 4 16C4 15.4696 3.78929 14.9609 3.41421 14.5858C3.03914 14.2107 2.53043 14 2 14ZM2 7C1.60444 7 1.21776 7.1173 0.888861 7.33706C0.559963 7.55682 0.303617 7.86918 0.152242 8.23463C0.000866562 8.60009 -0.0387401 9.00222 0.0384303 9.39018C0.115601 9.77814 0.306083 10.1345 0.585788 10.4142C0.865493 10.6939 1.22186 10.8844 1.60982 10.9616C1.99778 11.0387 2.39992 10.9991 2.76537 10.8478C3.13082 10.6964 3.44318 10.44 3.66294 10.1111C3.8827 9.78224 4 9.39556 4 9C4 8.46957 3.78929 7.96086 3.41421 7.58579C3.03914 7.21071 2.53043 7 2 7Z"
+                                            fill="black" />
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" ngbDropdownMenu>
+                                    <li *ngFor="let value of actionOptionsForPrLines(item)" ngbDropdownItem>
+                                        <a (click)="onModelClick(value,item);"
+                                            class="dropdown-item pt-0 pb-0 mt-0 mb-0">
+                                            {{value}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-command-column>
+            <kendo-grid-column [filterable]="true" [columnMenu]="true" field="buyerstatus" [headerClass]="headerStyle"
+                title="Buyer Status" [width]="120">
+                <ng-template kendoGridHeaderTemplate>
+                    <ng-container>
+                        <div data-toggle="tooltip" title="Buyer Status">
+                           Buyer Status
+                        </div>
+                    </ng-container>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <span [ngClass]="showBadgeStatusColorClass(item.buyerstatus)"
+                            class="badge ">{{item.buyerstatus}}</span>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="pR_NUM" title="PR No"
+                [width]="MediumColumnWidth">
+                <ng-template kendoGridHeaderTemplate>
+                    <ng-container>
+                        <div data-toggle="tooltip" title="PR No">
+                            PR No
+                        </div>
+                    </ng-container>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a (click)="onModelClick('Lines', item,true);"
+                            class="color-secondary text-center">{{item.pR_NUM}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="prid" title="PR NO" [width]="columnWidth"></kendo-grid-column> -->
+
+            <kendo-grid-column [filterable]="true" field="description" [headerClass]="headerStyle"
+                title="PR Description" [width]="280">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        {{item.description}}
+                    </ng-container>
+                </ng-template></kendo-grid-column>
+
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+            <kendo-grid-column [headerClass]="headerStyle" field="enterdateFormat" format="dd-MMM-yyyy" filter="date"
+                [width]="XtraLargeColumnWidth" title="Created Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.enterdate | date: 'dd-MMM-yyyy H:mm'}}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="approvedDateFormat" format="dd-MMM-yyyy" filter="date"
+                [width]="XtraLargeColumnWidth" title="Approved Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.approvedDate | date: 'dd-MMM-yyyy HH:mm'}}
+                </ng-template>
+            </kendo-grid-column>
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+            <kendo-grid-column cell [headerClass]="headerStyle" field="siteName" title="Site"
+                [width]="90"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="projecT_NAME" title="Project Id"
+                [width]="XtraXtraLargeColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="departmentName" title="Department"
+                [width]="255"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="prtype" title="PR Type" [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="prSubType" title="PR Sub Type" [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="preparer" title="Request By"
+                [width]="LargeColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="totalValue" title="Total Value"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="assignBuyer" title="Assign To"
+                [width]="columnWidth"></kendo-grid-column>
+
+
+            <kendo-grid-column *ngFor="let item of newColumns" [headerClass]="headerStyle" [field]="item?.field"
+                [title]="item?.title" [width]="columnWidth" editor="numeric">
+
+                <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                    <kendo-textbox [(ngModel)]="dataItem.field" name="dataItem.field" required></kendo-textbox>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+                [width]="columnWidth"></kendo-grid-column> -->
+            <kendo-grid-excel [fetchData]="allData" fileName="My PR.xlsx">
+
+            </kendo-grid-excel>
+        </kendo-grid>
+    </div>
+</div>
+
+<!-- Pr line Model Start -->
+<div class="modal bg-white fade" tabindex="-1" id="kt_modal_2">
+    <div class="modal-dialog modal-fullscreen p-9">
+        <div class="modal-content shadow-none">
+            <div class="modal-header">
+                <h5 class="modal-title">PR Line Item for PR :PR23014419</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <app-pr-modal-view></app-pr-modal-view>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pr line Model End -->

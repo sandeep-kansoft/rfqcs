@@ -1,0 +1,45 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title">
+            <div>
+                <div class="d-flex align-items-center">
+                    <div class="">
+                        <span class=" fs-3 fw-semibold card-label fw-bold text-gray-800">Vendor Email List</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" m-0" (click)="closeModal('CLOSE')" class="btn btn-icon btn-sm btn-active-light-primary ">
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  m-0 svg-icon-2"></span>
+        </div>
+    </div>
+
+    <div class="modal-body modal-body-height-scroll">
+        <div *ngFor="let email of eventVendorEmailList; let i=index"
+            class="form-check form-check-custom form-check-solid form-check-sm px-2 py-2 text-black align-items-center  ">
+            <input *ngIf="eventStatusConditionCHeck(email)" [disabled]="isCheckBoxdisabled" class="form-check-input check" type="checkbox" value="" id="flexRadioLg"  [(ngModel)]="email.isChecked" />
+            <label *ngIf="eventStatusConditionCHeck(email)" class="form-check-label label-margin" for="flexRadioLg">
+                {{email.email}}
+            </label>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button [disabled]="isCancelButtonDisabled"    (click)="closeModal('SAVE')"  type="button" class="btn btn-light btn-sm">Close</button>
+        <button *ngIf="!isCheckBoxdisabled" (click)="saveVendorsEmailList()" type="button" class="btn btn-primary btn-sm">
+            <ng-container *ngIf="isSaveLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </ng-container>
+            <ng-container *ngIf="!isSaveLoading">
+                <span [style.display]="'block'">
+                    Save
+
+                </span>
+            </ng-container>
+        </button>
+        <!-- <button  [disabled]="isSaveButtonDisabled" (click)="closeModal('SAVE')"  type="button" class="btn btn-primary btn-sm">Save changes</button> -->
+    </div>
+</div>

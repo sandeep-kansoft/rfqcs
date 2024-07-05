@@ -1,0 +1,14 @@
+.show-pointer {
+  cursor: pointer;
+}
+li {
+  cursor: pointer;
+}
+
+a {
+  cursor: pointer;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}

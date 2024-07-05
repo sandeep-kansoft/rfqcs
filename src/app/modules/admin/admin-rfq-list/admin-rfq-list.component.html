@@ -1,0 +1,347 @@
+<!----------------------->
+<!----------------------->
+<!-- Page Title starts -->
+<!----------------------->
+<!----------------------->
+
+
+  <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="container-xxl d-flex flex-stack px-0">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+              All RFQ / Auctions List(s)
+            </h1>
+            <!--end::Title-->
+        </div>
+        <!--end::Page title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+            <!--begin::Filter menu-->
+            <div class="m-0">
+                <!--begin::Menu toggle-->
+
+                <!--end::Menu toggle-->
+                <!--begin::Menu 1-->
+                <a (click)="openFilterDrawer()" class="btn btn-sm btn-secondary btn-active-light-primary ms-2"
+                    id="filter2-toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                    <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    Filter
+                </a>
+                <!--end::Menu 1-->
+            </div>
+            <!--end::Filter menu-->
+            <!--begin::Primary button-->
+            <!-- <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">
+              Create        </a> -->
+            <!--end::Primary button-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+
+
+
+<!----------------------->
+<!----------------------->
+<!-- Page Title ends -->
+<!----------------------->
+<!----------------------->
+
+
+<div class="card over-view-box">
+  <div [hidden]="!isReadOnlyRfqcs" class="card-body p-9 pt-3 cs-kendo-grid">
+
+
+    <div class="filter-pills-mobile">
+      <span *ngIf="customFilter.dateRangeSelected?.days!==0" class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+        {{customFilter.dateRangeSelected?.rangeName}}
+        <span *ngIf="!customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+          <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24" viewBox="0 0 24 24"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+              <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                fill="currentColor" />
+              <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                fill="currentColor" />
+            </svg>
+          </span>
+          <span *ngIf="customFilter.dateRangeSelected?.days===0" class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill cursor-pointer">
+              {{customFilter.dateRangeSelected?.startDate | date:'dd MMM YYYY'}} - {{customFilter.dateRangeSelected?.endDate | date:'dd MMM YYYY'}}<span
+                  class="badge badge-circle ms-2">
+                  <span (click)="closeFilter()" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                          viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                          <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                              fill="currentColor" />
+                          <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                              fill="currentColor" />
+                      </svg>
+                  </span>
+              </span>
+          </span>
+        </span>
+      </span>
+    </div>
+
+
+    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+      [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+      [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                              pageSizes:true,
+                              info: true
+                          }" [sortable]="{
+      allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+      <ng-template kendoGridToolbarTemplate>
+        <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+          <app-filter-view *ngIf="refreshComponent" [customFilter]="customFilter"
+            (onFilterAllFieldEmitter)="onFilterAllField($event)" (closeFilterEmitter)="closeFilter()"></app-filter-view>
+
+          <div class="d-flex excel-export">
+            <!-- <button type="button" (click)="goToCreateRfq()" class="btn btn-light-success btn-sm"
+              icon="file-excel">Create RFQ / Auction</button> -->
+          </div>
+        </div>
+      </ng-template>
+      <!-- Kendo Default Loader -->
+      <ng-template kendoGridLoadingTemplate>
+        <app-wonder-loader></app-wonder-loader>
+      </ng-template>
+      <!-- Kendo End Default Loader -->
+
+      <kendo-grid-command-column field="sno" [columnMenu]="false" title="#" [width]="ExtraSmallColumnWidth"><ng-template
+          kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+      </kendo-grid-command-column>
+
+      <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Action" [width]="70">
+        <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+          <ng-container>
+            <div container="body ">
+              <div class="d-flex justify-content-center align-content-center">
+
+
+                <!-- <button [disabled]="!item.is_Delete"
+                                  (click)="deleteModalConfirmation(item,rowIndex)"
+                                  class="btn btn-sm px-0 py-1 "
+                                  type="button"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top" title="Delete Event"
+                                  data-bs-auto-close="outside"> -->
+                <!-- <i class="fa fa-times text-primary" aria-hidden="true"></i> -->
+                <!-- <span class="text-primary">  Terminate</span> -->
+                <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-01-30-131017/core/html/src/media/icons/duotune/general/gen034.svg-->
+
+                <!-- <span class="svg-icon  text-primary svg-icon-2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                              <rect x="0" y="0" width="24" height="24"/>
+                                              <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="currentcolor" fill-rule="nonzero"/>
+                                              <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="currentcolor" opacity="0.7"/>
+                                          </g>
+                                      </svg></span> -->
+
+                <!--end::Svg Icon-->
+                <!-- </button> -->
+
+                <button aria-role-check="yes" [disabled]="!item.is_Terminate" (click)="openReasonModal(item,rowIndex)"
+                  class="btn btn-sm px-0 py-1 " type="button" data-bs-auto-close="outside" data-bs-placement="top"
+                  alt="Terminate RFQ/Auction" title="Terminate RFQ/Auction">
+                  <!-- <i class="fa fa-times text-primary" aria-hidden="true"></i> -->
+                  <!-- <span class="text-primary">  Terminate</span> -->
+                  <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-01-30-131017/core/html/src/media/icons/duotune/general/gen034.svg-->
+                  <span class="svg-icon svg-icon-muted text-primary svg-icon-2 justify-content-between"><svg
+                      _ngcontent-yvv-c636="" width="24" height="20" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <!-- <rect _ngcontent-yvv-c636="" opacity="0.3" x="3" y="3" width="18" height="18"
+                                          rx="5" fill="#c90c0f4f"></rect> -->
+                      <rect _ngcontent-yvv-c636="" x="7" y="15.3137" width="12" height="2" rx="1"
+                        transform="rotate(-45 7 15.3137)" fill="currentcolor"></rect>
+                      <rect _ngcontent-yvv-c636="" x="8.41422" y="7" width="12" height="2" rx="1"
+                        transform="rotate(45 8.41422 7)" fill="currentcolor"></rect>
+                    </svg>
+                  </span>
+                  <!--end::Svg Icon-->
+                </button>
+                <div (click)="openprmodal(item)">
+                  <button type="button" class="btn  btn-sm btn-light-blue p-1" title="View PR">
+                    <span class="svg-icon m-0 ">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view">
+                        <g data-name="32. Veiw">
+                          <path fill="currentcolor"
+                            d="M23.91 11.58C21.94 7.31 17.5 3 12 3S2.06 7.31.09 11.58a1.025 1.025 0 0 0 0 .84C2.06 16.69 6.5 21 12 21s9.94-4.31 11.91-8.58a1.025 1.025 0 0 0 0-.84ZM12 17a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z">
+                          </path>
+                          <circle fill="currentcolor" cx="12" cy="12" r="3"></circle>
+                        </g>
+                      </svg>
+                    </span>
+                  </button>
+                  <div class="modal fade" tabindex="-1" id="kt_modal_102">
+                    <div class="modal-dialog  modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title">Change Status</h3>
+                          <!--begin::Close-->
+                          <div class="btn btn-icon btn-sm btn-active-light-primary " data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span class="justify-content-center "
+                              [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+                          </div>
+                          <!--end::Close-->
+                        </div>
+                        <div class="modal-body">
+                          <h5 class="mb-3">Are you sure to regret ?</h5>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Event No.</label>
+                            <input type="text" class="form-control" placeholder="3455">
+                          </div>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Event Name</label>
+                            <input type="text" class="form-control" placeholder="RFQ1">
+                          </div>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Project Name</label>
+                            <input type="text" class="form-control">
+                          </div>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Location</label>
+                            <input type="text" class="form-control" disabled>
+                          </div>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Regret Type</label>
+                            <select class="form-select" aria-label="Select example">
+                              <option value="1">Interested But No Time</option>
+                              <option value="2">Not Interested</option>
+                            </select>
+                          </div>
+                          <div class="d-block d-md-flex mb-2 align-items-center">
+                            <label for="" class="w-150px">Comment </label>
+                            <textarea class="form-control" placeholder="Leave a comment here"
+                              id="floatingTextarea"></textarea>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">No</button>
+                          <button type="button" class="btn btn-primary btn-sm">Yes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+      </kendo-grid-command-column>
+
+          <kendo-grid-column  [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="evenT_ROUND" title="Round"
+              [width]="100">
+              <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                      <a (click)="gotoEventDashboard(item)"
+                          class="color-secondary text-center">{{item.evenT_ROUND}}</a>
+                  </ng-container>
+              </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="evenT_NO" title="Number"
+              [width]="110">
+              <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                      <a (click)="gotoEventDashboard(item)" class="color-secondary cursor-pointer text-center">{{item.evenT_NO}}</a>
+                  </ng-container>
+              </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="evenT_NAME" title="RFQ/Auction Name"
+              [width]="210">
+              <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                      <a (click)="gotoEventDashboard(item)"
+                          class="color-secondary text-center cursor-pointer">{{item.evenT_NAME}}</a>
+                  </ng-container>
+              </ng-template>
+          </kendo-grid-column>
+
+      <!-- <kendo-grid-column [headerClass]="headerStyle" title="PR No" field="pR_NO" [width]="smallColumnWidth">
+              <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                      <a  class="color-secondary text-center">{{item.pR_NO}}</a>
+                  </ng-container>
+              </ng-template>
+          </kendo-grid-column> -->
+
+      <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="evenT_STATUS" title="Status"
+        [width]="140">
+        <ng-template kendoGridCellTemplate let-item>
+          <ng-container>
+            <span [ngClass]="showBadgeStatusColorClass(item.evenT_STATUS)" class="badge">{{item.evenT_STATUS}}</span>
+          </ng-container>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [filterable]="true" format="dd-MMM-yyyy" filter="date" field="createD_DATE"
+        [headerClass]="headerStyle" [width]="columnWidth" title="Created Date">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.createD_DATE | date: 'dd-MMM-yyyy'}}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [filterable]="true" format="dd-MMM-yyyy" filter="date" field="closinG_TIME_Format"
+        [headerClass]="headerStyle" [width]="LargeColumnWidth" title="Bid Closing Date">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.closinG_TIME | date: 'dd-MMM-yyyy'}}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [headerClass]="headerStyle" field="projecT_NAME" title="Project ID"
+        [width]="XtraXtraLargeColumnWidth"></kendo-grid-column>
+
+      <kendo-grid-column [headerClass]="headerStyle" field="event_Type" title="Type"
+        [width]="MediumColumnWidth"></kendo-grid-column>
+
+
+
+      <kendo-grid-column [headerClass]="headerStyle" field="createD_BY" title="Created By Person"
+        [width]="190"></kendo-grid-column>
+
+
+
+
+      <!-- <kendo-grid-column [headerClass]="headerStyle" field="pR_VALUE" title="PR Value"
+              [width]="MediumColumnWidth"></kendo-grid-column> -->
+
+
+    </kendo-grid>
+  </div>
+</div>
+
+<div [hidden]="isReadOnlyRfqcs">You are not authorized to view this page kindly contact to administrator</div>
+
+<!-- Pr line Model Start -->
+<div class="modal bg-white fade" tabindex="-1" id="kt_modal_2">
+  <div class="modal-dialog modal-fullscreen p-9">
+    <div class="modal-content shadow-none">
+      <div class="modal-header">
+        <h5 class="modal-title">PR Line Item for PR :PR23014419</h5>
+
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+        </div>
+        <!--end::Close-->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Pr line Model End -->

@@ -1,0 +1,388 @@
+<div class="card">
+
+
+
+    <div class="card-body py-3">
+        <div class="d-flex align-items-center justify-content-between px-0 mb-3">
+            <h3 class="fs-4 mb-0">Live Auction</h3>
+            <div class="d-flex">
+                <!-- <button (click)="opensettingModel()" class="btn btn-sm btn-light-blue" title="Auction Setting">
+                <span class="svg-icon ">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 50 50">
+                        <path fill="currentcolor"
+                            d="M 22.205078 2 A 1.0001 1.0001 0 0 0 21.21875 2.8378906 L 20.246094 8.7929688 C 19.076509 9.1331971 17.961243 9.5922728 16.910156 10.164062 L 11.996094 6.6542969 A 1.0001 1.0001 0 0 0 10.708984 6.7597656 L 6.8183594 10.646484 A 1.0001 1.0001 0 0 0 6.7070312 11.927734 L 10.164062 16.873047 C 9.583454 17.930271 9.1142098 19.051824 8.765625 20.232422 L 2.8359375 21.21875 A 1.0001 1.0001 0 0 0 2.0019531 22.205078 L 2.0019531 27.705078 A 1.0001 1.0001 0 0 0 2.8261719 28.691406 L 8.7597656 29.742188 C 9.1064607 30.920739 9.5727226 32.043065 10.154297 33.101562 L 6.6542969 37.998047 A 1.0001 1.0001 0 0 0 6.7597656 39.285156 L 10.648438 43.175781 A 1.0001 1.0001 0 0 0 11.927734 43.289062 L 16.882812 39.820312 C 17.936999 40.39548 19.054994 40.857928 20.228516 41.201172 L 21.21875 47.164062 A 1.0001 1.0001 0 0 0 22.205078 48 L 27.705078 48 A 1.0001 1.0001 0 0 0 28.691406 47.173828 L 29.751953 41.1875 C 30.920633 40.838997 32.033372 40.369697 33.082031 39.791016 L 38.070312 43.291016 A 1.0001 1.0001 0 0 0 39.351562 43.179688 L 43.240234 39.287109 A 1.0001 1.0001 0 0 0 43.34375 37.996094 L 39.787109 33.058594 C 40.355783 32.014958 40.813915 30.908875 41.154297 29.748047 L 47.171875 28.693359 A 1.0001 1.0001 0 0 0 47.998047 27.707031 L 47.998047 22.207031 A 1.0001 1.0001 0 0 0 47.160156 21.220703 L 41.152344 20.238281 C 40.80968 19.078827 40.350281 17.974723 39.78125 16.931641 L 43.289062 11.933594 A 1.0001 1.0001 0 0 0 43.177734 10.652344 L 39.287109 6.7636719 A 1.0001 1.0001 0 0 0 37.996094 6.6601562 L 33.072266 10.201172 C 32.023186 9.6248101 30.909713 9.1579916 29.738281 8.8125 L 28.691406 2.828125 A 1.0001 1.0001 0 0 0 27.705078 2 L 22.205078 2 z M 23.056641 4 L 26.865234 4 L 27.861328 9.6855469 A 1.0001 1.0001 0 0 0 28.603516 10.484375 C 30.066026 10.848832 31.439607 11.426549 32.693359 12.185547 A 1.0001 1.0001 0 0 0 33.794922 12.142578 L 38.474609 8.7792969 L 41.167969 11.472656 L 37.835938 16.220703 A 1.0001 1.0001 0 0 0 37.796875 17.310547 C 38.548366 18.561471 39.118333 19.926379 39.482422 21.380859 A 1.0001 1.0001 0 0 0 40.291016 22.125 L 45.998047 23.058594 L 45.998047 26.867188 L 40.279297 27.871094 A 1.0001 1.0001 0 0 0 39.482422 28.617188 C 39.122545 30.069817 38.552234 31.434687 37.800781 32.685547 A 1.0001 1.0001 0 0 0 37.845703 33.785156 L 41.224609 38.474609 L 38.53125 41.169922 L 33.791016 37.84375 A 1.0001 1.0001 0 0 0 32.697266 37.808594 C 31.44975 38.567585 30.074755 39.148028 28.617188 39.517578 A 1.0001 1.0001 0 0 0 27.876953 40.3125 L 26.867188 46 L 23.052734 46 L 22.111328 40.337891 A 1.0001 1.0001 0 0 0 21.365234 39.53125 C 19.90185 39.170557 18.522094 38.59371 17.259766 37.835938 A 1.0001 1.0001 0 0 0 16.171875 37.875 L 11.46875 41.169922 L 8.7734375 38.470703 L 12.097656 33.824219 A 1.0001 1.0001 0 0 0 12.138672 32.724609 C 11.372652 31.458855 10.793319 30.079213 10.427734 28.609375 A 1.0001 1.0001 0 0 0 9.6328125 27.867188 L 4.0019531 26.867188 L 4.0019531 23.052734 L 9.6289062 22.117188 A 1.0001 1.0001 0 0 0 10.435547 21.373047 C 10.804273 19.898143 11.383325 18.518729 12.146484 17.255859 A 1.0001 1.0001 0 0 0 12.111328 16.164062 L 8.8261719 11.46875 L 11.523438 8.7734375 L 16.185547 12.105469 A 1.0001 1.0001 0 0 0 17.28125 12.148438 C 18.536908 11.394293 19.919867 10.822081 21.384766 10.462891 A 1.0001 1.0001 0 0 0 22.132812 9.6523438 L 23.056641 4 z M 25 17 C 20.593567 17 17 20.593567 17 25 C 17 29.406433 20.593567 33 25 33 C 29.406433 33 33 29.406433 33 25 C 33 20.593567 29.406433 17 25 17 z M 25 19 C 28.325553 19 31 21.674447 31 25 C 31 28.325553 28.325553 31 25 31 C 21.674447 31 19 28.325553 19 25 C 19 21.674447 21.674447 19 25 19 z">
+                        </path>
+                    </svg>
+                </span>
+                Auction
+            </button>  -->
+            <!--begin::Drawer-->
+<!--begin::Trigger button-->
+
+<button *ngIf="DownloadReverseAuctionReportCondition()" (click)="saveReverseAuctionReport()" class="btn-sm btn btn-light-blue d-none d-md-block p-0 px-5 mx-5"
+data-bs-toggle="modal" data-bs-target="#kt_modal_vertically-centered" title="Download Reverse Auction Report">
+<!-- download-svg -->
+<span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+<!-- download-svg -->
+
+</button>
+
+        <button (click)="openBroadcastDrawer()" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEW_AUCTION_BRODCAST_BUTTON)" title="Broadcast" class="btn  btn-sm btn-sm btn-primary d-md-block  p-0 px-5 ">            
+            <span class="svg-icon svg-icon-2 m-0">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path fill="none" d="M0 0h24v24H0z"/>
+                        <path fill="currentcolor" d="M4.929 2.929l1.414 1.414A7.975 7.975 0 0 0 4 10c0 2.21.895 4.21 2.343 5.657L4.93 17.07A9.969 9.969 0 0 1 2 10a9.969 9.969 0 0 1 2.929-7.071zm14.142 0A9.969 9.969 0 0 1 22 10a9.969 9.969 0 0 1-2.929 7.071l-1.414-1.414A7.975 7.975 0 0 0 20 10c0-2.21-.895-4.21-2.343-5.657L19.07 2.93zM7.757 5.757l1.415 1.415A3.987 3.987 0 0 0 8 10c0 1.105.448 2.105 1.172 2.828l-1.415 1.415A5.981 5.981 0 0 1 6 10c0-1.657.672-3.157 1.757-4.243zm8.486 0A5.981 5.981 0 0 1 18 10a5.981 5.981 0 0 1-1.757 4.243l-1.415-1.415A3.987 3.987 0 0 0 16 10a3.987 3.987 0 0 0-1.172-2.828l1.415-1.415zM12 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 2c.58 0 1.077.413 1.184.983L14.5 22h-5l1.316-7.017c.107-.57.604-.983 1.184-.983z"/>
+                    </g>
+                </svg>
+                </span>
+        </button>
+<!--end::Trigger button-->
+
+            <!--begin::View component-->                                                                                    
+           
+            <!--end::View component-->
+
+<!--end::Drawer-->
+                <button (click)="refreshButtonHandler()" class="btn-sm btn btn-light-blue d-none d-md-block ms-5"
+                    title="Refresh Auction">
+                    <span class="svg-icon m-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                            viewBox="0 0 32 32">
+                            <path fill="currentcolor"
+                                d="M 16 4 C 10.886719 4 6.617188 7.160156 4.875 11.625 L 6.71875 12.375 C 8.175781 8.640625 11.710938 6 16 6 C 19.242188 6 22.132813 7.589844 23.9375 10 L 20 10 L 20 12 L 27 12 L 27 5 L 25 5 L 25 8.09375 C 22.808594 5.582031 19.570313 4 16 4 Z M 25.28125 19.625 C 23.824219 23.359375 20.289063 26 16 26 C 12.722656 26 9.84375 24.386719 8.03125 22 L 12 22 L 12 20 L 5 20 L 5 27 L 7 27 L 7 23.90625 C 9.1875 26.386719 12.394531 28 16 28 C 21.113281 28 25.382813 24.839844 27.125 20.375 Z">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="">
+
+            <div class="d-xl-flex mt-5 justify-content-between">
+                <div class="mb-5 mb-md-0 line-chart">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <kendo-chart [seriesColors]='seriesColors' >
+                                <kendo-chart-category-axis>
+                                    <kendo-chart-category-axis-item [baseUnit]="'fit'">
+                                        <kendo-chart-category-axis-item-labels
+                                            [rotation]="315"></kendo-chart-category-axis-item-labels>
+                                    </kendo-chart-category-axis-item>
+                                </kendo-chart-category-axis>
+                                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                                <kendo-chart-tooltip format="{0}"></kendo-chart-tooltip>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item *ngFor="let item of lineChartList" type='line'
+                                        categoryField="category" [data]="item"  [name]="item[0].vendorName"  >
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart> -->
+                            <kendo-chart>
+                             
+                                <kendo-chart-category-axis>
+                                  <kendo-chart-category-axis-item
+                                  
+                                  [maxDivisions]="maxDivisions"
+                                  
+                                  >
+                                  <kendo-chart-category-axis-item-labels
+                                  [rotation]="315" format="{0:dd/MM/yyyy HH:mm:ss}"></kendo-chart-category-axis-item-labels>
+                                  </kendo-chart-category-axis-item>
+                                </kendo-chart-category-axis>
+                                 <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                                 <kendo-chart-tooltip>
+                                    <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
+                                      <div>Date: {{category}} - Value: {{value}}</div>
+                                    </ng-template>
+                                  </kendo-chart-tooltip>
+                                <kendo-chart-series>
+                                  <kendo-chart-series-item *ngFor="let series of lineChartList"
+                                                           [data]="series"
+                                                           type="line"
+                                                           [name]="series[0].vendorName"
+                                                           field="value"
+                         categoryField="category" >
+                                  </kendo-chart-series-item>
+                                </kendo-chart-series>
+                              </kendo-chart>
+                            <!-- <div *ngIf="lineGraphNoDataFound">
+
+                                <app-no-data-found errMessage="No data found"></app-no-data-found>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class=" mb-5 mb-md-5 ms-md-2 pie-chart">
+                    <div class="card">
+                        <div *ngIf="refreshPieChart" class="card-body p-0">
+                            <kendo-chart title="Vendor Count"  [transitions]="true">
+                                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                                <!-- <kendo-chart-tooltip></kendo-chart-tooltip> -->
+                                <kendo-chart-tooltip format="{0}"></kendo-chart-tooltip>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item type="pie" [data]="pieData" field="value"
+                                        categoryField="category">
+
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart>
+                            <div *ngIf="pieChartNoDataFound">
+                                <app-no-data-found errMessage="No data found"></app-no-data-found>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <!-- <div class="d-flex align-items-center ">
+                    <span class="svg-icon svg-icon-2 position-absolute ms-3"
+                        [inlineSVG]="'./assets/media/svg/search.svg'">
+
+                    </span>
+                    <input _type="text" id="" placeholder="Search"
+                        class="form-control form-control-solid border-body w-100px btn btn-sm ps-10"
+                        style="background-color: #f1f1f1;">
+                </div> -->
+                <div class="mt-3">
+                    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true, sort: true }"
+                        [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter"
+                        [filterable]="false" [reorderable]="true" [resizable]="true" [skip]="state.skip"
+                        [pageSize]="pageSize" [pageable]="{
+                      pageSizes: true,
+                      info: true
+                    }" [sortable]="{
+                      allowUnsort: true,
+                      mode: 'multiple'
+                    }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+                        <ng-template kendoGridLoadingTemplate>
+                            <app-wonder-loader></app-wonder-loader>
+                        </ng-template>
+
+                        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                            title="#" [width]="ExtraSmallColumnWidth">
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                                }}</ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="vendorRank" title="Rank"
+                            [width]="80">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false"
+                            [headerClass]="headerStyle" field="action" title="Action" [width]="100">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div class="d-flex justify-content-center">
+                                        <button  (click)='showReviewModel(item)' class="cursor-pointer text-blue"
+                                            title="Review" type="button" class="btn  btn-sm btn-light-blue p-1">
+                                            <span class="svg-icon m-0 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view">
+                                                    <g data-name="32. Veiw">
+                                                        <path fill="currentcolor"
+                                                            d="M23.91 11.58C21.94 7.31 17.5 3 12 3S2.06 7.31.09 11.58a1.025 1.025 0 0 0 0 .84C2.06 16.69 6.5 21 12 21s9.94-4.31 11.91-8.58a1.025 1.025 0 0 0 0-.84ZM12 17a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z">
+                                                        </path>
+                                                        <circle fill="currentcolor" cx="12" cy="12" r="3"></circle>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </button> 
+                                        <button (click)="showRemarkModel(item)" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEW_AUCTION_REJECT_LAST_BID)"
+                                            class="btn btn-sn btn-light-danger ms-2 p-1 text-danger" title="Reject Last Bid">
+
+                                            <span class="svg-icon m-0">
+                                                <svg data-name="Layer 2" id="bcd0be1c-48c2-48cd-8c01-dda2e7bf22b1"
+                                                    viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill="currentcolor"
+                                                        d="M.56,19A18.44,18.44,0,1,1,19,37.44,18.461,18.461,0,0,1,.56,19Zm2.5,0A15.94,15.94,0,1,0,19,3.06,15.957,15.957,0,0,0,3.06,19Z" />
+                                                    <circle cx="19" cy="19" fill="none" r="8.985" stroke="currentcolor"
+                                                        stroke-miterlimit="10" stroke-width="2.5" />
+                                                    <line fill="none" stroke="currentcolor" stroke-miterlimit="10"
+                                                        stroke-width="2.5" x1="25.131" x2="12.659" y1="12.433"
+                                                        y2="25.365" />
+                                                </svg>
+                                            </span></button>
+                                            <button (click)="DisqualifyVendorBid(item)" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEW_AUCTION_DISQUALIFY_VENDOR_BID) && !item.isBidDisqualified"
+                                            class="btn btn-sn btn-light ms-2 p-1 " title="Disqualify Vendor Bid">
+
+                                            <span class="svg-icon m-0">
+                                                <svg fill="#3f3f40" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                width="800px" height="800px" viewBox="0 0 93.934 93.934"
+                                                xml:space="preserve">
+                                           <g>
+                                               <path d="M80.178,13.757c-18.341-18.342-48.08-18.342-66.421,0c-18.342,18.341-18.342,48.08,0,66.421
+                                                   c18.341,18.342,48.08,18.342,66.421,0C98.52,61.836,98.52,32.098,80.178,13.757z M71.576,61.737l-9.838,9.838l-14.771-14.77
+                                                   l-14.771,14.77l-9.838-9.838l14.77-14.771l-14.77-14.771l9.838-9.838l14.771,14.771l14.771-14.771l9.838,9.838l-14.77,14.772
+                                                   L71.576,61.737z"/>
+                                           </g>
+                                           </svg>
+                                            </span></button>
+
+                                            <button (click)="disquailificationDetails(item)" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEW_AUCTION_DISQUALIFICATION_DETAILS_BUTTON) && item.isBidDisqualified"
+                                            class="btn btn-sn btn-light ms-2 p-1 " title="Disqualification Details">
+
+                                            <span class="svg-icon m-0">
+                                                <svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+ 
+                                                    <defs>
+                                                     
+                                                    <style>.cls-1{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
+                                                     
+                                                    </defs>
+                                                     
+                                                    <g data-name="Layer 2" id="Layer_2">
+                                                     
+                                                    <g data-name="E425, History, log, manuscript" id="E425_History_log_manuscript">
+                                                     
+                                                    <path class="cls-1" d="M75.11,117h0A21.34,21.34,0,0,1,53.83,95.57V31.39A21.34,21.34,0,0,1,75.11,10h0A21.34,21.34,0,0,1,96.39,31.39V95.57A21.34,21.34,0,0,1,75.11,117Z"/>
+                                                     
+                                                    <rect class="cls-1" height="64.17" width="319.22" x="96.39" y="31.39"/>
+                                                     
+                                                    <rect class="cls-1" height="320.87" width="319.22" x="96.39" y="95.57"/>
+                                                     
+                                                    <path class="cls-1" d="M34.34,39.08H53.83a0,0,0,0,1,0,0v48.8a0,0,0,0,1,0,0H34.34A24.34,24.34,0,0,1,10,63.54v-.13A24.34,24.34,0,0,1,34.34,39.08Z"/>
+                                                     
+                                                    <path class="cls-1" d="M436.89,117h0a21.34,21.34,0,0,0,21.28-21.39V31.39A21.34,21.34,0,0,0,436.89,10h0a21.34,21.34,0,0,0-21.28,21.39V95.57A21.34,21.34,0,0,0,436.89,117Z"/>
+                                                     
+                                                    <path class="cls-1" d="M482.51,39.08H502a0,0,0,0,1,0,0v48.8a0,0,0,0,1,0,0H482.51a24.34,24.34,0,0,1-24.34-24.34v-.13a24.34,24.34,0,0,1,24.34-24.34Z" transform="translate(960.17 126.96) rotate(-180)"/>
+                                                     
+                                                    <path class="cls-1" d="M75.11,395h0a21.34,21.34,0,0,0-21.28,21.39v64.18A21.34,21.34,0,0,0,75.11,502h0a21.34,21.34,0,0,0,21.28-21.39V416.43A21.34,21.34,0,0,0,75.11,395Z"/>
+                                                     
+                                                    <rect class="cls-1" height="64.17" width="319.22" x="96.39" y="416.43"/>
+                                                     
+                                                    <path class="cls-1" d="M34.34,424.12H53.83a0,0,0,0,1,0,0v48.8a0,0,0,0,1,0,0H34.34A24.34,24.34,0,0,1,10,448.58v-.13A24.34,24.34,0,0,1,34.34,424.12Z"/>
+                                                     
+                                                    <path class="cls-1" d="M436.89,395h0a21.34,21.34,0,0,1,21.28,21.39v64.18A21.34,21.34,0,0,1,436.89,502h0a21.34,21.34,0,0,1-21.28-21.39V416.43A21.34,21.34,0,0,1,436.89,395Z"/>
+                                                     
+                                                    <path class="cls-1" d="M482.51,424.12H502a0,0,0,0,1,0,0v48.8a0,0,0,0,1,0,0H482.51a24.34,24.34,0,0,1-24.34-24.34v-.13a24.34,24.34,0,0,1,24.34-24.34Z" transform="translate(960.17 897.04) rotate(-180)"/>
+                                                     
+                                                    <line class="cls-1" x1="143.41" x2="256" y1="140.11" y2="140.11"/>
+                                                     
+                                                    <line class="cls-1" x1="143.41" x2="371.26" y1="186.47" y2="186.47"/>
+                                                     
+                                                    <line class="cls-1" x1="143.41" x2="371.26" y1="232.82" y2="232.82"/>
+                                                     
+                                                    <line class="cls-1" x1="143.41" x2="371.26" y1="279.18" y2="279.18"/>
+                                                     
+                                                    <line class="cls-1" x1="143.41" x2="371.26" y1="325.53" y2="325.53"/>
+                                                     
+                                                    <line class="cls-1" x1="256" x2="371.26" y1="371.89" y2="371.89"/>
+                                                     
+                                                    </g>
+                                                     
+                                                    </g>
+                                                     
+                                                    </svg>
+                                            </span></button>
+
+                                    </div>
+                                </ng-container>
+
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                        <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+                        <kendo-grid-column [headerClass]="headerStyle" field="vendorcode" title="Vendor Code"
+                            [width]="100">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="vendorname" title="Vendor Name"
+                            [width]="250">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="startingBid" title="Starting Bid"
+                            [width]="120"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="currentBid" title="Current Bid"
+                            [width]="120"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="convertedAmt" title="Converted Amount"
+                    [width]="120">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            {{item.currentBid == 0 ? 0 :item.convertedAmt}}
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column> 
+
+
+                      <kendo-grid-column [headerClass]="headerStyle" field="currencY_CODE" title="Currency"
+                        [width]="120"></kendo-grid-column> 
+
+
+
+
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10">
+
+
+            <div class="mt-3">
+
+                <div class=" ">
+                    <!-- <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+                    [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                    [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                      pageSizes: true,
+                      info: true
+                    }" [sortable]="{
+                      allowUnsort: true,
+                      mode: 'multiple'
+                    }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                 
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                        title="#" [width]="ExtraSmallColumnWidth">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                            }}</ng-template>
+                    </kendo-grid-column>
+                  <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="itemCode" title="Item Code"
+                    [width]="140">
+                    
+                </kendo-grid-column>
+                 -->
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="itemDesc"    title="Item description"
+                        [width]="300">
+                       
+                    </kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="requester" title="Qty"
+                [width]="90">
+                
+            </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="uom" title="Currency"
+                        [width]="150"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="quantity" title="Vendor Code"
+                        [width]="150"></kendo-grid-column> -->
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="round" title="Line Item No"
+                    [width]="100"></kendo-grid-column> -->
+
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="Vendor Name"
+                        [width]="150"></kendo-grid-column>
+                    
+                        <kendo-grid-column [headerClass]="headerStyle" field="prCode" title="Starting Bid"
+                        [width]="150"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="Current Bid"
+                        [width]="150"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="Total Price"
+                        [width]="150"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="Converted Total(INR)"
+                        [width]="150"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="Action"
+                        [width]="100"></kendo-grid-column>
+                   
+                   
+                </kendo-grid> -->
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>

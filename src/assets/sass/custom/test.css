@@ -1,0 +1,37 @@
+/* 
+@media print{ 
+    .pdf-box .comparison-box {
+    padding: 2px !important;
+}
+.pdf-box .fs-6 {
+    font-size: 8px !important;
+}
+.pdf-box h6 {
+    font-size: 10px !important;
+}
+.pdf-box .comparison-box .k-grid-header-wrap .k-table-row .k-link {
+    justify-content: center !important;
+    padding: 4px 12px !important;
+    font-size: 8px !important;
+    word-break: initial;
+    white-space: normal !important;
+    text-align: center;
+}
+.pdf-box .comparison-box .k-grid-header-wrap .k-table-row .k-column-title {
+    word-break: initial;
+    white-space: normal !important;
+}
+.pdf-box .comparison-box .k-table-md .k-table-td {
+    padding: 2px !important;
+}
+.pdf-box .comparison-box .k-table-md .k-table-td {
+    padding: 2px !important;
+}
+.pdf-box .fs-6 {
+    font-size: 10px !important;
+}
+.pdf-box .comparison-box .k-table-td div {
+    text-align: end;
+    font-size: 7px;
+}
+} */

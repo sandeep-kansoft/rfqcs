@@ -1,0 +1,54 @@
+<kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+[groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+[reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+  pageSizes:true,
+ info: true
+  }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+<ng-template  class="p-0" kendoGridToolbarTemplate>
+  <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+    <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+  </div>
+</ng-template>
+
+<ng-template kendoGridLoadingTemplate>
+  <app-wonder-loader></app-wonder-loader>
+</ng-template>
+
+
+<kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+  [width]="ExtraSmallColumnWidth">
+  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+    }}</ng-template>
+</kendo-grid-column>
+<kendo-grid-command-column [headerClass]="headerStyle" title="Action" [columnMenu]="false" [width]="50">
+  <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+    <ng-container>
+      <div autoClose="'outside'" container="body">
+
+        <div class="form-check form-switch form-check-custom form-check-solid justify-content-center ">
+          <input class="form-check-input h-20px w-30px " type="checkbox" [disabled]="item.isAdmin || !checkPermission(permissionEnum.DASHBOARD_VIEWER_AND_ADMINSTRATOR_ADMINISTRATOR_SELECT_BUTTON_ENABLED)"
+            (change)="checkBoxSelectedHandler($event,item,rowIndex)" [(ngModel)]="item.isAdmin"
+            style="border:1px solid #d3d3d3;" />
+
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</kendo-grid-command-column>
+
+
+<!-- <kendo-grid-column [filterable]="true" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+  field="personId" title="Buyer Name" [width]="140">
+</kendo-grid-column> -->
+
+
+
+
+<kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field="name"
+  title="Administrator Name" [width]="300">
+
+</kendo-grid-column>
+
+</kendo-grid>

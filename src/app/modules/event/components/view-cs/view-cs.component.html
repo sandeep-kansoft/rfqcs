@@ -1,0 +1,2500 @@
+<div class="card mb-5 ">
+  <div class="card-body py-3">
+    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-4">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_15">Line Item Information</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_14">Header Information</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_13">Vendor Status</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_16">PDF Tab</a>
+      </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_17">CS View</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_18"> CS View 1 </a>
+      </li> -->
+      <li *ngIf="viewCsCondition()" class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_20">CS sheet</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_19"> Technical Specification </a>
+      </li> -->
+
+      <!-- <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#kt_tab_pane_131">Price Comparison</a></li> -->
+      <!-- <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_22">Link 2</a></li><li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_32">Link 3</a></li> -->
+    </ul>
+    <div class="tab-content " id="myTabContent">
+      <div class="tab-pane fade " id="kt_tab_pane_13" role="tabpanel">
+        <!-- <div class=" mt-5 mb-5"><label class="fw-bold mb-2">Technical approver Comment</label><textarea class="form-control min-h-50px" readonly placeholder="Leave a comment here"></textarea></div> -->
+        <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+          [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"
+          [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+          pageSizes: true,
+          info: true
+        }" [sortable]="{
+          allowUnsort: true,
+          mode: 'multiple'
+        }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+          <!-- Kendo Default Loader -->
+          <ng-template kendoGridLoadingTemplate>
+            <div *ngIf="loading">
+              <app-wonder-loader></app-wonder-loader>
+            </div>
+          </ng-template>
+          <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+            [width]="ExtraSmallColumnWidth">
+            <ng-template kendoGridCellTemplate l let-rowIndex="rowIndex">{{ rowIndex + 1
+              }}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column cell [headerClass]="headerStyle" field="vendorcode" title="Vendor Code" [width]="100">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title=" Vendor Code">
+                  Vendor Code
+                </div>
+              </ng-container>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="vendorname" title="Vendor Name"
+            [width]="200"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="statusvendor" title="Status"
+            [width]="MediumColumnWidth"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="participatestatus" title="Participation"
+            [width]="MediumColumnWidth">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title="Participation">
+                  Participation
+                </div>
+              </ng-container>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="tnc" title="T & C"
+            [width]="MediumColumnWidth"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="technical" title="Technical"
+            [width]="columnWidth"></kendo-grid-column>
+
+          <!-- <kendo-grid-column [headerClass]="headerStyle" field="sarogateBidding" title="Surrogate
+          Bidding"
+            [width]="columnWidth"></kendo-grid-column> -->
+          <kendo-grid-column *ngIf="techApproveAndScoreCondition()" [headerClass]="headerStyle" field="technicalApprove"
+            title="Tech Approve" [width]="MediumColumnWidth">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title=" Tech Approve">
+                  Tech Approve
+                </div>
+              </ng-container>
+            </ng-template>
+
+          </kendo-grid-column>
+          <kendo-grid-column *ngIf="scoreCondition()" [headerClass]="headerStyle" field="technicalScore" title="Score"
+            [width]=" 100"></kendo-grid-column>
+          <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="true" [headerClass]="headerStyle"
+            title="Collaborator Document" [width]="SmallColumnWidth">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title="Collaborator Document">
+                  Collaborator Document
+                </div>
+              </ng-container>
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-item>
+              <div class="d-flex justify-content-center text-center">
+                <span *ngIf="item.scoreDocPath" (click)="downloadAttachment(item.scoreDocPath)"
+                  class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                  <!-- download-svg -->
+                  <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-0 text-blue"
+                    title="Download"></span>
+                </span>
+              </div>
+
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="true" [headerClass]="headerStyle"
+            field="pricebidAttachment" title="Pricebid Attachment" [width]="SmallColumnWidth">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title="Pricebid Attachment">
+                  Pricebid Attachment
+                </div>
+              </ng-container>
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-item>
+              <span *ngIf="item.priceBidDocPath" (click)="downloadAttachment(item.priceBidDocPath)"
+                class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                <!-- download-svg -->
+                <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-3 text-blue"
+                  title="Pricebid Attachment Download"></span>
+              </span>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="technicalRemark" title="Technical Remark" [width]="250">
+            <ng-template kendoGridHeaderTemplate>
+              <ng-container>
+                <div data-toggle="tooltip" title="Technical Remark">
+                  Technical Remark
+                </div>
+              </ng-container>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+        <div class="d-block d-md-flex justify-content-end mt-5">
+          <div class="d-block d-sm-flex justify-content-end ">
+            <!-- <button type="button" title="Download New Comparison" class=" btn btn-light-blue btn-sm"><span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+
+              New Comparison
+            </button><button type="button" title="Download Old Comparison" class=" ms-5 btn btn-light-blue btn-sm"><span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+
+              Old Comparison
+            </button></div> -->
+            <div>
+              <!-- <button (click)="openBidOptimization()" type="button" title="Add Bid Optimization"
+          class=" mt-3 mt-sm-0 ms-0 ms-sm-5 btn btn-light-blue btn-sm"> -->
+              <!-- <span class="svg-icon "><svg width="22" height="22" viewBox="0 0 24 24"
+                fill="none"
+							xmlns="http://www.w3.org/2000/svg"><rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                    transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect><rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect></svg></span> -->
+              <!-- <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon m-0 "></span>
+          Bid Optimization
+        </button> -->
+            </div>
+          </div>
+          <!-- <div class=""><app-no-data-found></app-no-data-found></div> -->
+        </div>
+      </div>
+      <div class="tab-pane fade" id="kt_tab_pane_14" role="tabpanel">
+        <!--begin::Accordion-->
+        <app-header-information [isExpandAlls]="headerBidIsExpanded" [csId]="csId"
+          [rfqDetail]="rfqDetail"></app-header-information>
+        <!--end::Accordion-->
+      </div>
+      <div class="tab-pane fade show active" id="kt_tab_pane_15" role="tabpanel">
+        <app-line-information [csId]="csId" [rfqDetail]="rfqDetail"></app-line-information>
+      </div>
+      <div class="tab-pane fade " id="kt_tab_pane_16" role="tabpanel">
+        <app-pdf-tab [csId]="csId" [rfqDetail]="rfqDetail"></app-pdf-tab>
+      </div>
+      <div class="tab-pane fade " id="kt_tab_pane_17" role="tabpanel">
+        <div class="example-config ">
+          <button kendoButton (click)="pdf.saveAs(getPdfFileName())" class="btn btn-sm btn-light-success mb-4"> Save As
+            PDF... </button>
+        </div>
+        <kendo-pdf-export #pdf [landscape]="isLandScape" [paperSize]="selectedPaperSize" margin="1cm" class="pdf-box">
+          <!-- table -->
+          <table cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines sheet-box border-0">
+            <!-- <col class="col0"><col class="col1"><col class="col2"><col class="col3"><col class="col4"><col class="col5"><col class="col6"><col class="col7"><col class="col8"><col class="col9"><col class="col10"><col class="col11"><col class="col12"><col class="col13"><col class="col14"><col class="col15"><col class="col16"> -->
+            <tbody>
+              <tr class="row0">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style48 null style40" colspan="2" rowspan="5">
+                  <div>
+                    <img src="./assets/media//wonder/RED-LOGO-BG-Horizontal-transprant.png" />
+                  </div>
+                </td>
+                <td class="column3 style49 s style50" colspan="3" rowspan="5">
+                  <label class="fw-bold"> RFQ No:</label>
+                  3325 <br /> COST COMPARISON REPORT
+                </td>
+                <td class="column6 style51 s style51" colspan="4"> <label class="fw-bold"> Comp. Date :</label>
+                  16/05/2023</td>
+                <td class="column10 style52 s style54" colspan="5"><label class="fw-bold">Vendor Name :</label> Aditya
+                  Associates</td>
+                <td class="column15"><label class="fw-bold">Vendor Name :</label> A K J Marbles Pvt Limited</td>
+                <!-- <td class="column16"></td> -->
+              </tr>
+              <tr class="row1">
+                <!-- <td class="column0"></td> -->
+                <td class="column6 style55 s style55" colspan="4"> <label class="fw-bold"> RFQ No:</label> 3325</td>
+                <td class="column10 style56 s style58" colspan="5"> <label class="fw-bold"> Contact Name :</label>
+                  Aditya Associates</td>
+                <td class="column15 style2 null"><label class="fw-bold"> Contact Name :</label>A K J Marbles Pvt Limited
+                </td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row2">
+                <!-- <td class="column0"></td> -->
+                <td class="column6 style55 s style55" colspan="4"> <label class="fw-bold"> RFQ Date :</label> 16/05/2023
+                  10:12:17</td>
+                <td class="column10 style41 s style43" colspan="5"> <label class="fw-bold">Vendor City :</label>
+                  Bhilwara</td>
+                <td class="column15 style2 null"><label class="fw-bold"> Vendor City :</label> Udaipur</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row3">
+                <!-- <td class="column0"></td> -->
+                <td class="column6 style55 s style55" colspan="4"><label class="fw-bold">BCD Date : </label>16/05/2023
+                  23:59:00</td>
+                <td class="column10 style41 s style43" colspan="5"><label class="fw-bold">Telephone # :</label> 25893147
+                </td>
+                <td class="column15 style2 null"><label class="fw-bold"> Telephone # :</label> 4545482</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row4">
+                <!-- <td class="column0"></td> -->
+                <td class="column6 style40 null style40" colspan="4"></td>
+                <td class="column10 style41 s style43" colspan="5"> <label class="fw-bold">Mobile: </label> 9876522345
+                </td>
+                <td class="column15 style2 null"><label class="fw-bold">Mobile : </label> 9876522345</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row5">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style44 s style44" colspan="9"><label class="fw-bold"> PR Number :</label> PR24000166
+                </td>
+                <td class="column10 style45 s style47" colspan="5"><label class="fw-bold">Email : </label>
+                  salesme181@gmail.com</td>
+                <td class="column15 style2 null"><label class="fw-bold">Email :</label> salesme181@gmail.com</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row6">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style34 s style34" colspan="9"><label class="fw-bold"> Package / RFQ Name :</label>
+                  WCLRFQ / 113/ PR24000166</td>
+                <td class="column10 style35 s style37" colspan="5">
+                  <table class="w-100 text-center">
+                    <tr>
+                      <td>R1</td>
+                      <td>R2</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column15 style2 null">Round # : 1</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row7">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style34 s style34" colspan="9"><label class="fw-bold"> Technical Approver :</label>
+                  MOHAN LAL SHARMA</td>
+                <td class="column10 style35 s style37" colspan="5">
+                  <table class="w-100">
+                    <tr>
+                      <td>Techanical Score :12</td>
+                      <td>Techanical Score: 5</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column15 style2 null">Techanical Score : 22</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row8">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style34 s style34" colspan="9"><label class="fw-bold"> Buyer : </label>Vikas Vyas
+                </td>
+                <td class="column10 style35 s style37" colspan="5">
+                  <table class="w-100">
+                    <tr>
+                      <td>Quotation Date :22/6/20</td>
+                      <td>Quotation Date :1/8/20</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column15 style2 null">Quotation Date : </td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row9">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style38 s style38" colspan="5" rowspan="2"><label class="fw-bold">Comp. :</label> 1
+                </td>
+                <td class="column6 style23 s style23" colspan="4"><label class="fw-bold"> Currency :</label>INR</td>
+                <td class="column10 style35 s style37" colspan="5">
+                  <table class="w-100">
+                    <tr>
+                      <td>Quotation Validity Date :1/8/20</td>
+                      <td>Quotation Validity Date :15/8/20</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column15 style2 null">Quotation Validity Date : 19/5/20</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row10">
+                <!-- <td class="column0"></td> -->
+                <td class="column6 style3 s"> <label class="fw-bold"> BUDGET PRICE :</label></td>
+                <td class="column7 style39 s style23" colspan="3">40,605.00</td>
+                <td class="column10 style35 s style37" colspan="5">
+                  <table class="w-100">
+                    <tr>
+                      <td>Quote Currency : INR</td>
+                      <td>Quote Currency : INR</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column15 style2 null"><label class="fw-bold"> Quote Currency :</label> INR</td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row11 bg-light">
+                <!-- <td class="column0"></td> -->
+                <td class="column1  fw-bold">#</td>
+                <td class="column2 fw-bold">Item Code</td>
+                <td class="column3 style4 s fw-bold">Item Description</td>
+                <td class="column4 style4 s fw-bold">Last PO Details</td>
+                <td class="column5 style4 s fw-bold">Unit</td>
+                <td class="column6 style4 s fw-bold">Qty</td>
+                <td class="column7 style4 s fw-bold">Last PO Price </td>
+                <td class="column8 style59 s fw-bold">Last PR price</td>
+                <td class="column9 style4 s fw-bold">Total PO Value </td>
+                <td class="column10 style4 s fw-bold" colspan="2">Unit Price</td>
+                <td class="column11 style59 s fw-bold">Discount</td>
+                <td class="column12 style4 s fw-bold">Net Price</td>
+                <!-- <td class="column13 style4 null"></td> -->
+                <td class="column14 style4 s fw-bold">Total</td>
+                <td class="column15 style5 null"></td>
+                <!-- <td class="column16 style5 null"></td> -->
+              </tr>
+              <tr class="row12">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">1</td>
+                <td class="column2 style6 s">100000015</td>
+                <td class="column3 style6 s">WRENCH, ALLEN; TYPE: KEY, COMMERCIAL SIZE: 14 MM</td>
+                <td class="column4 style6 s">115PO2300571 , 17/11/2022 , (502628) DEV ENTERPRISE</td>
+                <td class="column5 style6 s">NOS</td>
+                <td class="column6 style6 n">2</td>
+                <td class="column7 style6 s">128.00</td>
+                <td class="column8 style6 null"></td>
+                <td class="column9 style6 s">128.00</td>
+                <td class="column10 style6 s" colspan="2">Basic price/ MRP :100 <br /> Discount % :10% <br /> P&amp;F-%
+                  -2% <br /> Additional charges <br /> Excluding <br /> GST% </td>
+                <td class="column11 style60 s">%</td>
+                <td class="column12 style6 n">91.8</td>
+                <!-- <td class="column13 style6 null"></td> -->
+                <td class="column14 style6 f">183.6</td>
+                <td class="column15 style7 null"></td>
+                <!-- <td class="column16 style7 null"></td> -->
+              </tr>
+              <tr class="row13">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">2</td>
+                <td class="column2 style6 s">100000018</td>
+                <td class="column3 style6 s">WRENCH, ALLEN; TYPE: KEY, COMMERCIAL SIZE: 24 MM</td>
+                <td class="column4 style6 s">115PO2300571 , 17/11/2022 , (502628) DEV ENTERPRISE</td>
+                <td class="column5 style6 s">NOS</td>
+                <td class="column6 style6 n">4</td>
+                <td class="column7 style6 s">977.00</td>
+                <td class="column8 style6 null"></td>
+                <td class="column9 style6 s">977.00</td>
+                <td class="column10 style6 s" colspan="2">Basic price/ MRP :200 <br /> Discount % :10% <br /> P&amp;F-%
+                  -2% <br /> Additional charges <br /> Excluding <br /> GST % </td>
+                <td class="column11 style6 null"></td>
+                <td class="column12 style6 n">183.6</td>
+                <!-- <td class="column13 style6 null"></td> -->
+                <td class="column14 style6 f">734.4</td>
+                <td class="column15 style7 null"></td>
+                <!-- <td class="column16 style7 null"></td> -->
+              </tr>
+              <tr class="row14">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style33 s style33" colspan="9"><label class="fw-bold"> Item Total:</label> </td>
+                <td class="column10 style3 null" colspan="2"></td>
+                <td class="column11 style3 null"></td>
+                <td class="column12 style3 null"></td>
+                <!-- <td class="column13 style3 null"></td> -->
+                <td class="column14 style10 f">918.00</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row15">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style23 s style23" colspan="9"><label class="fw-bold"> Freight Charges:</label></td>
+                <td class="column10 style3 s" colspan="2">10.00 %</td>
+                <td class="column11 style3 null"></td>
+                <td class="column12 style3 null"></td>
+                <!-- <td class="column13 style3 null"></td> -->
+                <td class="column14 style11 f">91.80</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row16">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style23 s style23" colspan="9"><label class="fw-bold"> GST Value total</label></td>
+                <td class="column10 style3 null" colspan="2"></td>
+                <td class="column11 style3 null"></td>
+                <td class="column12 style3 null"></td>
+                <!-- <td class="column13 style3 null"></td> -->
+                <td class="column14 style11 f">0.00</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row17">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style33 s style33" colspan="9"><label class="fw-bold">Total Lot Charges</label></td>
+                <td class="column10 style3 null" colspan="2"></td>
+                <td class="column11 style3 null"></td>
+                <td class="column12 style3 null"></td>
+                <!-- <td class="column13 style3 null"></td> -->
+                <td class="column14 style12 f">91.80</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row18">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style33 s style33" colspan="9"><label class="fw-bold">Net Amount</label></td>
+                <td class="column10 style9 s" colspan="2">INR</td>
+                <td class="column11 style9 null"></td>
+                <td class="column12 style9 null"></td>
+                <td class="column13 style9 null">1009.80</td>
+                <td class="column14 style12 f"></td>
+                <!-- <td class="column15 style2 null"></td> -->
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row19">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style61 s style23" colspan="9"> <label class="fw-bold">Payment terms:</label> 30days
+                  after receipt of material</td>
+                <td class="column10 style62 s style32" colspan="5">15 Days credit/Accept/No</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row20">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style61 s style23" colspan="9"><label class="fw-bold">Delivery terms:</label> FOR
+                </td>
+                <td class="column10 style62 s style32" colspan="5">FOR Site/Yes/Accept</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row21 bg-light">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style13 s fw-bold">#</td>
+                <td class="column2 style13 s fw-bold">Item Code</td>
+                <td class="column3 style13 s fw-bold">Item Description</td>
+                <td class="column4 style13 s fw-bold">Qty</td>
+                <td class="column5 style13 s fw-bold">Unit</td>
+                <td class="column6 style13 s fw-bold">Sr No</td>
+                <td class="column7 style27 s style27 fw-bold" colspan="3">Technical Term</td>
+                <td class="column10 style28 s style30 fw-bold" colspan="5">Technical Response</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row22">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">1</td>
+                <td class="column2 style6 s">100000015</td>
+                <td class="column3 style6 s">WRENCH, ALLEN; TYPE: KEY, COMMERCIAL SIZE: 14 MM</td>
+                <td class="column4 style6 s">1.000</td>
+                <td class="column5 style6 s">NOS</td>
+                <td class="column6 style6 n">1</td>
+                <td class="column7 style19 s style23" colspan="3">DOC</td>
+                <td class="column10 style20 s style22" colspan="5">ZZ</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row23">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">2</td>
+                <td class="column7 style19 s style19" colspan="3">Model</td>
+                <td class="column10 style20 s style22" colspan="5">ZZ</td>
+                <td class="column15 style5 null"></td>
+                <!-- <td class="column16 style5 null"></td> -->
+              </tr>
+              <tr class="row24">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">3</td>
+                <td class="column7 style19 s style23" colspan="3">Make</td>
+                <td class="column10 style20 s style22" colspan="5">ZZ</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row25">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">2</td>
+                <td class="column2 style6 s">100000018</td>
+                <td class="column3 style6 s">WRENCH, ALLEN; TYPE: KEY, COMMERCIAL SIZE: 24 MM</td>
+                <td class="column4 style6 s">1.000</td>
+                <td class="column5 style6 s">NOS</td>
+                <td class="column6 style6 n">1</td>
+                <td class="column7 style19 s style23" colspan="3">DOC</td>
+                <td class="column10 style20 s style22" colspan="5">DD</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row26">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">2</td>
+                <td class="column7 style19 s style23" colspan="3">Model</td>
+                <td class="column10 style20 s style22" colspan="5">DD</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row27">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">3</td>
+                <td class="column7 style19 s style23" colspan="3">Make</td>
+                <td class="column10 style20 s style22" colspan="5">DD</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row28">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">3</td>
+                <td class="column2 style6 s">100000040</td>
+                <td class="column3 style6 s">ANGLE, STRUCTURAL; MATERIAL: MS, MATERIAL SPECIFICATION: IS 2062, LEG
+                  LENGTH:
+                  150 X 150 MM, MATERIAL THICKNESS: 16 MM, MANUFACTURING PROCESS: HOT ROLLED</td>
+                <td class="column4 style6 s">1.000</td>
+                <td class="column5 style6 s">MT</td>
+                <td class="column6 style6 n">1</td>
+                <td class="column7 style19 s style23" colspan="3">DOC</td>
+                <td class="column10 style20 s style22" colspan="5">AA</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row29">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">2</td>
+                <td class="column7 style19 s style23" colspan="3">Model</td>
+                <td class="column10 style20 s style22" colspan="5">AA</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row30">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 null"></td>
+                <td class="column2 style6 null"></td>
+                <td class="column3 style6 null"></td>
+                <td class="column4 style6 null"></td>
+                <td class="column5 style6 null"></td>
+                <td class="column6 style6 n">3</td>
+                <td class="column7 style19 s style23" colspan="3">Make</td>
+                <td class="column10 style20 s style22" colspan="5">AA</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row31">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style27 s style27 fw-bold" colspan="9">Wonder Cement Terms and Conditions</td>
+                <td class="column10 style28 s style30 fw-bold" colspan="5">Vendor Response</td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row32">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">1</td>
+                <td class="column2 style19 s style19" colspan="8">clause1</td>
+                <td class="column10 style20 s style22" colspan="5">Accepted </td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row33">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style6 n">2</td>
+                <td class="column2 style19 s style19" colspan="8">clause2</td>
+                <td class="column10 style20 s style22" colspan="5">Accepted </td>
+                <td class="column15 style2 null"></td>
+                <!-- <td class="column16 style2 null"></td> -->
+              </tr>
+              <tr class="row34">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style63 s style23 fw-bold" colspan="9">Technical/collobrative Approver Comment</td>
+                <td class="column10 style6 s" colspan="2"></td>
+                <td class="column11 style6 null"></td>
+                <td class="column12 style6 null"></td>
+                <!-- <td class="column13 style6 null"></td> -->
+                <td class="column14 style6 s"></td>
+                <td class="column15"></td>
+                <!-- <td class="column16"></td> -->
+              </tr>
+              <tr class="row35">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style17 s style17 fw-bold" colspan="9">Vendor Status</td>
+                <td class="column10 style24 s style26" colspan="5">Round # : 1</td>
+                <td class="column15"></td>
+                <!-- <td class="column16"></td> -->
+              </tr>
+            </tbody>
+            <tbody>
+              <tr class="row36 bg-light">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style14 s fw-bold">Sr No.</td>
+                <td class="column2 style14 s fw-bold">Vendor Code</td>
+                <td class="column3 style17 s style17 fw-bold" colspan="7">Vendor Name</td>
+                <td class="column10 style14 s fw-bold" colspan="2">Status</td>
+                <td class="column11 style14 null"></td>
+                <td class="column12 style14 null"></td>
+                <td class="column13 style14 null"></td>
+                <td class="column14 style14 s fw-bold">Remarks</td>
+                <!-- <td class="column15"></td> -->
+                <!-- <td class="column16"></td> -->
+              </tr>
+              <tr class="row37" *ngFor="let vendorItem of viewcsdata;let index=index">
+                <!-- <td class="column0"></td> -->
+                <td class="column1 style15 n">{{index + 1}}</td>
+                <td class="column2 style16 s">{{vendorItem.vendorcode}}</td>
+                <td class="column3 style18 s style18" colspan="7">{{vendorItem.vendorname}}</td>
+                <td class="column10 style16 s" colspan="2">{{vendorItem.participatestatus}}</td>
+                <td class="column11 style16 null"></td>
+                <td class="column12 style16 null"></td>
+                <td class="column13 style16 null"></td>
+                <td class="column14 style16 s">{{vendorItem.technicalRemark}}</td>
+                <!-- <td class="column15"></td> -->
+                <!-- <td class="column16"></td> -->
+              </tr>
+              <!-- <tr class="row38">
+                <td class="column1 style15 n">2</td>
+                <td class="column2 style16 s">100007</td>
+                <td class="column3 style18 s style18" colspan="7">Aditya Associates</td>
+                <td class="column10 style16 s " colspan="2">Participate</td>
+                <td class="column11 style16 null"></td>
+                <td class="column12 style16 null"></td>
+                <td class="column13 style16 null"></td>
+                <td class="column14 style16 s"></td>
+              </tr>
+              <tr class="row39">
+                <td class="column1 style15 n">3</td>
+                <td class="column2 style16 s">100010</td>
+                <td class="column3 style18 s style18" colspan="7">Agarwal'S Carriers Corporation Of India</td>
+                <td class="column10 style16 s" colspan="2">Participate</td>
+                <td class="column11 style16 null"></td>
+                <td class="column12 style16 null"></td>
+                <td class="column13 style16 null"></td>
+                <td class="column14 style16 s"></td>
+              </tr> -->
+            </tbody>
+          </table>
+        </kendo-pdf-export>
+      </div>
+
+      <div class="tab-pane fade overflow-auto" id="kt_tab_pane_18" role="tabpanel">
+        <div class="example-config d-flex align-items-center mb-4">
+          <button kendoButton (click)="pdf1.saveAs(getPdfFileName())" class="btn btn-sm btn-light-success "> Save As
+            PDF... </button>
+          <div class="ms-5 me-5">
+            <select [(ngModel)]="selectedPaperSizeforpdf1" class="form-control selectpicker py-2 px-3"
+              class="form-select py-2 fs-6" aria-label="Select tempalte">
+              <option value="A0">A0</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="A3">A3</option>
+              <option value="A4">A4</option>
+              <option value="B3">B3</option>
+
+
+              <!-- <option value="A0">A0</option>
+              <option value="A1">A1</option> -->
+
+            </select>
+          </div>
+        </div>
+        <kendo-pdf-export #pdf1 [landscape]="true" [paperSize]="selectedPaperSizeforpdf1" margin="1cm" class="pdf-box">
+          <!-- table -->
+          <table border="0" cellpadding="0" cellspacing="0" class="sheet-box">
+            <!-- <colgroup>
+            <col class="x21" width="64" span="2" style="mso-width-source:userset;background:none;width:48pt">
+          <col class="x21" width="94" style="mso-width-source:userset;background:none;width:70.5pt">
+          <col class="x21" width="230" style="mso-width-source:userset;background:none;width:172.5pt">
+          <col class="x21" width="145" style="mso-width-source:userset;background:none;width:108.75pt">
+          <col class="x21" width="64" span="2" style="mso-width-source:userset;background:none;width:48pt">
+          <col class="x21" width="105" style="mso-width-source:userset;background:none;width:78.75pt">
+          <col class="x21" width="64" style="mso-width-source:userset;background:none;width:48pt">
+          <col class="x21" width="101" span="12" style="mso-width-source:userset;background:none;width:75.75pt">
+          <col class="x21" width="64" span="6" style="mso-width-source:userset;background:none;width:48pt">
+          </colgroup> -->
+            <tbody>
+              <tr height="20">
+                <!-- <td height="20" class="x21" width="64" style="height:15pt;width:48pt;"></td> -->
+                <td colspan="2" rowspan="5" height="100" width="158"
+                  style="text-align: left;height:75pt;vertical-align:top;" align="left">
+                  <span>
+
+                    <img src="./assets/media//wonder/RED-LOGO-BG-Horizontal-transprant.png" />
+                  </span>
+                </td>
+                <td colspan="3" rowspan="5" height="99" class="x52" width="439" style="height:74.25pt;">RFQ No: 244<br>
+                  COST COMPARISON REPORT</td>
+                <td colspan="3" class="x56" width="233">Comp. Date :
+                  07/04/2023</td>
+                <td colspan="10" class="x57" width="504">Vendor Name : Pioneer Industrial Mill Stores</td>
+                <td colspan="10" class="x57" width="504">Vendor Name : HNR Power Tools</td>
+                <td colspan="10" class="x57" width="504">Vendor Name : Industrial Electricals</td>
+                <td colspan="10" class="x57" width="504">Vendor Name : Industrial Electricals</td>
+                <td colspan="10" class="x57" width="504">Vendor Name : Industrial Electricals</td>
+                <!-- <td colspan="6" class="x21" width="384"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="3" class="x54">RFQ #: 244</td>
+                <td colspan="10" class="x47">Contact Name : Pioneer Industrial Mill Stores</td>
+                <td colspan="10" class="x47">Contact Name : HNR Power Tools</td>
+                <td colspan="10" class="x47">Contact Name : HNR Power Tools</td>
+                <td colspan="10" class="x47">Contact Name : HNR Power Tools</td>
+                <td colspan="10" class="x47">Contact Name : HNR Power Tools</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="3" class="x54">RFQ Date : 16/06/2022 11:22:36
+                </td>
+                <td colspan="10" class="x47">Vendor City : Chittorgarh</td>
+                <td colspan="10" class="x47">Vendor City :&nbsp;</td>
+                <td colspan="10" class="x47">Vendor City : Udaipur</td>
+                <td colspan="10" class="x47">Vendor City : Udaipur</td>
+                <td colspan="10" class="x47">Vendor City : Udaipur</td>
+
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="3" class="x54">BCD Date : 16/06/2022 23:59:00
+                </td>
+                <td colspan="10" class="x47">Telephone # :&nbsp;</td>
+                <td colspan="10" class="x47">Telephone # :&nbsp;</td>
+                <td colspan="10" class="x47">Telephone # :&nbsp;</td>
+                <td colspan="10" class="x47">Telephone # :&nbsp;</td>
+                <td colspan="10" class="x47">Telephone # :&nbsp;</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="3" class="x51"></td>
+                <td colspan="10" class="x47">Mobile # :&nbsp;</td>
+                <td colspan="10" class="x47">Mobile # :&nbsp;</td>
+                <td colspan="10" class="x47">Mobile # :&nbsp;</td>
+                <td colspan="10" class="x47">Mobile # :&nbsp;</td>
+                <td colspan="10" class="x47">Mobile # :&nbsp;</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x48">
+                  PR Number : PR23003252</td>
+                <td colspan="10" class="x46">Email : pimschittor@yahoo.com</td>
+                <td colspan="10" class="x46">Email : hnrpowertools@gmail.com</td>
+                <td colspan="10" class="x46">Email : info@industrialelectricals.com</td>
+                <td colspan="10" class="x46">Email : info@industrialelectricals.com</td>
+                <td colspan="10" class="x46">Email : info@industrialelectricals.com</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x49">Package / RFQ Name : WCLRFQ /
+                  102/ PR23003252</td>
+                <td colspan="2" class="x46">Round # : 1</td>
+                <td colspan="2" class="x46">Round # : 2</td>
+                <td colspan="2" class="x46">Round # : 3</td>
+                <td colspan="2" class="x46">Round # : 4</td>
+                <td colspan="2" class="x46">Round # : 5</td>
+
+                <td colspan="2" class="x46">Round # : 1</td>
+                <td colspan="2" class="x46">Round # : 2</td>
+                <td colspan="2" class="x46">Round # : 3</td>
+                <td colspan="2" class="x46">Round # : 4</td>
+                <td colspan="2" class="x46">Round # : 5</td>
+
+                <td colspan="2" class="x46">Round # : 1</td>
+                <td colspan="2" class="x46">Round # : 2</td>
+                <td colspan="2" class="x46">Round # : 3</td>
+                <td colspan="2" class="x46">Round # : 4</td>
+                <td colspan="2" class="x46">Round # : 5</td>
+
+                <td colspan="2" class="x46">Round # : 1</td>
+                <td colspan="2" class="x46">Round # : 2</td>
+                <td colspan="2" class="x46">Round # : 3</td>
+                <td colspan="2" class="x46">Round # : 4</td>
+                <td colspan="2" class="x46">Round # : 5</td>
+
+                <td colspan="2" class="x46">Round # : 1</td>
+                <td colspan="2" class="x46">Round # : 2</td>
+                <td colspan="2" class="x46">Round # : 3</td>
+                <td colspan="2" class="x46">Round # : 4</td>
+                <td colspan="2" class="x46">Round # : 5</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x49"></td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <td colspan="2" class="x46">Techanical Score :&nbsp;</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x49">Buyer : VIJAY CHAPLOT</td>
+                <td colspan="2" class="x46">Quotation Date : 13/06/2022 16:20:45</td>
+                <td colspan="2" class="x46">Quotation Date : 16/06/2022 11:28:09</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date : 11/06/2022 18:07:44</td>
+
+                <td colspan="2" class="x46">Quotation Date : 13/06/2022 16:20:45</td>
+                <td colspan="2" class="x46">Quotation Date : 16/06/2022 11:28:09</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date : 11/06/2022 18:07:44</td>
+
+                <td colspan="2" class="x46">Quotation Date : 13/06/2022 16:20:45</td>
+                <td colspan="2" class="x46">Quotation Date : 16/06/2022 11:28:09</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date : 11/06/2022 18:07:44</td>
+
+                <td colspan="2" class="x46">Quotation Date : 13/06/2022 16:20:45</td>
+                <td colspan="2" class="x46">Quotation Date : 16/06/2022 11:28:09</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date : 11/06/2022 18:07:44</td>
+
+                <td colspan="2" class="x46">Quotation Date : 13/06/2022 16:20:45</td>
+                <td colspan="2" class="x46">Quotation Date : 16/06/2022 11:28:09</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date :&nbsp;</td>
+                <td colspan="2" class="x46">Quotation Date : 11/06/2022 18:07:44</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="5" rowspan="2" height="36" class="x43">
+                  Comp. # : 2</td>
+                <td colspan="3" class="x40">Currency :INR</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 23/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 16/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+
+                <td colspan="2" class="x40">Quotation Validity Date : 23/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 16/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+
+                <td colspan="2" class="x40">Quotation Validity Date : 23/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 16/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+
+                <td colspan="2" class="x40">Quotation Validity Date : 23/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 16/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+
+                <td colspan="2" class="x40">Quotation Validity Date : 23/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date : 16/06/2022 23:59:59</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <td colspan="2" class="x40">Quotation Validity Date :&nbsp;</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x40">BUDGET PRICE :</td>
+                <td colspan="2" class="x50">13200.00</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <td colspan="2" class="x40">Quote Currency : INR</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x35">#</td>
+                <td class="x35">Item Code</td>
+                <td class="x35">Item Description</td>
+                <td class="x35">Last PO Details</td>
+                <td class="x35">Unit</td>
+                <td class="x35">Qty</td>
+                <td class="x35">Last PO Price&nbsp;</td>
+                <td class="x35">Total PO Value&nbsp;</td>
+
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <td class="x35">Unit Price</td>
+                <td class="x35">Total</td>
+                <!-- <td colspan="6" class="x36"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x26">1</td>
+                <td class="x26">100005148</td>
+                <td class="x26">BLOWER, ELECTRICAL; TYPE: AIR, HAND OPERATED, AIR FLOW CAPACITY: 4.5<span
+                    style="mso-spacerun:yes;">&nbsp;&nbsp; </span>M?/MIN, DIAMETER: LENGTH : 500 MM, WIDTH : 215 MM,
+                  VOLTAGE: 220 AC, POWER: 820 W, STANDARD: BOSCH GBL 800 E</td>
+                <td class="x26">102PO2305764 , 29/10/2022 , (100977) Pioneer Industrial Mill Stores</td>
+                <td class="x29">NOS</td>
+                <td class="x29">4.000</td>
+                <td class="x30">
+                  <div style="float:right">3300.00</div>
+                </td>
+                <td class="x30">
+                  <div style="float:right">13200.00</div>
+                </td>
+
+                <td class="x31">
+                  <div style="float:right">(INR)3450.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13800.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3300.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13200.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)4150.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)16600.00</div>
+                </td>
+
+                <td class="x31">
+                  <div style="float:right">(INR)3450.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13800.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3300.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13200.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)4150.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)16600.00</div>
+                </td>
+
+                <td class="x31">
+                  <div style="float:right">(INR)3450.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13800.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3300.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13200.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)4150.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)16600.00</div>
+                </td>
+
+                <td class="x31">
+                  <div style="float:right">(INR)3450.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13800.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3300.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13200.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)4150.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)16600.00</div>
+                </td>
+
+                <td class="x31">
+                  <div style="float:right">(INR)3450.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13800.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3300.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)13200.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)3600.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)14400.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)4150.00</div>
+                </td>
+                <td class="x31">
+                  <div style="float:right">(INR)16600.00</div>
+                </td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x45">Item Total</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13800">13800.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13200">13200.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="16600">16600.00</td>
+
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13800">13800.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13200">13200.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="16600">16600.00</td>
+
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13800">13800.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13200">13200.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="16600">16600.00</td>
+
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13800">13800.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13200">13200.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="16600">16600.00</td>
+
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13800">13800.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="13200">13200.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="14400">14400.00</td>
+                <td class="x28"></td>
+                <td class="x32" align="right" x:num="16600">16600.00</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x40">GST/Taxes&nbsp;</td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2484.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2376.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2988.00</div>
+                </td>
+
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2484.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2376.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2988.00</div>
+                </td>
+
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2484.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2376.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2988.00</div>
+                </td>
+
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2484.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2376.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2988.00</div>
+                </td>
+
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2484.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2376.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2592.00</div>
+                </td>
+                <td class="x28">18.00 %</td>
+                <td class="x33">
+                  <div style="float:right">2988.00</div>
+                </td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20" style="mso-height-source:userset;/* height:15pt; */">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x40">P&amp;F should be NIL</td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <td class="x28">0.00 %</td>
+                <td class="x33">
+                  <div style="float:right">0.00</div>
+                </td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x45">Total Lot Charges</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2484">2484.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2376">2376.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2988">2988.00</td>
+
+                <td class="x28"></td>
+                <td class="x34" x:num="2484">2484.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2376">2376.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2988">2988.00</td>
+
+                <td class="x28"></td>
+                <td class="x34" x:num="2484">2484.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2376">2376.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2988">2988.00</td>
+
+                <td class="x28"></td>
+                <td class="x34" x:num="2484">2484.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2376">2376.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2988">2988.00</td>
+
+                <td class="x28"></td>
+                <td class="x34" x:num="2484">2484.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2376">2376.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2592">2592.00</td>
+                <td class="x28"></td>
+                <td class="x34" x:num="2988">2988.00</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x45">Net Amount</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16284">16284.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="15576">15576.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="19588">19588.00</td>
+
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16284">16284.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="15576">15576.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="19588">19588.00</td>
+
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16284">16284.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="15576">15576.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="19588">19588.00</td>
+
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16284">16284.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="15576">15576.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="19588">19588.00</td>
+
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16284">16284.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="15576">15576.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="16992">16992.00</td>
+                <td class="x27">INR</td>
+                <td class="x34" x:num="19588">19588.00</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td colspan="8" class="x42">Freight (Inclusive / Extra)</td>
+                <td colspan="2" class="x43">inclusive</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">EXTRA</td>
+
+                <td colspan="2" class="x43">inclusive</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">EXTRA</td>
+
+                <td colspan="2" class="x43">inclusive</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">EXTRA</td>
+
+                <td colspan="2" class="x43">inclusive</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">EXTRA</td>
+
+                <td colspan="2" class="x43">inclusive</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">INCLUSIVE</td>
+                <td colspan="2" class="x43">EXTRA</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td colspan="8" class="x42">Price Basis (Ex-Works/ FOR WCL Site)</td>
+                <td colspan="2" class="x43">for site</td>
+                <td colspan="2" class="x43">F O R SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR UDAIPUR</td>
+
+                <td colspan="2" class="x43">for site</td>
+                <td colspan="2" class="x43">F O R SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR UDAIPUR</td>
+
+                <td colspan="2" class="x43">for site</td>
+                <td colspan="2" class="x43">F O R SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR UDAIPUR</td>
+
+                <td colspan="2" class="x43">for site</td>
+                <td colspan="2" class="x43">F O R SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR UDAIPUR</td>
+
+                <td colspan="2" class="x43">for site</td>
+                <td colspan="2" class="x43">F O R SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR WCL SITE</td>
+                <td colspan="2" class="x43">FOR UDAIPUR</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td colspan="8" class="x42">Delivery Schedule</td>
+                <td colspan="2" class="x43">10 days</td>
+                <td colspan="2" class="x43">EX STOCK</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">READY</td>
+
+                <td colspan="2" class="x43">10 days</td>
+                <td colspan="2" class="x43">EX STOCK</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">READY</td>
+
+                <td colspan="2" class="x43">10 days</td>
+                <td colspan="2" class="x43">EX STOCK</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">READY</td>
+
+                <td colspan="2" class="x43">10 days</td>
+                <td colspan="2" class="x43">EX STOCK</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">READY</td>
+
+                <td colspan="2" class="x43">10 days</td>
+                <td colspan="2" class="x43">EX STOCK</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">7 DAYS</td>
+                <td colspan="2" class="x43">READY</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="60" style="mso-height-source:userset;height:45pt">
+                <!-- <td height="60" class="x21" style="height:45pt;"></td> -->
+                <td colspan="8" class="x42">Warranty/Guarantee</td>
+                <td colspan="2" class="x43">6 months</td>
+                <td colspan="2" class="x43">6 MONTHS FOR ARMATURE AND FIELD COIL</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">12 MONTHS AG ANY MANUFACTURING DEFECT</td>
+
+                <td colspan="2" class="x43">6 months</td>
+                <td colspan="2" class="x43">6 MONTHS FOR ARMATURE AND FIELD COIL</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">12 MONTHS AG ANY MANUFACTURING DEFECT</td>
+
+                <td colspan="2" class="x43">6 months</td>
+                <td colspan="2" class="x43">6 MONTHS FOR ARMATURE AND FIELD COIL</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">12 MONTHS AG ANY MANUFACTURING DEFECT</td>
+
+                <td colspan="2" class="x43">6 months</td>
+                <td colspan="2" class="x43">6 MONTHS FOR ARMATURE AND FIELD COIL</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">12 MONTHS AG ANY MANUFACTURING DEFECT</td>
+
+                <td colspan="2" class="x43">6 months</td>
+                <td colspan="2" class="x43">6 MONTHS FOR ARMATURE AND FIELD COIL</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">6 MONTHS ON ARMATURE AND FIELD</td>
+                <td colspan="2" class="x43">12 MONTHS AG ANY MANUFACTURING DEFECT</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td colspan="8" class="x42">Any other remarks</td>
+                <td colspan="2" class="x43">q</td>
+                <td colspan="2" class="x43">N/A</td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43">HSN 8467 MODEL NO. GBL82-270</td>
+
+                <td colspan="2" class="x43">q</td>
+                <td colspan="2" class="x43">N/A</td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43">HSN 8467 MODEL NO. GBL82-270</td>
+
+                <td colspan="2" class="x43">q</td>
+                <td colspan="2" class="x43">N/A</td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43">HSN 8467 MODEL NO. GBL82-270</td>
+
+                <td colspan="2" class="x43">q</td>
+                <td colspan="2" class="x43">N/A</td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43">HSN 8467 MODEL NO. GBL82-270</td>
+
+                <td colspan="2" class="x43">q</td>
+                <td colspan="2" class="x43">N/A</td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43"></td>
+                <td colspan="2" class="x43">HSN 8467 MODEL NO. GBL82-270</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x25">#</td>
+                <td class="x25">Item Code</td>
+                <td class="x25">Item Description</td>
+                <td class="x25">Qty</td>
+                <td class="x25">Unit</td>
+                <td class="x25">Sr No</td>
+                <td colspan="2" class="x44">Technical Term</td>
+
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <td colspan="2" class="x44">Technical Response</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="100" style="mso-height-source:userset;height:75pt">
+                <!-- <td height="100" class="x21" style="height:75pt;"></td> -->
+                <td class="x29">1</td>
+                <td class="x29">100005148</td>
+                <td class="x29">BLOWER, ELECTRICAL; TYPE: AIR, HAND OPERATED, AIR FLOW CAPACITY: 4.5<span
+                    style="mso-spacerun:yes;">&nbsp;&nbsp; </span>M?/MIN, DIAMETER: LENGTH : 500 MM, WIDTH : 215 MM,
+                  VOLTAGE: 220 AC, POWER: 820 W, STANDARD: BOSCH GBL 800 E</td>
+                <td class="x29">4.000</td>
+                <td class="x29">NOS</td>
+                <td class="x29">1</td>
+                <td colspan="2" class="x39">please mention make, model/part no. and specifications, attach data sheet
+                </td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V&nbsp;</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V</td>
+                <td colspan="2" class="x39">GBL82-270 MODEL BOSCH</td>
+
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V&nbsp;</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V</td>
+                <td colspan="2" class="x39">GBL82-270 MODEL BOSCH</td>
+
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V&nbsp;</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V</td>
+                <td colspan="2" class="x39">GBL82-270 MODEL BOSCH</td>
+
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V&nbsp;</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V</td>
+                <td colspan="2" class="x39">GBL82-270 MODEL BOSCH</td>
+
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL 82-270 MAKE BOSCH</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V&nbsp;</td>
+                <td colspan="2" class="x39">GBL82-270 BLOWER BOSCH 820W 220V</td>
+                <td colspan="2" class="x39">GBL82-270 MODEL BOSCH</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x38">Wonder Cement Terms and Conditions</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <td colspan="2" class="x38">Vendor Response</td>
+                <!-- <td colspan="6" class="x36"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td class="x29">1</td>
+                <td colspan="7" class="x39">Payment Terms (100% after 15 days of receipt &amp; acceptance of material)
+                </td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <td colspan="2" class="x39">Accepted&nbsp;</td>
+                <!--- <td colspan="6" class="x24"  ></td> -->
+              </tr>
+              <tr height="40">
+                <!---  <td height="40" class="x21" style="height:30pt;"></td> -->
+                <td colspan="8" class="x41">Technical Approver Comment</td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <td colspan="2" class="x41"></td>
+                <!-- <td colspan="6" class="x21"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td colspan="8" class="x59">Vendor Status</td>
+                <td colspan="2" class="x59">Round # : 1</td>
+                <td colspan="2" class="x59">Round # : 2</td>
+                <td colspan="2" class="x59">Round # : 3</td>
+                <td colspan="2" class="x59">Round # : 4</td>
+                <td colspan="2" class="x59">Round # : 5</td>
+
+                <td colspan="2" class="x59">Round # : 1</td>
+                <td colspan="2" class="x59">Round # : 2</td>
+                <td colspan="2" class="x59">Round # : 3</td>
+                <td colspan="2" class="x59">Round # : 4</td>
+                <td colspan="2" class="x59">Round # : 5</td>
+
+                <td colspan="2" class="x59">Round # : 1</td>
+                <td colspan="2" class="x59">Round # : 2</td>
+                <td colspan="2" class="x59">Round # : 3</td>
+                <td colspan="2" class="x59">Round # : 4</td>
+                <td colspan="2" class="x59">Round # : 5</td>
+
+                <td colspan="2" class="x59">Round # : 1</td>
+                <td colspan="2" class="x59">Round # : 2</td>
+                <td colspan="2" class="x59">Round # : 3</td>
+                <td colspan="2" class="x59">Round # : 4</td>
+                <td colspan="2" class="x59">Round # : 5</td>
+
+                <td colspan="2" class="x59">Round # : 1</td>
+                <td colspan="2" class="x59">Round # : 2</td>
+                <td colspan="2" class="x59">Round # : 3</td>
+                <td colspan="2" class="x59">Round # : 4</td>
+                <td colspan="2" class="x59">Round # : 5</td>
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x22">Sr No.</td>
+                <td class="x22">Vendor Code</td>
+                <td colspan="6" class="x59">Vendor Name</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+                <td class="x22">Status</td>
+                <td class="x22">Remarks</td>
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x37">1</td>
+                <td class="x23">111677</td>
+                <td colspan="6" class="x60">HNR Power Tools</td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x37">2</td>
+                <td class="x23">100977</td>
+                <td colspan="6" class="x60">Pioneer Industrial Mill Stores</td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <!-- <td colspan="14" class="x21"  ></td> -->
+              </tr>
+              <tr height="20">
+                <!---  <td height="20" class="x21" style="height:15pt;"></td> -->
+                <td class="x37">3</td>
+                <td class="x23">100123</td>
+                <td colspan="6" class="x60">Industrial Electricals</td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+                <td class="x23">Participate</td>
+                <td class="x23"></td>
+
+              </tr>
+              <!---->
+              <!-- <tr height="0" style="display:none">
+           <td width="128" colspan="2" style="width:96pt;mso-ignore:colspan;"></td>
+           <td width="94" style="width:70.5pt;"></td>
+           <td width="230" style="width:172.5pt;"></td>
+           <td width="145" style="width:108.75pt;"></td>
+           <td width="128" colspan="2" style="width:96pt;mso-ignore:colspan;"></td>
+           <td width="105" style="width:78.75pt;"></td>
+           <td width="64" style="width:48pt;"></td>
+           <td width="1212" colspan="12" style="width:909pt;mso-ignore:colspan;"></td>
+           <td width="384" colspan="6" style="width:288pt;mso-ignore:colspan;"></td>
+          </tr> -->
+              <!--[endif]-->
+            </tbody>
+          </table>
+        </kendo-pdf-export>
+      </div>
+      <div class="tab-pane fade " id="kt_tab_pane_19" role="tabpanel">
+        <button kendoButton (click)="pdf3.saveAs(gettechnicalspecification())" class="btn btn-sm btn-light-success ">
+          Save As
+          PDF... </button>
+        <kendo-pdf-export #pdf3 [landscape]="true" [paperSize]="selectedPaperSizefortechnicalspecification" margin="1cm"
+          class="pdf-box">
+          <div class=" border border-botton border-gray-300 mb-5 p-3">
+
+
+            <div class="d-flex fs-6">
+              <div class="d-flex bg-light-blue  px-5 py-3  me-5">
+                <span class="fw-semibold">PR : <label for="" class="text-primary fw-bold">24000163</label></span>
+                <!-- <input type="number" class="form-control" placeholder="2345853"  disabled> -->
+              </div>
+              <div class="d-flex bg-light  px-5 py-3  ms-5">
+                <span class="fw-semibold">Item Code: <label for="" class="text-gray-700 fw-bold">50000006</label></span>
+                <!-- <input type="number" class="form-control" placeholder="28886"  disabled> -->
+              </div>
+            </div>
+            <div class="mt-5">
+              <span class="fs-6 text-dark fw-bold"> Item Description</span>
+              <div class="table-responsive w-600px">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="fw-bold fs-6 text-gray-800">
+                      <th class="w-20px border border-gray-500">S no</th>
+                      <th class="w-100px border border-gray-500">Name</th>
+                      <th class="w-30px border border-gray-500 ">remark</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="border border-gray-500">1</td>
+                      <td class="border border-gray-500">System Architect</td>
+                      <td class="border border-gray-500">Edinburgh</td>
+
+                    </tr>
+                    <tr>
+                      <td class="border border-gray-500">2</td>
+                      <td class="border border-gray-500">Accountant</td>
+                      <td class="border border-gray-500">Tokyo</td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="mt-5">
+
+
+              <div class="d-flex fs-6">
+
+                <div class="d-flex bg-light  px-5 py-3  ">
+                  <span class="fw-semibold">Item Code: <label for=""
+                      class="text-gray-700 fw-bold">100000011</label></span>
+                  <!-- <input type="number" class="form-control" placeholder="28886"  disabled> -->
+                </div>
+              </div>
+              <div class="mt-5">
+                <span class="fs-6 text-dark fw-bold"> Item Description</span>
+                <div class="table-responsive w-600px">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="fw-bold fs-6 text-gray-800">
+                        <th class="w-20px border border-gray-500">S no</th>
+                        <th class="w-100px border border-gray-500">Name</th>
+                        <th class="w-30px border border-gray-500">remark</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="border border-gray-500">1</td>
+                        <td class="border border-gray-500">System Architect</td>
+                        <td class="border border-gray-500">Edinburgh</td>
+
+                      </tr>
+                      <tr>
+                        <td class="border border-gray-500">2</td>
+                        <td class="border border-gray-500">Accountant</td>
+                        <td class="border border-gray-500">Tokyo</td>
+
+                      </tr>
+                      <tr>
+                        <td class="border border-gray-500">3</td>
+                        <td class="border border-gray-500">System Architect</td>
+                        <td class="border border-gray-500">Edinburgh</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" border border-botton border-gray-300 mb-5 p-3">
+
+
+            <div class="d-flex fs-6">
+              <div class="d-flex bg-light-blue  px-5 py-3  me-5">
+                <span class="fw-semibold"> PR : <label for="" class="text-primary fw-bold">900222532</label></span>
+                <!-- <input type="number" class="form-control" placeholder="2345853"  disabled> -->
+              </div>
+              <div class="d-flex bg-light  px-5 py-3  ms-5">
+                <span class="fw-semibold">Item Code: <label for="" class="text-gray-700 fw-bold">0004532</label></span>
+                <!-- <input type="number" class="form-control" placeholder="28886"  disabled> -->
+              </div>
+            </div>
+            <div class="mt-5">
+              <span class="fs-6 text-dark fw-bold"> Item Description</span>
+              <div class="table-responsive w-600px">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="fw-bold fs-6 text-gray-800">
+                      <th class="w-20px border border-gray-500">S no</th>
+                      <th class="w-100px border border-gray-500">Name</th>
+                      <th class="w-30px border border-gray-500">remark</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="border border-gray-500">1</td>
+                      <td class="border border-gray-500">System Architect</td>
+                      <td class="border border-gray-500">Edinburgh</td>
+
+                    </tr>
+                    <tr>
+                      <td class="border border-gray-500">2</td>
+                      <td class="border border-gray-500">Accountant</td>
+                      <td class="border border-gray-500">Tokyo</td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </kendo-pdf-export>
+      </div>
+      <div class="tab-pane fade " id="kt_tab_pane_20" role="tabpanel">
+        <div class="row border-bottom border-gray-300 ">
+
+
+          <div class=" mb-5 col-md-6 col-lg-4">
+            <div class=" mb-5">
+              <h4 class="me-4 min-w-150px mb-0 "> Select Rounds : </h4>
+              <span class="text-gray-700  form-check text-blue  text-hover-primary  d-flex align-items-center">
+                <input class="form-check-input h-20px w-20px my-5 pb-5 me-3 fs-5" type="checkbox" value="" id=" "
+                  [(ngModel)]="selectAllrounds" (change)="selectallrounds()" />Select All Rounds</span>
+            </div>
+
+            <div class="round-box w-100">
+
+
+              <div class="round-inner-box" *ngFor="let roundItem of roundlist let index=index">
+                <div class="form-check">
+                  <input class="form-check-input h-20px w-20px " [(ngModel)]="roundItem.isroundenabled"
+                    (change)="checkboxChnageHandler(roundItem)" type="checkbox" value="" id=" " />
+                </div>
+                <span>R{{index+1}}</span>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div class=" col-md-6 col-lg-8">
+
+            <div class=" mb-5">
+              <h4 class="me-4 min-w-150px mb-0"> Select Vendors : </h4>
+              <span class="text-gray-700  form-check text-blue  text-hover-primary  d-flex align-items-center">
+                <input class="form-check-input  h-20px w-20px my-5 pb-5 me-3 fs-5" type="checkbox" value="" id=" "
+                  [(ngModel)]="selectAllvendor" (change)="selectallvendor()" />Select All Vendors</span>
+            </div>
+            <div class="vendorname-box">
+
+
+              <div class=" vendor-box mb-2" *ngFor="let vendorItem of vendorslistdata">
+                <div class="form-check">
+                  <input class="form-check-input h-20px w-20px " [(ngModel)]="vendorItem.isvendorEnabled"
+                    (change)="vendorboxChnageHandler(vendorItem)" type="checkbox" value="" id=" " />
+                </div>
+                <span>{{vendorItem.vendorname}}</span>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- <div class="mt-5 pt-3">
+          <h4 class="me-4 mb-3 ">
+            Select Report Layout :
+          </h4>
+          <div class="d-md-flex">
+            <div class=" w-300px d-flex align-items-center  ">
+              <p class="mb-1 me-3">PriceBid Details</p>
+              <select class="form-select w-60px min-h-30px ps-2" aria-label="Select example"
+                [(ngModel)]="pricebidDetailsoption" (change)="pricebiddetailsvalue()">
+
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div class="w-300px d-flex align-items-center  ">
+              <p class="mb-1 me-3"> Technical Parameters Details</p>
+              <select class="form-select w-60px min-h-30px ps-2" aria-label="Select example"
+                [(ngModel)]="Technicalparameterdetailsoption">
+
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div class="w-300px d-flex align-items-center  ">
+              <p class="mb-1 me-3">T & C Details</p>
+              <select class="form-select w-60px min-h-30px ps-2" aria-label="Select example"
+                [(ngModel)]="Termsdetailsoption">
+
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+
+              </select>
+            </div>
+          </div>
+        </div> -->
+        <div class="d-flex justify-content-end mt-5">
+          <button class=" btn btn-sm btn-light-success" (click)="downloadCsComparisionSheet()"> Download CS
+            Sheet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

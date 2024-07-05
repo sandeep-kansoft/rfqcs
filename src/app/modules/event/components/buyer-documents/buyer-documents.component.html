@@ -1,0 +1,281 @@
+<div class="card mb-5 ">
+
+    <div class="card-body buyer-doc-box py-3">
+        <ul class="nav nav-tabs nav-line-tabs mb-5 fs-4">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_12">Internal Documents</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_22">Link 2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_32">Link 3</a>
+            </li> -->
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_12" role="tabpanel">
+                <div class=" d-flex justify-content-between mb-3 align-items-center">
+                    <button aria-role-check="yes" *ngIf="uploadButtonConition() && checkPermission(permissionEnum.DASHBOARD_BUYER_DOCUMENT_UPLOAD_NEW_DOCUMENT)" type="button" class="btn btn-light-success btn-sm me-5 mb-md-0"
+                        (click)="uploadNewBuyerDocument()" title="Upload New Document">
+                        <!-- <span class="svg-icon  m-0 me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g _ngcontent-dak-c656="" stroke="none" stroke-width="1" fill="none"
+                                    fill-rule="evenodd">
+                                    <rect _ngcontent-dak-c656="" x="0" y="0" width="24" height="24"></rect>
+                                    <path _ngcontent-dak-c656=""
+                                        d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                        fill="currentcolor" fill-rule="nonzero" opacity="0.7"></path>
+                                    <rect _ngcontent-dak-c656="" fill="currentcolor" opacity="0.7" x="11" y="2"
+                                        width="2" height="14" rx="1"></rect>
+                                    <path _ngcontent-dak-c656=""
+                                        d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
+                                        fill="currentcolor" fill-rule="nonzero">
+
+                                    </path>
+                                </g>
+                            </svg></span> -->
+                        <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon m-0 "></span>
+                        Document
+                    </button>
+                    <div class="d-block d-md-flex align-items-center justify-content-between">
+
+
+                        <div class="d-flex">
+
+                            <div>
+                                <button type="button" title="Download All" (click)="downloadAllBuyerAttachment()"
+                                    class=" btn btn-light-blue btn-sm">
+                                    <!-- <span class="svg-icon  m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <path
+                                                    d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                                    fill="currentcolor" fill-rule="nonzero" opacity="0.7"></path>
+                                                <rect fill="currentcolor" opacity="0.7"
+                                                    transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+                                                    x="11" y="1" width="2" height="14" rx="1"></rect>
+                                                <path
+                                                    d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+                                                    fill="currentcolor" fill-rule="nonzero"
+                                                    transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) ">
+                                                </path>
+                                            </g>
+                                        </svg></span> -->
+                                    <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <kendo-grid class="fixed-header mb-5" [loading]="loading" [data]="gridView"
+                            [group]="state.group" [resizable]="true" [skip]="state.skip" [pageSize]="state.take"
+                            [pageable]="{
+                 pageSizes:true,
+                 info: true
+                 }" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" (dataStateChange)="onStateChange($event)"
+                            class="grid-padding">
+
+
+                            <ng-template kendoGridLoadingTemplate>
+                                <app-wonder-loader></app-wonder-loader>
+                            </ng-template>
+                            <!-- Kendo End Default Loader -->
+                            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                                title="#" [width]="50"><ng-template kendoGridCellTemplate
+                                    let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Actions"
+                                [width]="90">
+                                <ng-template kendoGridCellTemplate let-item>
+                                    <ng-container>
+
+
+
+                                        <div class="d-flex justify-content-center">
+
+                                            <span (click)="downloadAttachment(item.attachmentURL)"
+                                                class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                                                <!-- download-svg -->
+                                                <span [inlineSVG]="'./assets/media/svg/download.svg'"
+                                                    class="svg-icon  me-3 text-blue" title="Download"></span>
+                                                <!-- download-svg -->
+
+                                                <!-- <span class="svg-icon  svg-icon-primary m-0 cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24" />
+                                                        <path
+                                                            d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                                            fill="#36acf9" fill-rule="nonzero" opacity="0.7" />
+                                                        <rect fill="#36acf9" opacity="0.7"
+                                                            transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+                                                            x="11" y="1" width="2" height="14" rx="1" />
+                                                        <path
+                                                            d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+                                                            fill="#36acf9" fill-rule="nonzero"
+                                                            transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+                                                    </g>
+                                                </svg>
+                                            </span> -->
+
+                                            </span>
+
+                                            <span (click)="deleteHandlerConfirm(item.attachmentId)" *ngIf="checkPermission(permissionEnum.DASHBOARD_BUYER_DOCUMENT_DELETE_ACTION_BUTTON)"
+                                                class="bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                                                <span class="svg-icon  text-primary m-0">
+                                                    <!-- delete-svg -->
+                                                    <span [inlineSVG]="'./assets/media/svg/delete.svg'"
+                                                        class="svg-icon text-primary  " title="Delete item"></span>
+                                                    <!-- delete-svg -->
+                                                    <!-- <svg xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24" />
+                                                        <path
+                                                            d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z"
+                                                            fill="currentcolor" fill-rule="nonzero" />
+                                                        <path
+                                                            d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
+                                                            fill="currentcolor" opacity="0.3" />
+                                                    </g>
+                                                </svg> -->
+                                                    <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+
+                                                    <path
+                                                        d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+                                                        stroke="currentcolor" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+
+                                                    <path
+                                                        d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+                                                        stroke="currentcolor" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        opacity="0.7" />
+
+                                                    <path
+                                                        d="M18.8504 9.13965L18.2004 19.2096C18.0904 20.7796 18.0004 21.9996 15.2104 21.9996H8.79039C6.00039 21.9996 5.91039 20.7796 5.80039 19.2096L5.15039 9.13965"
+                                                        stroke="currentcolor" opacity="0.7" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+
+                                                    <path d="M10.3301 16.5H13.6601" stroke="currentcolor"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+
+                                                    <path d="M9.5 12.5H14.5" stroke="currentcolor"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+
+                                                </svg> -->
+                                                </span>
+                                            </span>
+                                        </div>
+
+                                    </ng-container>
+                                </ng-template>
+                            </kendo-grid-command-column>
+
+                            <kendo-grid-column [filterable]="true" [columnMenu]="false" field="documentName"
+                                [headerClass]="headerStyle" [width]="210" title="Document Name">
+
+                            </kendo-grid-column>
+
+                            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="remarks"
+                                title="Remarks">
+
+                            </kendo-grid-column>
+                            <!-- <kendo-grid-column [headerClass]="headerStyle" field="prid" title="PR NO" [width]="columnWidth"></kendo-grid-column> -->
+
+                            <kendo-grid-column [filterable]="true" field="userRole" [headerClass]="headerStyle"
+                                title="User Type" [width]="120">
+                            </kendo-grid-column>
+                            <!-- <kendo-grid-column cell [headerClass]="headerStyle" field="\"
+                            title="Uploaded By" [width]="90"></kendo-grid-column> -->
+                            <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                            <kendo-grid-column [headerClass]="headerStyle" [width]="150" field="createdDate"
+                                format="dd-MMM-yyyy" filter="date" title="Date">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{dataItem.createdDate | date: 'dd-MMM-yyyy H:mm'}}
+                                </ng-template>
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_stacked_1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Modal title</h3>
+
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <!-- <svg _ngcontent-kkk-c312="" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect _ngcontent-kkk-c312="" opacity="0.5" x="6" y="17.3137" width="16"
+                                            height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor">
+                                        </rect>
+                                        <rect _ngcontent-kkk-c312="" x="7.41422" y="6" width="16" height="2" rx="1"
+                                            transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+                                    </svg> -->
+                                    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 "></span>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-5">
+                                        <label for="">Document Name</label>
+                                        <input type="text" class="form-control" placeholder="" />
+                                    </div>
+                                    <div class="mb-5">
+                                        <label for="">Remarks</label>
+                                        <textarea class="form-control"></textarea>
+
+                                    </div>
+                                    <button type="button" class="btn btn-light-success btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#kt_modal_stacked_1">
+                                        Upload File
+                                    </button>
+                                </form>
+
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+
+                </div>
+            </div>
+            <!-- <div class="tab-pane fade" id="kt_tab_pane_22" role="tabpanel">
+                ...
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_32" role="tabpanel">
+                ...
+            </div> -->
+        </div>
+    </div>
+</div>

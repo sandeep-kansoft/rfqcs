@@ -1,0 +1,101 @@
+.configuration{
+    display: flex;
+    align-items: center;
+    margin-left:  10px; ;
+}
+.reverse-input-box {
+    .input-box{
+        margin-bottom: 10px;
+    margin-right: 20px;
+    align-items: center;
+    min-width: 150px;
+    width: 320px;
+    justify-content: space-between;
+    white-space: nowrap;
+   
+    .form-control{
+        max-width: 110px;
+    }
+    }
+    .remark-box{
+        max-width: 150px;
+    }
+    .checkbox-div{
+        width: 23%;
+        .input-box{
+            width: 200px;
+        }
+    }
+    .form-boxdiv{
+        width: 75%;
+        .heading{
+            width: 212px;
+        }
+        
+    }
+}
+@media (max-width: 1024px){
+    .checkbox-div{
+        width: 100%!important;
+       display: flex;
+       flex-wrap: wrap;
+       
+    }
+    .form-boxdiv{
+        width: 100%!important;
+        display: flex;
+        flex-wrap: wrap;
+        .heading{
+            width: 212px;
+        }
+        .input-box{
+            width: 300px;
+        }
+    }
+   
+}
+input{ 
+    text-align:left 
+}
+
+.inputClass{
+    text-align:left
+}
+
+.bidDecrement{display: flex;
+    align-items: center
+}
+.saveButtonClass{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+        
+}
+.gridclass{
+    display: flex;
+    margin: 8px;
+}
+
+.form-box-reverse{
+    height: 100%;
+    .card{
+        height: 100%;
+        min-width: 25%;
+        .card-body{
+            padding: 10px!important;
+            .configuration{
+                .w-150px{
+                    width: 120px !important;
+                }
+            }
+            .remark-box{
+
+                &.w-150px{
+                    span.mx-3{
+                        margin: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,98 @@
+<div class="modal-header">
+    <div class="d-flex flex-column">
+        <h3 class="modal-title">CS Status <span>{{awardNumber? "( "+awardNumber+" )" :'' }}</span> </h3>
+        <h6  *ngIf="vendorDetail" class="p-1 fw-500">{{vendorDetail || ''}}</h6>
+    </div>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="closeModel()" data-bs-dismiss="modal"
+        aria-label="Close">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+    </div>
+    <!--end::Close-->
+</div>
+
+<div class="modal-body">
+
+
+    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: false ,sort : false  }"
+        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="false" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+             pageSizes:true,
+             info: true
+             }" [sortable]="{
+    allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+
+
+        <!-- <kendo-grid-column [filterable]="true" filter="numeric" [columnMenu]="false" [headerClass]="headerStyle"
+            field="ItemCode" title="Item Code" [width]="MediumColumnWidth">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <a class="color-secondary text-center">{{item.ItemCode}}</a>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column> -->
+
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="workFlowNo"
+            title="Workflow no" [width]="150">
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="site"
+            title="Site" [width]="150">
+
+        </kendo-grid-column>
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="level"
+            title="Level" [width]="80">
+
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="Department" field="department"
+            [width]="180">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="assignDate"
+            title="Assign date" [width]="170">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <a>{{getTimeFormat( item.assignDate )}}</a>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" field="approvedBy" [headerClass]="headerStyle"
+            [width]="185" title="Action taken by">
+
+        </kendo-grid-column>
+
+        <!-- <kendo-grid-column [filterable]="true" [columnMenu]="false" filter="date" field="responseUser"
+            [headerClass]="headerStyle" [width]="LargeColumnWidth" title="Response User"> 
+
+        </kendo-grid-column>
+-->
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="responseStatus" title="Status"
+            [width]="130"></kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="responseDate"
+            title="Action taken date time" [width]="190">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <a>{{getTimeFormat( item.responseDate)}}</a>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" field="approvers" [headerClass]="headerStyle"
+            [width]="220" title="Approval required by">
+
+        </kendo-grid-column>
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" field="responseRemark" [headerClass]="headerStyle"
+            [width]="columnWidth" title="Remark">
+
+        </kendo-grid-column>
+    </kendo-grid>
+</div>

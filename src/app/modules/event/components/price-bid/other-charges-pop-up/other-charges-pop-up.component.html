@@ -1,0 +1,106 @@
+<div class="modal-header ">
+    <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">Other Remarks</span>
+    </h3>
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+<div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ">
+    <span  [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon   svg-icon-2 m-0">
+    </span>
+</div>
+      
+        <!-- <button [disabled]="!checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" 
+        (click)="addOtherChargesParameter()" type="button" class="btn btn-light-blue  btn-sm" icon="plus" title="Add New">
+      
+        <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon    me-2">
+        </span>
+       
+            New</button> -->
+
+    </div>
+</div>
+
+<div class="modal-body">
+    <div>
+        <!-- begin::Body -->
+        <div class=" ">
+            <div class=" mb-2">
+                <button [disabled]="!checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" 
+                (click)="addOtherChargesParameter()" type="button" class="btn btn-light-blue  btn-sm" icon="plus" title="Add New">
+                
+                <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                </span>
+                
+                    New</button>
+            </div>
+          
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+                <!-- begin::Table -->
+                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                    <!-- begin::Table head -->
+                    <thead>
+                        <tr class="text-gray-800  fw-semibold">
+                            <th width="10%" class="min-w-80px">#</th>
+                            <th class="min-w-150px">Header</th>
+                            <th *ngIf="checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" width="20%" class="min-w-150px text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- end::Table head -->
+                    <!-- begin::Table body -->
+                    <tbody>
+                        <tr *ngFor="let item of getNonDeletedOtherCharges();let i=index" [hidden]="item.isDeleted">
+                            <td width="10%">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-dark  fs-6">
+                                            {{i+1}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+
+                                        <input [disabled]="!checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" type="text" placeholder="Enter Header"
+                                            class="custom-form-control form-control"
+                                            (input)="item.isEdit=true;" 
+                                            [ngClass]="item.isError && item.headerName==''?'border border-danger':'' "
+                                            [(ngModel)]="item.headerName" [value]="item.headerName">
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td *ngIf="checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" width="20%">
+                                <div class="d-flex justify-content-end flex-shrink-0">
+                                    <a (click)="item.isDeleted=true"
+                                        class="btn  btn-sm">
+                                        <span [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon text-primary me-2">
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!-- end::Table body -->
+                </table>
+                <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+        </div>
+        <!-- begin::Body -->
+    </div>
+</div>
+
+<div class="modal-footer">
+    <!-- <button type="button" (click)="close()" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button> -->
+    <button id="submitbtn" [disabled]="!checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS)" type="button" (click)="saveButtonClicked()" class="btn btn-primary btn-sm">
+        <span class="indicator-label">
+            Save changes
+        </span>
+        <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+    </button>
+</div>

@@ -1,0 +1,62 @@
+<div class="modal-dialog-centered custom-dialog-modal modal-dialog-mobile" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Reason for {{getTypeText()}}</h3>
+
+            <!--begin::Close-->
+            <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                aria-label="Close">
+                <span class="svg-icon svg-icon-1">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                            transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                            fill="currentColor"></rect>
+                    </svg>
+
+                </span>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group mb-5">
+                <div class="">
+                    <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Select Reason</label>
+                    <select [ngClass]="this.inValidate && (this.reasonId === 0)? 'border-danger' :'' "
+                        [(ngModel)]="reasonId" class="form-control form-select selectpicker">
+                        <option  [value]='0'>
+                           <span style="color:gray">Select Reason</span>
+                        </option>
+                        <option *ngFor="let reasonData of reasonList" [value]="reasonData.reasonId">
+                            {{reasonData.reasonName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div >
+                <div class="w-100 me-5">
+                    <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Remarks</label>
+                    <textarea maxlength="255" type="remarks" [(ngModel)]="remarks"
+                        [ngClass]="this.inValidate && (this.remarks === '' || this.remarks === undefined)? 'border-danger' :'' "
+                        class="form-control border" rows="3" placeholder="Enter Remakrs"></textarea>
+                </div>
+
+                <div class="error-message-div">
+                    <p class="fw-400 font-size-12">
+                        <span>{{remarks.length ? (255 - remarks.length):'255'}} {{'character left'}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <button (click)="close()" type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
+            <button (click)="save()" type="button" class="btn btn-primary btn-sm">Save</button>
+        </div>
+    </div>
+</div>

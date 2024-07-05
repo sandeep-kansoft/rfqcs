@@ -1,0 +1,35 @@
+<ngb-toast class="toast toast-container position-fixed" *ngFor="let toast of toaster" [autohide]="true"
+  [delay]="toast.delay || 5000" (hidden)="removeToaster(toast)"
+  [ngClass]="toast.success?'cs-success-bg-light cs-text-success cs-border-success':'cs-danger-bg-light cs-text-danger cs-border-danger'">
+  <div class="row">
+    <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+      <div class="d-flex align-items-stretch flex-shrink-0">
+        <div class="d-flex align-items-center me-2 toast-message-icon">
+          <!-- icons -->
+          <!-- success -->
+          <img *ngIf="toast.success" src="../../../../assets/media/wonder/success-icon.svg">
+          <!-- error  -->
+          <img *ngIf="!toast.success" src="../../../../assets/media/wonder/error-icon.svg" />
+          <!-- <span  class="svg-icon svg-icon-1"  inlineSVG="../../../../assets/media/wonder/success-icon.svg"></span> -->
+          <!-- <span  class="svg-icon svg-icon-1"  inlineSVG="../../../../assets/media/wonder/error-icon.svg"></span> -->
+
+        </div>
+      </div>
+      <div class="">
+        <div class=" me-2 toast-message">
+          {{ toast.comment }}
+        </div>
+      </div>
+      <div class="d-flex align-items-stretch flex-shrink-0">
+        <div class="d-flex align-items-center me-2">
+          <div class="toast-close-icon">
+            <img (click)="closeToast(toast)" *ngIf="toast.success"
+              src="assets/media/wonder/close-success-icon.svg">
+            <img (click)="closeToast(toast)" *ngIf="!toast.success"
+              src="assets/media/wonder/close-error-icon.svg">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngb-toast>

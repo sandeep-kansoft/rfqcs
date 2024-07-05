@@ -1,0 +1,307 @@
+<div class="tab-pane fade  show active" id="kt_tab_pane_246" role="tabpanel">
+    <button class="btn btn-light-blue btn-sm ms-0 ms-md-2 me-2" title="Expand all">Expand
+        All</button>
+    <button class="btn btn-light-blue btn-sm ml-2" title="Collapse all">Collapse All</button>
+    <div class="accordion mt-3" >
+        <!-- <h4></h4> -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="kt_accordion_1_header_1">
+                <button class="accordion-button fs-4 fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#kt_accordion_1_body_1" aria-expanded="true" aria-controls="kt_accordion_1_body_1">
+                    <div class="fs-6 fw-semibold">
+                        <div class="d-flex mb-1">
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Code</span>100050552
+                                </div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Qty</span>2 </div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">UOM</span>NOS</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-1"> SHIM; THICKNESS: 2 MM, MATERIAL: SS, MATERIAL
+                            GRADE: 304; FFT:
+                            F/ALIGNMENT</p>
+                    </div>
+
+                </button>
+            </h2>
+            <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
+                aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
+                <div class="accordion-body px-0">
+                    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+                        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter"
+                        [filterable]="false" [reorderable]="true" [resizable]="true" [skip]="state.skip"
+                        [pageSize]="pageSize" [sortable]="{
+       allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+                        <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                            title="Comparison" [width]="180">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div class="text-start"> {{item.name}} </div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-command-column>
+
+                        <kendo-grid-column-group title="Vendor 1">
+                            <kendo-grid-column title="R1">
+
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+
+                        <kendo-grid-column-group title="Vendor 2">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 3" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 4" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 5" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 7" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group> <kendo-grid-column-group title="Vendor 8" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+          [width]="columnWidth"></kendo-grid-column> -->
+
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="kt_accordion_1_header_2">
+                <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#kt_accordion_1_body_2" aria-expanded="false" aria-controls="kt_accordion_1_body_2">
+                    <div class="fs-6 fw-semibold">
+                        <div class="d-flex mb-1">
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Code</span>1767676
+                                </div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Qty</span>8 </div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">UOM</span>NOS</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-1"> VALVE,ANGLE;50 NB;PSA (ROTEX), PN:AV
+                            50090V01-F4-P2-16G ATM 0-16;AIR
+                        </p>
+                    </div>
+                </button>
+            </h2>
+            <div id="kt_accordion_1_body_2" class="accordion-collapse collapse"
+                aria-labelledby="kt_accordion_1_header_2" data-bs-parent="#kt_accordion_1">
+                <div class="accordion-body px-0">
+                    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+                        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter"
+                        [filterable]="false" [reorderable]="true" [resizable]="true" [skip]="state.skip"
+                        [pageSize]="pageSize" [sortable]="{
+       allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+                        <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                            title="Comparison" [width]="180">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div class="text-start"> {{item.name}} </div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-command-column>
+
+                        <kendo-grid-column-group title="Vendor 11" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+
+                        <kendo-grid-column-group title="Vendor 22" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 33" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 34" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+
+                        <kendo-grid-column-group title="Vendor 35" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 36" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 37" [width]="100">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+          [width]="columnWidth"></kendo-grid-column> -->
+
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="kt_accordion_1_header_3">
+                <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#kt_accordion_1_body_3" aria-expanded="false" aria-controls="kt_accordion_1_body_3">
+                    <div class="fs-6 fw-semibold">
+                        <div class="d-flex mb-1">
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Code</span>1235
+                                </div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Qty</span>5</div>
+                            </div>
+                            <span class="vertical-line-seperator me-3 ms-3"></span>
+                            <div class="d-flex">
+                                <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">UOM</span>NOS</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-1"> VALVE,ANGLE;50 NB;PSA (ROTEX), PN:AV
+                            50090V01-F4-P2-16G ATM 0-16;AIR
+                        </p>
+                    </div>
+                </button>
+            </h2>
+            <div id="kt_accordion_1_body_3" class="accordion-collapse collapse"
+                aria-labelledby="kt_accordion_1_header_3" data-bs-parent="#kt_accordion_1">
+                <div class="accordion-body px-0">
+                    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+                        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter"
+                        [filterable]="false" [reorderable]="true" [resizable]="true" [skip]="state.skip"
+                        [pageSize]="pageSize" [sortable]="{
+       allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+                        <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                            title="Comparison" [width]="180">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div class="text-start"> {{item.name}} </div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-command-column>
+
+                        <kendo-grid-column-group title="Vendor 12">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+
+                        <kendo-grid-column-group title="Vendor 13">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+                        <kendo-grid-column-group title="Vendor 14">
+                            <kendo-grid-column [width]="100" title="R1">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R2">
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="100" title="R3">
+                            </kendo-grid-column>
+                        </kendo-grid-column-group>
+
+
+                        <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+          [width]="columnWidth"></kendo-grid-column> -->
+
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

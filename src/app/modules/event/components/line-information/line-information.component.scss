@@ -1,0 +1,32 @@
+.custom-div-class {
+    padding: 5px 10px;
+    border-bottom: 1px solid gray;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.span-div-class {
+    padding: 0px;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: space-around;
+    align-items: center;
+
+    h4 {
+        writing-mode: vertical-lr;
+        text-orientation: upright;
+        /* text-align: left; */
+       
+        font-weight: bold;
+        text-transform: capitalize !important;
+    }
+}
+
+.value-class{
+    
+}

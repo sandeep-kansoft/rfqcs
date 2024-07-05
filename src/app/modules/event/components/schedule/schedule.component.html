@@ -1,0 +1,293 @@
+<div class="card mb-5 ">
+
+    <div class="card-body py-3">
+
+        <div class="">
+            <h3 class="border-bottom flex-column pb-3">
+                <span class="card-label fs-4">{{rfqDetail.eventStatus === 'Unpublished' ? "Schedule" :
+                    'Change Schedule'}}</span>
+            </h3>
+
+            <div class=" tab-content-main my-3">
+                <div>
+                    <div *ngIf="rfqDetail.eventStatus == 'Published'">
+                        <div class="">
+                            <div class="d-block border-bottom  my-5 border-solid">
+                                <div *ngIf="showTechnicalBidInputsFlag" class="datepicker row mb-3">
+                                    <div id="div1" class="date-box  col-md-6  mb-5">
+                                        <div class="d-md-flex  align-items-center">
+                                            <h4 class="mb-2 text-gray-800 fs-5 ">Current Technical Bid </h4>
+                                        </div>
+                                        <div class="d-md-flex justify-content-start align-items-center ">
+                                            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px">
+                                                Closing
+                                                Date </h4>
+                                            <div class="dategrid">
+                                                <kendo-datetimepicker class="border  form-control"
+                                                    [ngClass]="getErrorMessage('oldTeachnicalEndDate')?  'border-danger':''"
+                                                    #longDate format="dd-MMM-yyyy hh:mm a"
+                                                    [(ngModel)]="oldTeachnicalEndDate"
+                                                    (input)="inputChangeHandler($event,'technicalBidEndDate')"
+                                                    [disabled]="getInputDisableStatus('oldTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_CURRENT_TECHNICAL_BID_CLOSING_DATE_ENABLED)"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    (ngModelChange)="onDateChange($event,'oldTeachnicalEndDate')"
+                                                    (input)="inputChangeHandler($event,'oldTeachnicalEndDate')"
+                                                    [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                            </div>
+                                        </div>
+                                        <span class="text-primary">{{getErrorMessage('oldTeachnicalEndDate')}}</span>
+                                    </div>
+                                    <div id="div2" class="date-box col-md-6   mb-5">
+                                        <div class="d-md-flex  align-items-center">
+                                            <h4 class="mb-2 text-gray-800 fs-5 ">New Technical Bid</h4>
+                                        </div>
+                                        <div class="d-md-flex align-items-center ">
+                                            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px">
+                                                Closing
+                                                Date</h4>
+                                            <div class="dategrid">
+                                                <kendo-datetimepicker class="border  form-control"
+                                                    [ngClass]="getErrorMessage('technicalBidEndDate')?  'border-danger':''"
+                                                    #longDate [(ngModel)]="technicalBidEndDate"
+                                                    [disabled]="getInputDisableStatus('isTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_NEW_TECHNICAL_BID_CLOSING_DATE_ENABLED)"
+                                                    format="dd-MMM-yyyy hh:mm a"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    (ngModelChange)="onDateChange($event,'technicalBidEndDate')"
+                                                    (input)="inputChangeHandler($event,'technicalBidEndDate')"
+                                                    [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                            </div>
+                                        </div>
+                                        <span class="text-primary">{{getErrorMessage('technicalBidEndDate')}}</span>
+                                    </div>
+                                </div>
+                                <div class="datepicker row mb-3">
+                                    <div id="div1" class="date-box col-md-6   mb-5">
+                                        <div class="d-md-flex  align-items-center">
+                                            <h4 class="mb-2 text-gray-800 fs-5 ">Current Price Bid </h4>
+                                        </div>
+                                        <div class="d-md-flex justify-content-start align-items-center ">
+                                            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px">
+                                                Closing
+                                                Date </h4>
+                                            <div class="dategrid">
+                                                <kendo-datetimepicker class="border  form-control"
+                                                    [ngClass]="getErrorMessage('oldPriceEndDate')?  'border-danger':''"
+                                                    #longDate format="dd-MMM-yyyy hh:mm a" [(ngModel)]="oldPriceEndDate"
+                                                    [disabled]="getInputDisableStatus('oldPriceBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_CURRENT_PRICE_BID_CLOSING_DATE_ENABLED)"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    (ngModelChange)="onDateChange($event,'oldPriceEndDate')"
+                                                    (input)="inputChangeHandler($event,'oldPriceEndDate')"
+                                                    [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="text-primary">{{getErrorMessage('oldPriceEndDate')}}</span>
+                                        </div>
+                                    </div>
+                                    <div id="div2" class="date-box  col-md-6   mb-5">
+                                        <div class="d-md-flex align-items-center">
+                                            <h4 class="mb-2 text-gray-800 fs-5 ">New Price Bid </h4>
+                                        </div>
+                                        <div class="d-md-flex  align-items-center">
+                                            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px">
+                                                Closing
+                                                Date </h4>
+                                            <div class="dategrid">
+                                                <kendo-datetimepicker class="border  form-control"
+                                                    [ngClass]="getErrorMessage('priceBidEndDate')?  'border-danger':''"
+                                                    #longDate [(ngModel)]="priceBidEndDate"
+                                                    [disabled]="getInputDisableStatus('isPriceBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_NEW_PRICE_BID_CLOSING_DATE_ENABLED)"
+                                                    format="dd-MMM-yyyy hh:mm a"
+                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                    (ngModelChange)="onDateChange($event,'priceBidEndDate')"
+                                                    (input)="inputChangeHandler($event,'priceBidEndDate')"
+                                                    [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                            </div>
+                                        </div>
+                                        <span class="text-primary">{{getErrorMessage('priceBidEndDate')}}</span>
+                                    </div>
+                                </div>
+                                <!-- <div class="datepicker row  mb-3">
+                                        <div id="div1" class="date-box col-md-6   mb-5">
+                                            <div class="d-md-flex  align-items-center">
+                                                <h4 class="mb-2 text-gray-800 fs-5 ">Current Term and Conditions</h4>
+                                            </div>
+                                            <div class="d-md-flex justify-content-start align-items-center ">
+                                                <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px"> bid
+                                                    Closing Date </h4>
+                                                <div class="dategrid">
+                                                    <kendo-datetimepicker class="border  form-control"
+                                                        [ngClass]="getErrorMessage('oldTnCClosingTime')?  'border-danger':''"
+                                                        formControlName="oldTnCClosingTime" #longDate
+                                                        format="dd-MMM-yyyy hh:mm "
+                                                        [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                        [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                                </div>
+                                            </div>
+                                            <span class="text-primary">{{getErrorMessage('oldTnCClosingTime')}}</span>
+                                        </div>
+                                        <div id="div2" class="date-box  col-md-6  mb-5">
+                                            <div class="d-md-flex  align-items-center">
+                                                <h4 class="mb-2 text-gray-800 fs-5 ">New Term and Conditions</h4>
+                                            </div>
+                                            <div class="d-md-flex  align-items-center ">
+                                                <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px"> bid
+                                                    Closing Date </h4>
+                                                <div class="dategrid">
+                                                    <kendo-datetimepicker class="border  form-control"
+                                                        [ngClass]="getErrorMessage('updateTaCClosingDate')?  'border-danger':''"
+                                                        formControlName="updateTaCClosingDate" #longDate
+                                                        format="dd-MMM-yyyy hh:mm"                                                    [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                                        (ngModelChange)="onDateChange($event,'updateTaCClosingDate')"
+                                                        (input)="inputChangeHandler($event,'updateTaCClosingDate')"
+                                                        [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                                </div>
+                                            </div>
+                                            <span class="text-primary">{{getErrorMessage('updateTaCClosingDate')}}</span>
+                                        </div>
+                                    </div> -->
+
+                                <div class="datepicker" *ngIf="checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_SELECT_REASON_DROPDOWN)">
+                                    <div class="d-block w-100  mb-5">
+                                        <label class="fs-6 fw-bold">Reason</label>
+                                        <select class="form-control border"
+                                            [ngClass]="getErrorMessage('currentReasonId')?  'border-danger':''"
+                                            [(ngModel)]="currentReasonId" class="form-select w-lg-300px"
+                                            aria-label="Select example">
+                                            <option *ngFor="let item of reasonDropdownData" [value]="item.reasonId">
+                                                {{item.reasonName}}</option>
+                                        </select>
+                                        <span class="text-primary">{{getErrorMessage('currentReasonId')}}</span>
+                                    </div>
+                                </div>
+                                <!-- <div class="w-100 mt-5"><label class="fs-6 fw-bold d-block mb-1 "> Current Price Bid Closing Date & Time</label><div class="d-flex align-items-center"><div class="d-block me-3"><input formControlName="oldPriceClosingDate" type="text"
+                                              class="form-control text-center" placeholder="31/03/2023"></div><div class="d-block"><input formControlName="oldUpdatePriceClosingTime" type="text"
+                                              class="form-control text-center" placeholder="11:59"></div></div></div> -->
+                            </div>
+                        </div>
+                        <div *ngIf="checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_SAVE_BUTTON)" class="btns-row-footer d-flex align-items-center justify-content-between">
+                            <div class="d-flex"></div>
+                            <div class="d-flex">
+                                <button aria-role-check="yes"  (click)="submitHandler()" class="btn btn-primary btn-sm me-0">
+                                    <ng-container *ngIf="saveEventLoader">
+                                        <span class="indicator-progress" [style.display]="'block'"> Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="!saveEventLoader">
+                                        <span class="indicator-label">Save</span>
+                                    </ng-container>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="rfqDetail.eventStatus == 'Unpublished'">
+                        <div class="datepicker row  mb-3">
+                            <h4 class="mb-2 text-gray-800 fs-5 "> Technical Bid </h4>
+                            <div [hidden]="getInputDisableStatus('isTechnicalBidStartDisabled')" id="div1"
+                                class="date-box col-md-6  mb-5">
+                                <div class="d-md-flex justify-content-start align-items-center ">
+                                    <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px"> bid start
+                                        date
+                                    </h4>
+                                    <div class="dategrid">
+                                        <kendo-datetimepicker class="border  form-control"
+                                            [ngClass]="getErrorMessage('technicalBidStartDate')?  'border-danger':''"
+                                            #longDate format="dd-MMM-yyyy hh:mm a" [(ngModel)]="technicalBidStartDate"
+                                            [disabled]="getInputDisableStatus('isTechnicalBidStartDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_START_DATE_ENABLED)"
+                                            (ngModelChange)="onDateChange($event,'technicalBidStartDate')"
+                                            (input)="inputChangeHandler($event,'technicalBidStartDate')"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                    </div>
+                                </div>
+                                <span class="text-primary">{{getErrorMessage('technicalBidStartDate')}}</span>
+                            </div>
+                            <div id="div2" class="date-box  col-md-6  mb-5">
+                                <div class="d-md-flex  align-items-center ">
+                                    <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px"> bid end
+                                        date
+                                    </h4>
+                                    <div class="dategrid">
+                                        <kendo-datetimepicker class="border  form-control"
+                                            [ngClass]="getErrorMessage('technicalBidEndDate')?  'border-danger':''"
+                                            #longDate format="dd-MMM-yyyy hh:mm a" [(ngModel)]="technicalBidEndDate"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [disabled]="getInputDisableStatus('isTechnicalBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_BID_END_DATE_ENABLED)"
+                                            (ngModelChange)="onDateChange($event,'technicalBidEndDate')"
+                                            (input)="inputChangeHandler($event,'technicalBidEndDate')"
+                                            [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                    </div>
+                                </div>
+                                <span class="text-primary">{{getErrorMessage('technicalBidEndDate')}}</span>
+                            </div>
+                        </div>
+                        <div class="datepicker row mb-3">
+                            <h4 class="mb-2 text-gray-800 fs-5 ">Price Bid</h4>
+                            <div [hidden]="getInputDisableStatus('isPriceBidStartDisabled')" id="div1"
+                                class="date-box  col-md-6  mb-5">
+                                <div class="d-md-flex justify-content-start align-items-center ">
+                                    <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px"> Start
+                                        Date
+                                    </h4>
+                                    <div class="dategrid">
+                                        <kendo-datetimepicker class="border  form-control"
+                                            [ngClass]="getErrorMessage('priceBidStartDate')?  'border-danger':''"
+                                            format="dd-MMM-yyyy hh:mm a" #longDate [(ngModel)]="priceBidStartDate"
+                                            [disabled]="getInputDisableStatus('isPriceBidStartDisabled') ||  !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_PRICE_BID_START_DATE_ENABLED)"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            (ngModelChange)="onDateChange($event,'priceBidStartDate')"
+                                            (input)="inputChangeHandler($event,'priceBidStartDate')"
+                                            [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                    </div>
+                                </div>
+                                <span class="text-primary">{{getErrorMessage('priceBidStartDate')}}</span>
+                            </div>
+                            <div id="div2" class="date-box col-md-6   mb-5">
+                                <div class="d-md-flex  align-items-center ">
+                                    <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px">
+                                        Bid End Date
+                                    </h4>
+                                    <div class="dategrid">
+                                        <kendo-datetimepicker class="border  form-control"
+                                            [ngClass]="getErrorMessage('priceBidEndDate')?  'border-danger':''"
+                                            [disabled]="getInputDisableStatus('isPriceBidEndDisabled') || !checkPermission(permissionEnum.DASHBOARD_SCHEDULE_PRICE_BID_END_DATE_ENABLED)" #longDate
+                                            format="dd-MMM-yyyy hh:mm a" [(ngModel)]="priceBidEndDate"
+                                            (ngModelChange)="onDateChange($event,'priceBidEndDate')"
+                                            (input)="inputChangeHandler($event,'priceBidEndDate')"
+                                            [formatPlaceholder]="{ year: 'YYY', month: 'MMM', day: 'DD', hour: 'hh', minute: 'mm', second: '' }"
+                                            [disabledDates]="disabledDates"></kendo-datetimepicker>
+                                    </div>
+                                </div>
+                                <span class="text-primary">{{getErrorMessage('priceBidEndDate')}}</span>
+                            </div>
+                        </div>
+
+                        <div class="btns-row-footer d-flex align-items-center justify-content-between">
+                            <div class="d-flex"></div>
+                            <div class="d-flex">
+                                <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_SCHEDULE_SAVE_CHANGES_BUTTON)" (click)="submitHandler()" type="submit" class="btn btn-primary btn-sm me-0">
+                                    <ng-container *ngIf="saveEventLoader">
+                                        <span class="indicator-progress" [style.display]="'block'"> Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="!saveEventLoader">
+                                        <span class="indicator-label">Save</span>
+                                    </ng-container>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div class="change-schedule-card"></div>
+        </div>
+
+    </div>
+</div>

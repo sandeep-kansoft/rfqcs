@@ -1,0 +1,316 @@
+<div class="card mb-5 ">
+  <!-- card header -->
+  <!-- <div class="card-header pt-0 hh-50px align-items-center">
+        <h3 class="card-title flex-column my-0">
+            <span class="card-label fw-bold text-gray-800">Collaboration</span>
+        </h3>
+
+        <div class="card-toolbar my-0">
+            <div class="d-flex align-items-center my-3">
+
+            </div>
+        </div>
+    </div> -->
+  <!-- card header -->
+  <div class="card-body py-3">
+
+    <div class="">
+      <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-4">
+
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_COLLABORATIVE_USERS_TAB)" data-bs-toggle="tab" href="#kt_tab_pane_1">Collaborative Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_TRANSFER_BUYERS_TAB)" data-bs-toggle="tab" href="#kt_tab_pane_2">Transfer Buyer</a>
+        </li>
+        <!-- <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3">Transfer buyer</a>
+                </li> -->
+      </ul>
+
+      <div class="tab-content collaboration-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+          <div class="card shadow-sm">
+            <!-- <div class="card-header">
+                            <h3 class="card-title">Title</h3>
+                            <div class="card-toolbar">
+                                <button type="button" class="btn btn-sm btn-light">
+                                    Action
+                                </button>
+                            </div>
+                        </div> -->
+
+
+            <div class="card-body" style="padding:0!important;">
+              <div *ngIf="addCollaboratorCondition()">
+
+                <form [formGroup]="formGroup" (submit)="addCollabaratorHandler()">
+                  <div class="d-md-flex justify-content-between">
+                    <div class="d-md-flex mb-5 justify-content-between w-100">
+
+
+                      <!-- <select (change)="typeChangeHandler($event)" formControlName="type"
+                                                class="form-select me-5 mb-3 mb-md-0 w-auto h-40px"
+                                                data-control="select2" data-placeholder="Select Collabrative Users">
+                                                <option value="Collaborative">Select Collaborative Users</option>
+                                                <option value="Technical">Technical User</option>
+
+                                            </select> -->
+                                            <div class="d-flex align-items-center">
+
+                                           
+                      <div class="multiple-select-box me-4" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_SELECT_COLLABORATOR)">
+
+
+                        <select2 aria-role-check-input="yes" placeholder="Select collaborator" formControlName="name"
+                          [overlay]="overlay" [data]="dropList" class=" form-control select-tec" resettable
+                          id="selec2-1">
+                        </select2>
+                      </div>
+
+                      <div>
+                        
+                        
+                        
+                        <button aria-role-check="yes" type="reset" class="btn btn-light me-5 btn-sm" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_RESET_BUTTON)">Reset</button>
+                        <button aria-role-check="yes" type="submit" class="btn btn-light-blue me-5 btn-sm" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_ADD_USER_BUTTON)"
+                          title="Add user">
+                          <!-- add-svg ( + )-->
+
+                          <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  m-0 "></span>
+
+                          <!-- add-svg -->
+                          User</button>
+                      </div>
+                      </div>
+                    </div>
+                      <!-- <select [hidden]="this.formGroup.get('type')?.value !== 'Technical'"
+                                                formControlName="name" class="form-select w-auto  h-40px"
+                                                data-control="select2" data-placeholder="Select  Users">
+                                                <option [value]="item.fulL_NAME"
+                                                    *ngFor="let item of selectedUserDropDownList">
+                                                    {{item.fulL_NAME}}</option>
+
+                                            </select> -->
+
+                                            <div class="d-flex justify-content-between mb-3">
+                                              
+                                              <div>
+                                                <button aria-role-check="yes" (click)="assignTabHandler()" type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_COLLABORATION_SAVE_BUTTON)"
+                                                  class="btn btn-light-primary btn-sm">Save</button>
+                                              </div>
+                                            </div>
+                    </div>
+                    
+                 
+                </form>
+              </div>
+
+              <div class="">
+                <kendo-grid class="fixed-header" [loading]="assignedCollabLoader" [data]="gridView" [resizable]="true"
+                  [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                                     pageSizes:true,
+                                     info: true
+                                     }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                  <!-- Kendo Default Loader -->
+                  <ng-template kendoGridLoadingTemplate>
+                    <app-wonder-loader></app-wonder-loader>
+                  </ng-template>
+                  <!-- Kendo End Default Loader -->
+                  <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                    [width]="ExtraSmallColumnWidth">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                      {{rowIndex+1}}</ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column *ngIf="addCollaboratorCondition() && checkPermission(permissionEnum.DASHBOARD_COLLABORATION_DELETE_BUTTON)" cell [headerClass]="headerStyle"
+                    field="siteName" title="Action" [width]="60">
+                    <ng-template kendoGridCellTemplate let-item let-action="action" let-rowIndex="rowIndex">
+                      <div class="d-flex justify-content-center">
+                        <span class="align-items-center" (click)="deleteHandler(item, rowIndex)"
+                          class="svg-icon  text-primary">
+                          <span aria-role-check="yes" *ngIf="!item.isDeleted"
+                            [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon text-primary m-0 "></span>
+                          <!-- <svg *ngIf="!item.isDeleted" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+
+                                                        <path
+                                                            d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+                                                            stroke="currentcolor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                        <path
+                                                            d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+                                                            stroke="currentcolor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            opacity="0.7" />
+
+                                                        <path
+                                                            d="M18.8504 9.13965L18.2004 19.2096C18.0904 20.7796 18.0004 21.9996 15.2104 21.9996H8.79039C6.00039 21.9996 5.91039 20.7796 5.80039 19.2096L5.15039 9.13965"
+                                                            stroke="currentcolor" opacity="0.7" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                        <path d="M10.3301 16.5H13.6601" stroke="currentcolor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                        <path d="M9.5 12.5H14.5" stroke="currentcolor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                    </svg> -->
+                          <!-- grey delete icon start -->
+                          <!-- <svg width="24" height="24" *ngIf="item.isDeleted"
+                                                        viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+
+                                                        <path
+                                                            d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+                                                            stroke="#808080" stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                        <path
+                                                            d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+                                                            stroke="#808080" stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" opacity="0.7" />
+
+                                                        <path
+                                                            d="M18.8504 9.13965L18.2004 19.2096C18.0904 20.7796 18.0004 21.9996 15.2104 21.9996H8.79039C6.00039 21.9996 5.91039 20.7796 5.80039 19.2096L5.15039 9.13965"
+                                                            stroke="#808080" opacity="0.7" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                        <path d="M10.3301 16.5H13.6601" stroke="#808080"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                        <path d="M9.5 12.5H14.5" stroke="#808080" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                    </svg> -->
+                          <span *ngIf="item.isDeleted" [inlineSVG]="'./assets/media/svg/delete.svg'"
+                            class="svg-icon  m-0 "></span>
+
+                          <!-- grey delete icon end -->
+                        </span>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column cell [headerClass]="headerStyle" field="usertype" title="User Type" [width]="120">
+                    <ng-template kendoGridCellTemplate let-item>
+                      <ng-container>
+                        <a
+                          [ngClass]="{'text-dark': !item.isDeleted , 'text-muted' : item.isDeleted}">{{item.usertype}}</a>
+                      </ng-container>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column [headerClass]="headerStyle" field="username" title="Collaborative User Name"
+                    [width]="200">
+                    <ng-template kendoGridCellTemplate let-item>
+                      <ng-container>
+                        <a
+                          [ngClass]="{'text-dark': !item.isDeleted , 'text-muted' : item.isDeleted}">{{item.username}}</a>
+                      </ng-container>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="iS_TECHNICAL_ACCESS"
+                    title="Technical Access" [width]="140">
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                      <ng-container>
+                        <div autoClose="'outside'" container="body">
+                          <div
+                            class="form-check form-switch form-check-custom form-check-solid me-10 justify-content-center">
+                            <input [disabled]="checkBoxDisableCondition(item) || !checkPermission(permissionEnum.DASHBOARD_COLLABORATION_COLLABORATIVE_USERS_TECHNICAL_ACCESS_ENABLED)" [(ngModel)]="item.iS_TECHNICAL_ACCESS"
+                              (change)="techncialAndTermsChange(rowIndex)" class="form-check-input h-20px w-30px "
+                              type="checkbox" style="border:1px solid #d3d3d3;" />
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+
+                  </kendo-grid-column>
+
+                  <kendo-grid-column [filterable]=" true" [headerClass]="headerStyle" field="iS_COMMERCIAL_ACCESS"
+                    title="Commercial T&C Access" [width]="190">
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                      <ng-container>
+                        <div autoClose="'outside'" container="body">
+                          <div
+                            class="form-check form-switch form-check-custom form-check-solid me-10 justify-content-center ">
+                            <input [disabled]="checkBoxDisableCondition(item) || !checkPermission(permissionEnum.DASHBOARD_COLLABORATION_COLLABORATIVE_USERS_COMMERCIAL_T_C_ENABLED)" [(ngModel)]="item.iS_COMMERCIAL_ACCESS"
+                              (change)="techncialAndTermsChange( rowIndex)" class="form-check-input h-20px w-30px "
+                              type="checkbox" style="border:1px solid #d3d3d3;" />
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template></kendo-grid-column>
+
+                  <!-- <kendo-grid-column [headerClass]="headerStyle" field="prid" title="PR NO" [width]="columnWidth"></kendo-grid-column> -->
+
+
+
+                  <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="iS_TECHNICAL_APPROVE"
+                    title="Technical Approval" [width]="160">
+
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                      <ng-container>
+                        <div autoClose="'outside'" container="body">
+                          <div
+                            class="form-check form-switch form-check-custom form-check-solid me-10 justify-content-center">
+                            <input [disabled]="checkBoxDisableCondition(item) || !checkPermission(permissionEnum.DASHBOARD_COLLABORATION_COLLABORATIVE_USERS_TECHNICAL_APPROVAL_ENABLED)" [(ngModel)]="item.iS_TECHNICAL_APPROVE"
+                              (change)="technicalOnChangeHandler(item)" class="form-check-input h-20px w-30px "
+                              type="checkbox" style="border:1px solid #d3d3d3;" />
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="iS_SCORE_ASSIGN"
+                    title="Scoring Approval" [width]="150">
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                      <ng-container>
+                        <div autoClose="'outside'" container="body">
+                          <div
+                            class="form-check form-switch form-check-custom form-check-solid me-10 justify-content-center">
+                            <input [disabled]="checkBoxDisableCondition(item) || !checkPermission(permissionEnum.DASHBOARD_COLLABORATION_COLLABORATIVE_USERS_SCORING_APPROVAL_ENABLED)" [(ngModel)]="item.iS_SCORE_ASSIGN"
+                              (change)="scoringChangeHandler(item)" class="form-check-input h-20px w-30px "
+                              type="checkbox" style="border:1px solid #d3d3d3;" />
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                  </kendo-grid-column>
+
+
+
+                  <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+
+
+
+
+                </kendo-grid>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+
+
+
+
+          <app-transfer-buyer [rfqDetail]="rfqDetail"></app-transfer-buyer>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

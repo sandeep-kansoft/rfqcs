@@ -1,0 +1,49 @@
+<!-- <div class="container-fluid overflow-auto">
+    <div class="card mb-5 mb-xl-10"> -->
+        <div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details"
+            aria-expanded="true" aria-controls="kt_account_profile_details">
+            <div class="card-title m-0">
+                <h3 class="fw-bolder m-0">PR Status</h3>
+            </div>
+            <div class="modal-title m-0" (click)="closeModel()">
+                <!-- <span class="justify-content-center " [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span> -->
+                <div class=" btn btn-icon btn-sm btn-active-light-primary">
+
+
+                    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0">
+
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <kendo-grid class="fixed-header" [loading]="isLoading" [columnMenu]="{ filter: true ,sort : true  }" [groupable]="true"
+                [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="true"
+                [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+
+                <kendo-grid-column field="site" title="Site" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+                <kendo-grid-column field="itemNumber" title="Item" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+
+                <kendo-grid-column field="config" title="Config" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+                <kendo-grid-column field="warehouse" title="Warehouse" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+                <kendo-grid-column field="location" title="Location" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+                <kendo-grid-column field="inStockQty" title="Stock" [width]="columnWidth"
+                    [headerClass]="headerStyle"></kendo-grid-column>
+                <kendo-grid-column field="consumeQty" title="Consume" [width]="columnWidth"
+                    [headerClass]="headerStyle">
+                </kendo-grid-column>
+
+            </kendo-grid>
+        </div>
+
+    <!-- </div>
+
+</div> -->

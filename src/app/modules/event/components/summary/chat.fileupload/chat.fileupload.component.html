@@ -1,0 +1,36 @@
+<!-- <div class="container-fluid overflow-auto"><div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+  aria-controls="kt_account_profile_details">
+  <div class="modal-title m-0">
+    <h3 class="fw-bolder m-0">File Upload</h3>
+  </div>
+  <div class="card-title m-0 btn btn-icon btn-sm btn-active-light-primary ms-2">
+
+    <!-- close-svg -->
+
+    <span (click)="closeModel()" [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+
+    <!-- close-svg -->
+  </div>
+</div>
+<div>
+  <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpg,image/jpeg,.doc,.docx,application/msword,.xlx,.xlsx,.txt'">
+      <ngx-dropzone-label><span>
+        <span class="cs-upload-text">Click to upload</span>
+        or drag and drop
+        </span>
+      <span>SVG, PNG, JPG, XLX, XLSX, DOC, TXT </span>
+    </ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
+</div>
+<div class="modal-footer">
+  <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+    <button type="button" (click)="closeModel()" class="btn me-5 btn-light btn-sm">Cancel</button>
+    <button (click)="sendFiles()" class="btn btn-primary btn-sm">
+      <span class="indicator-label">Submit</span>
+    </button>
+  </div>
+</div>

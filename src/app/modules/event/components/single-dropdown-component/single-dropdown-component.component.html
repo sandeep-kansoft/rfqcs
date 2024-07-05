@@ -1,0 +1,71 @@
+<div class="modal-dialog-centered custom-dialog-modal modal-dialog-mobile" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">{{title}}</h3>
+
+            <!--begin::Close-->
+            <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                aria-label="Close">
+                <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0"></span>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class=" mb-5 w-100 me-5">
+                <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Type of RFQ</label>
+
+                <select [(ngModel)]="typeOfRfq" class="form-control selectpicker py-2 px-3"
+                    (change)="typeOfRfqChangeHandler()"
+                    [ngClass]="this.inValidate && (this.typeOfRfq === ''|| this.typeOfRfq === undefined)? 'border-danger' :'' "
+                    class="form-select py-2 fs-6" aria-label="Select tempalte">
+                    <option value="">----Select----</option>
+                    <option value="RFQ" *ngIf="CheckValidation()">RFQ</option>
+                    <option value="Auction">Auction</option>
+                </select>
+
+
+
+            </div>
+
+            <div *ngIf="this.typeOfRfq == 'Auction'" class=" mb-5 w-100 me-5">
+                <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Type of Auction</label>
+
+                <select [(ngModel)]="typeOfAuction" class="form-control selectpicker py-2 px-3"
+                    [ngClass]="this.inValidate && (this.typeOfAuction === ''|| this.typeOfAuction === undefined)? 'border-danger' :'' "
+                    class="form-select py-2 fs-6" aria-label="Select tempalte">
+                    <option value="">----Select----</option>
+                    <option value="REVAUC">Reverse Auction</option>
+                    <option value="FWDAUC" *ngIf="CheckValidation()">Forward Auction</option>
+
+                </select>
+
+            </div>
+
+            <div *ngIf="this.typeOfRfq == 'Auction' && isAuctionModelVisible " class=" mb-5 w-100 me-5">
+                <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Type of Auction</label>
+
+                <select [(ngModel)]="auctionMode" class="form-control selectpicker py-2 px-3"
+                    [ngClass]="this.inValidate && (this.auctionMode === ''|| this.auctionMode === undefined)? 'border-danger' :'' "
+                    class="form-select py-2 fs-6" aria-label="Select tempalte">
+                    <option value="">----Select----</option>
+                    <option value="Both">Both</option>
+                    <option value="Color">Color</option>
+                    <option value="Rank">Rank</option>
+                </select>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="close()" type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
+            <button (click)="save()" type="button" class="btn btn-primary btn-sm">Save</button>
+        </div>
+    </div>
+</div>

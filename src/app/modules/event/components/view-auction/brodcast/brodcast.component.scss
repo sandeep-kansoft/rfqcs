@@ -1,0 +1,11 @@
+.broadcast-box .card-body {
+    height: calc(100vh - 250px);
+    display: flex;
+    /* justify-content: end; */
+
+    overflow-y: scroll;
+    align-items: end;
+}
+.broadcast-box .card-body.broadcast-box-view{
+    height: 90vh;
+}

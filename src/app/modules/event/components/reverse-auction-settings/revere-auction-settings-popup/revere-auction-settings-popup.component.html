@@ -1,0 +1,196 @@
+<!-- <div class="container-fluid overflow-auto">
+    <div class="card mb-5 mb-xl-10 over-view-box"> -->
+        <div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+        aria-controls="kt_account_profile_details">
+        <div class="modal-title m-0">
+            <h3 class="fw-bolder m-0"> Sub Item Level</h3>
+        </div>
+        <div class="card-title m-0" (click)="closeModel()">
+            <div class=" btn btn-icon btn-sm btn-active-light-primary">
+    
+    
+                <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0">
+    
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="modal-body pr-history-table">
+        <!-- <div *ngIf="noDataFound">
+            <div class="card">
+                <div class="card-body">
+                    <app-no-data-found [errMessage]="'No Data Found'"></app-no-data-found>
+    
+                </div>
+            </div>
+        </div> -->
+        <div class="d-md-flex align-items-center ">
+        <div class="configuration" *ngIf="!itemLevel" >
+            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px ">
+                Ceiling Value
+                </h4>
+                <div>
+                    <div class="remark-box">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <div class=" ">
+                                <input type="number" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_CELING_PRICE_GLOBAL_ENABLED)"
+                                    [(ngModel)]="CeilingValue" class="form-control form-control-lg" />
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        </div>
+        <div class="configuration" *ngIf="!itemLevel">
+            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px ">
+                Bid Decrement value
+                </h4>
+                <div>
+                    <div class="remark-box">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <div class=" ">
+                                <input type="number"  [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_BID_DECREMENT_PRICE_GLOBAL_ENABLED)"
+                                    [(ngModel)]="bidDecrementValue" class="form-control form-control-lg" />
+                            </div>
+
+                        </div>
+                    </div>
+        </div>
+        </div>
+        <div class="configuration" *ngIf="!itemLevel">
+            <h4 class="heading fs-5 text-gray-600 b-3 mb-md-0 fw-normal  w-150px ">
+                Bid Decrement percentage %
+                </h4>
+                <div>
+                    <div class="remark-box">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <div class=" ">
+                                <input type="number" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_BID_DECREMENT_PERCENTAGE_GLOBAL_ENABLED)"
+                                    [(ngModel)]="bidDecrementPercentage" class="form-control form-control-lg" (input)="onBiddecrementPercentageglobalChangeHandler($event)" />
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        </div>
+    </div>
+    <br>
+        <div >
+
+            <div class="  p-0 cs-kendo-grid">
+
+
+                <kendo-grid #grid="kendoGrid" class="fixed-header" [loading]="loading"
+                      [data]="gridView"
+                    [group]="state.group" [filter]="state.filter"  [reorderable]="true"
+                    [resizable]="true" [skip]="state.skip" [pageSize]="state.take" 
+                    [pageable]="true" 
+                     [navigable]="true"
+                     [sortable]="true"  [sort]="state.sort"
+                    (dataStateChange)="onStateChange($event)">   
+        
+                    <!-- Kendo Default Loader -->
+                    <ng-template *ngIf="loading">
+                        <app-wonder-loader></app-wonder-loader>
+                    </ng-template>
+                    <!-- Kendo End Default Loader -->
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                        title="#" [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate
+                            let-rowIndex="rowIndex">
+                            {{rowIndex+1}}</ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column  field="materialid" [headerClass]="headerStyle"
+                        title="Item Code" [width]="150">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                {{item.itemCode}}
+                            </ng-container>
+                        </ng-template></kendo-grid-column>
+        
+                        <kendo-grid-column  field="materialCode" [headerClass]="headerStyle"
+                        title="Item Name"  [width]="350" [minResizableWidth]="350">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                {{item.itemName}}
+                            </ng-container>
+                        </ng-template></kendo-grid-column>
+        
+        
+                        <kendo-grid-column cell [headerClass]="headerStyle" field="uom" title="UOM"
+                        [width]="70"></kendo-grid-column> 
+
+                        <kendo-grid-column cell [headerClass]="headerStyle" field="quantity" title="Quantity"
+                        [width]="100"></kendo-grid-column> 
+                        <kendo-grid-column cell [headerClass]="headerStyle" field="Remarks" title="Remarks"
+                        [width]="120"></kendo-grid-column> 
+        
+        
+        
+                        <kendo-grid-command-column *ngIf="itemLevel"  title="Ceiling price" [headerClass]="'required fw-bold'"  [headerStyle]="{ 'display':'flex' }"
+                            [width]="210">
+                            <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                                <div class="remark-box">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <div class=" ">
+                                            <input type="number" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_CELING_PRICE_ITEM_LEVEL_ENABLED)"
+                                                [(ngModel)]="dataItem.ceilingValue" class="form-control form-control-lg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-command-column>
+                        <kendo-grid-command-column  *ngIf="itemLevel"[headerClass]="headerStyle"  title="Bid decrement Percentage" [columnMenu]="false"
+                        [width]="190">
+                        <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                            <div class="remark-box">
+                                <div class="form-check form-switch form-check-custom form-check-solid ">
+                                    <div class="">
+                                        <input maxlength="200" (input)="BidDecrementChangehandler($event,rowIndex)" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_BID_DECREMENT_PERCENTAGE_ITEM_LEVEL_ENABLED)"
+                                            [(ngModel)]="dataItem.bidDecrementPercent" class="form-control form-control-lg" />
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </ng-template>
+    
+                    </kendo-grid-command-column>
+                        <kendo-grid-command-column  *ngIf="itemLevel"[headerClass]="headerStyle"  title="Bid decrement value" [columnMenu]="false"
+                            [width]="190">
+                            <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                                <div class="remark-box">
+                                    <div class="form-check form-switch form-check-custom form-check-solid ">
+                                        <div class="">
+                                            <input maxlength="200" (input)="BidDecrementValueChangehandler($event,rowIndex)" [disabled]="!checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_BID_DECREMENT_VALUE_ITEM_LEVEL_ENABLED)"
+                                                [(ngModel)]="dataItem.bidDecrement" class="form-control form-control-lg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+        
+                        </kendo-grid-command-column>
+        
+        
+            
+                </kendo-grid>
+                
+                
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="closeModel()" *ngIf="checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_CLOSE_BUTTON)" type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
+        <button   (click)="saveReverseAuctionSubItemPopUp()" *ngIf="checkPermission(permissionEnum.DASHBOARD_REVERSE_AUCTION_SETTINGS_ACTION_POPUP_SAVE_BUTTON)"
+            type="button" class="btn btn-primary btn-sm mt-3 mt-md-0">
+            <span  *ngIf="!savingloader">
+                Save Auction Settings
+            </span>
+            <span *ngIf="savingloader">
+                Please wait... <span
+                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+    </div>
+    
+ 

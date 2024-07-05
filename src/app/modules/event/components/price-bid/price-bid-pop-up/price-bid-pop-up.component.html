@@ -1,0 +1,161 @@
+<div class="modal-header">
+    <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">PriceBid Charges</span>
+    </h3>
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+
+        <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ">
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  svg-icon-2  m-0">
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal-body">
+    <!--begin::Repeater-->
+
+    <!-- Price bid charges-->
+    <div>
+        <div class=" mb-2">
+            <button [disabled]="!checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)"
+                (click)="addPriceBidCharge()" type="button" class="btn btn-light-blue   btn-sm" icon="plus"
+                title="Add New">
+                <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon     me-2">
+                </span>
+                New</button>
+        </div>
+        <!-- begin::Header -->
+
+        <!-- <div class="card-header border-0 pt-5 card-spacing">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bolder fs-3 mb-1">PriceBid Charges</span>
+            </h3>
+            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+
+                <button (click)="addPriceBidCharge()" type="button" class="btn btn-light-success btn-sm" icon="plus">Add
+                    new</button>
+
+            </div>
+        </div> -->
+        <!-- end::Header -->
+
+        <!-- begin::Body -->
+        <div class="">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+                <!-- begin::Table -->
+                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                    <!-- begin::Table head -->
+                    <thead>
+                        <tr class="text-gray-800  fw-semibold">
+                            <th width="10%" class="min-w-80px">#</th>
+                            <!-- <th width="20%" class="min-w-140px">Custom</th> -->
+                            <th class="min-w-150px">PriceBid Charge</th>
+                            <th *ngIf="checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)" width="20%"
+                                class="min-w-150px text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- end::Table head -->
+                    <!-- begin::Table body -->
+                    <tbody>
+                        <tr *ngFor="let item of getNonDeletedPriceBidCharge();let i=index" [hidden]="item.isDeleted">
+                            <td width="10%">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-dark fs-6">
+                                            {{i+1}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- <td width="20%">
+                                <div class="form-check form-switch form-check-custom form-check-solid ">
+                                    <input class="form-check-input h-20px w-30px " type="checkbox"
+                                        (change)="checkValueCheckbox(item)" [(ngModel)]="item.isCustom"
+                                        style="border:1px solid #d3d3d3;" />
+                                </div>
+                            </td> -->
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <select [ngClass]="item.isError?'border border-danger':'' "
+                                            *ngIf="!item.isCustom" [(ngModel)]="item.headerName"
+                                            [disabled]="!checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)"
+                                            (change)="item.isEdit=true;item.isError = false"
+                                            class="custom-form-control form-control selectpicker form-select">
+
+                                            <option *ngFor="let priceBid of priceBidChargesList"
+                                                [value]=" priceBid.markupCode == selectDescription ?  '' :  priceBid.markupCode">
+                                                {{priceBid.markupCode}}</option>
+                                        </select>
+                                        <!-- <select2
+                                        [ngClass]="item.isError?'border border-danger':'' "
+                                            *ngIf="!item.isCustom" [(ngModel)]="item.headerName"
+                                            [disabled]="!checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)"
+                                            (change)="item.isEdit=true;item.isError = false"
+                                            class="custom-form-control form-control selectpicker form-select"
+                                            [overlay]="false" [data]="priceBidChargesdropdown" resettable
+                                            id="selec2-1">
+                                        </select2> -->
+
+                                        <input *ngIf="item.isCustom" type="text"
+                                            [ngClass]="item.isError?'border border-danger':'' "
+                                            [disabled]="!checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)"
+                                            class="custom-form-control form-control" [(ngModel)]="item.headerName"
+                                            [value]="item.headerName">
+                                    </div>
+                                </div>
+                            </td>
+                            <td *ngIf="checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)" width="20%">
+                                <div class="d-flex justify-content-end flex-shrink-0">
+                                    <!-- <a (click)="item.isEdit=false" *ngIf="item.isEdit"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <span class="svg-icon ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
+                                                        fill="currentcolor"></path>
+                                                </svg></span>
+                                        </a>
+                                        <a *ngIf="!item.isEdit" (click)="item.isEdit=true"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                                class="svg-icon "></span>
+                                        </a> -->
+
+                                    <a (click)="item.isDeleted=true" class="btn btn-icon  btn-sm" title="delete">
+                                        <span [inlineSVG]="'./assets/media/svg/delete.svg'"
+                                            class="svg-icon text-primary   me-2">
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!-- end::Table body -->
+                </table>
+                <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+        </div>
+        <!-- begin::Body -->
+    </div>
+
+
+    <!--end::Repeater-->
+</div>
+
+<div class="modal-footer">
+    <!-- <button type="button" (click)="close()" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button> -->
+    <button id="submitbtn" type="button" (click)="saveButtonClicked()" class="btn btn-primary btn-sm">
+        <span class="indicator-label">
+            Save changes
+        </span>
+        <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+    </button>
+</div>

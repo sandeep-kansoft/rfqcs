@@ -1,0 +1,63 @@
+<div class="my-5">
+    <!-- template list -->
+
+    <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
+        <li *ngFor="let vendorItem of vendorListNames" class="nav-item">
+            <a [ngClass]="{'active': vendorItem.vendorid  == this.currentTabSelected }"
+                (click)="tabChangeHandler(vendorItem)" class="nav-link show-pointer"
+                data-bs-toggle="tab">{{vendorItem.vendorname}}</a>
+        </li>
+    </ul>
+
+
+
+    <kendo-grid [loading]="loading" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+         pageSizes:true,
+         info: true
+         }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" (dataStateChange)="onStateChange($event)" [sort]="state.sort">
+
+
+        <!-- Kendo Default Loader -->
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <!-- Kendo End Default Loader -->
+
+
+        <kendo-grid-column [headerClass]="headerStyle" field="sno" title="#" [width]="50">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1 === 0 ? '':
+                rowIndex+1 }}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" field="terms" [width]="400" title="Terms">
+        </kendo-grid-column>
+        <kendo-grid-column   [headerClass]="headerStyle" field="terms" title="Action"   [width]="200">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <div *ngIf="!item.isaccepted && !item.isdeviated">
+                        <a (click)="saveConditionCheckForAccept(item)"
+                            class="color-secondary text-center show-pointer me-5">Accept</a>
+                        <a (click)="saveConditionCheckForDevaite(item)"
+                            class="text-primary show-pointer text-center">Deviate</a>
+                    </div>
+                    <div *ngIf="item.isaccepted || item.isdeviated">
+                        <a *ngIf="item.isaccepted" class="text-success show-pointer text-center">Accepted</a>
+                        <a *ngIf="item.isdeviated" class="text-primary show-pointer text-center">Deviated</a>
+
+                    </div>
+
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" field="deviation" title="Deviation Reason" >
+
+        </kendo-grid-column>
+
+
+
+
+
+    </kendo-grid>
+    <!-- template list -->
+</div>

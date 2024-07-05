@@ -1,0 +1,252 @@
+<!----------------------->
+<!----------------------->
+<!-- Page Title starts -->
+<!----------------------->
+<!----------------------->
+<div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="container-xxl d-flex flex-stack px-0">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                Min/Max Pending PR
+            </h1>
+            <!--end::Title-->
+        </div>
+        <!--end::Page title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+            <!--begin::Filter menu-->
+            <div class="m-0">
+                <!--begin::Menu toggle-->
+
+                <!--end::Menu toggle-->
+                <!--begin::Menu 1-->
+                <a (click)="openFilterDrawer()" class="btn btn-sm btn-secondary btn-active-light-primary ms-2"
+                    id="filter2-toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                    <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    Filter
+                </a>
+                <!--end::Menu 1-->
+            </div>
+            <!--end::Filter menu-->
+            <!--begin::Primary button-->
+            <!-- <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">
+              Create        </a> -->
+            <!--end::Primary button-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+
+<!----------------------->
+<!----------------------->
+<!-- Page Title ends -->
+<!----------------------->
+<!----------------------->
+
+
+
+<div class="card over-view-box">
+    <div class="card-body p-9 pt-3 cs-kendo-grid">
+
+        <div class="filter-pills-mobile">
+            <span *ngIf="customFilter.dateRangeSelected?.days!==0" class="badge badge-light-blue px-4 fs-7 mb-1 rounded-pill">
+                {{customFilter.dateRangeSelected?.rangeName}}
+                <span *ngIf="!customFilter.dateRangeSelected?.isDefault" class="badge badge-circle ms-2">
+                    <span (click)="closeFilter('')" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+            <span *ngIf="customFilter.dateRangeSelected?.days===0" class="badge badge-light-blue me-5 px-4 fs-7 rounded-pill">
+                {{customFilter.dateRangeSelected?.startDate | date:'dd MMM YYYY'}} - {{customFilter.dateRangeSelected?.endDate | date:'dd MMM YYYY'}}<span
+                    class="badge badge-circle ms-2">
+                    <span (click)="closeFilter('')" class="svg-icon svg-icon-1 me-0"><svg width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                            <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
+                                fill="currentColor" />
+                            <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </span>
+            </span>
+        </div>
+
+
+        <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+            [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+            [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                                pageSizes:true,
+                                info: true
+                            }" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+
+            <ng-template kendoGridToolbarTemplate>
+                <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                    <app-filter-view *ngIf="refreshComponent" [customFilter]="customFilter"
+                        (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                        (closeFilterEmitter)="closeFilter($event)"></app-filter-view>
+
+                    <div class="d-flex min-max-export-btnbox">
+                        <div *ngIf="lastSelectedSite!==null" class="d-flex rfq me-5">
+                            <!-- <button type="button"  class="btn btn-primary btn-sm"
+                            icon="file-excel">Create RFQ</button> -->
+                            <button type="button" id="createRfq" (click)="createRfqHandler()"
+                                class="btn btn-light-blue btn-sm btn-active-icon-white">
+                                <span class="indicator-label">
+                                    Create RFQ
+                                </span>
+                                <span class="indicator-progress">
+                                    Please wait... <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="d-flex excel-export">
+                            <button type="button" kendoGridExcelCommand class="btn btn-light-success btn-sm"
+                                icon="file-excel">Export</button>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+            <!-- Kendo Default Loader -->
+            <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+            </ng-template>
+            <!-- Kendo End Default Loader -->
+
+            <kendo-grid-command-column field="sno" [columnMenu]="false" title="#"
+            [width]="60"><ng-template kendoGridCellTemplate
+                let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+        </kendo-grid-command-column>
+            <kendo-grid-command-column title="Select" [columnMenu]="false" [width]="80">
+                <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                    <ng-container>
+                        <div autoClose="'outside'" container="body">
+
+                            <div class="form-check form-switch form-check-custom form-check-solid justify-content-center ">
+                                <input class="form-check-input h-20px w-30px " type="checkbox"
+                                    (change)="checkBoxSelectedHandler(item,rowIndex)" [(ngModel)]="item.isEnabled"
+                                    style="border:1px solid #d3d3d3;" />
+                                <!-- <label class="form-check-label" for="flexSwitch20x30">
+
+                                </label> -->
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-command-column>
+
+            <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Stock" [width]="90">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a (click)="onModelClick('Hand', item);" class="color-secondary text-center">On Hand</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-command-column>
+
+            <kendo-grid-command-column title="Order Qty" [columnMenu]="false" [width]="90">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <div container="body"
+                            class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                            <div class="col-md-12 ">
+                                <input [disabled]="!item.isEnabled" type="number"
+                                    [ngClass]="getValidation(item)?'border border-danger':'' "
+                                    class="form-control py-1" [(ngModel)]="item.enterQty" />
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-command-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="site" title="Site" [width]="90">
+            </kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="warehouse" [width]="135" title="Warehouse">
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="buyerGroup" [width]="140" title="Buyer Group">
+
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="ppoNo" title="PPO no"
+                [width]="LargeColumnWidth"></kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" format="dd-MMM-yyyy" filter="date"
+                field="ppoDate" title="PPO Date" [width]="columnWidth">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.ppoDate | date: 'dd-MMM-yyyy'}}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="itemCode" title="Item Code" [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="itemDescription" title="Item Description"
+                [width]="XtraXtraLargeColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="config" title="Config"
+                [width]="SmallColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM"
+                [width]="SmallColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="minOrderQty" title="Min Order Qty"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="maxOrderQty" title="Max Order Qty"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="reqQuantity" title="Required Qty"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="poQty" title="Pending PO"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="poInProcess" title="PO In Process"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="inProcessQty" title="In Process PR"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="netOrderQty" title="Net Order Qty"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="orderedQty" title="Ordered Qty"
+                [width]="columnWidth"></kendo-grid-column>
+
+
+            <kendo-grid-column [headerClass]="headerStyle" field="prQty" title="Pending PR"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="prInReview" title="PR In Review"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="lastPurchasePrice" title="Last Purchase Price"
+                [width]="XtraLargeColumnWidth">
+
+            </kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="ppoAmount" title="PPO amount"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="lastPONo" title="Last PO No"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field='lastPODate' format="dd-MMM-yyyy"
+                filter="date" title="Last PO Date" [width]="columnWidth">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.lastPODate | date: 'dd-MMM-yyyy'}}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="totalConsumption365Days"
+                title="Total Consumption For 365 Days" [width]="250"></kendo-grid-column>
+
+            <kendo-grid-excel [fetchData]="allData" pages fileName="Min/Max Pending PR.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+.k-table-td {
+  white-space: nowrap;
+  // padding: 4px 12px!important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.custom-div-class {
+  padding: 5px 10px;
+  border-bottom: 1px solid gray;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

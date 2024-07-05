@@ -1,0 +1,973 @@
+<div class="card">
+  <div class="card-body vendor-analysis-tab-box py-3">
+    <!-- <div class="example-config mb-3">
+      <button kendoButton (click)="pdf.saveAs('invoice.pdf')" class="btn btn-sm btn-light-success"> Save As PDF...
+      </button>
+    </div> -->
+
+    <!-- <h6 class="text-dark" style="margin : 19px">Line Item Information</h6>
+    <div class="d-md-flex align-items-start justify-content-center ms-5 me-5  mb-20">
+      <div>
+        <div class="card h-200px w-300px me-5 bg-light">
+          <div class="card-body py-3">
+            <div class="d-flex justify-content-between align-items-center  mb-1">
+              <span class="card-inner-heading">Item Code :</span>
+              <span class="card-inner-value">584585</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center  mb-1">
+              <span class="card-inner-heading">Quantity :</span>
+              <span class="card-inner-value">5</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center  mb-1">
+              <span class="card-inner-heading">UOM :</span>
+              <span class="card-inner-value">NOS</span>
+            </div>
+            <div class="">
+              <span class="card-inner-heading">Description :</span>
+              <span class="card-inner-value">VALVE,ANGLE;50 NB;PSA (ROTEX), PN:AV
+                50090V01-F4-P2-16G ATM 0-16;AIR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+           pageSizes:true,
+           info: true
+           }" [sortable]="{
+         allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort"
+        (dataStateChange)="onStateChange($event)">
+
+        <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false" title="Comparison"
+          [width]="180">
+          <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+              <div class="text-start"> {{item.name}} </div>
+            </ng-container>
+          </ng-template>
+        </kendo-grid-command-column>
+
+        <kendo-grid-column-group title="Vendor 1">
+          <kendo-grid-column title="R1">
+          </kendo-grid-column>
+          <kendo-grid-column title="R2">
+          </kendo-grid-column>
+          <kendo-grid-column title="R3">
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+
+        <kendo-grid-column-group title="Vendor 1">
+          <kendo-grid-column title="R1">
+          </kendo-grid-column>
+          <kendo-grid-column title="R2">
+          </kendo-grid-column>
+          <kendo-grid-column title="R3">
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+        <kendo-grid-column-group title="Vendor 1">
+          <kendo-grid-column title="R1">
+          </kendo-grid-column>
+          <kendo-grid-column title="R2">
+          </kendo-grid-column>
+          <kendo-grid-column title="R3">
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+
+
+      </kendo-grid>
+
+    </div> -->
+
+
+
+    <kendo-pdf-export #pdf paperSize="A0" margin="2cm">
+      <ul class="nav nav-tabs nav-line-tabs mb-5 fs-4">
+        <!-- <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_143">Price Bid Comparison</a>
+        </li> -->
+        <li *ngIf="lineItemShow()" class="nav-item" >
+          <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_246">Line Item Information</a>
+        </li>
+        <li *ngIf="HeaderInformationShowCondition()" class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_244">Header Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_245">Vendor Analysis</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_20">CS Sheet</a>
+        </li>
+
+        <!-- <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_345">Link 3</a>s
+          </li> -->
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <!-- <div class="tab-pane fade show active" id="kt_tab_pane_143" role="tabpanel">
+          <div class="d-md-flex comparison-box ">
+            <div>
+              <h6 class="text-dark">Line Item Information</h6>
+              <div class="card h-200px w-300px me-5 bg-light">
+                <div class="card-body py-3">
+                  <div class="d-flex justify-content-between align-items-center  mb-1">
+                    <span class="card-inner-heading">Item Code :</span>
+                    <span class="card-inner-value">584585</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center  mb-1">
+                    <span class="card-inner-heading">Quantity :</span>
+                    <span class="card-inner-value">5</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center  mb-1">
+                    <span class="card-inner-heading">UOM :</span>
+                    <span class="card-inner-value">NOS</span>
+                  </div>
+                  <div class="">
+                    <span class="card-inner-heading">Description :</span>
+                    <span class="card-inner-value">VALVE,ANGLE;50 NB;PSA (ROTEX), PN:AV
+                      50090V01-F4-P2-16G ATM 0-16;AIR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="  pb-3  hover-scroll-x">
+              <h6 class="text-dark ms-5">Vendor</h6>
+              <div class="d-flex ms-5">
+                <div class="border rounded d-flex  me-3">
+             
+                  <div id="kt_docs_card_collapsible" class="w-400px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Amtech India </h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                   
+                      <div>
+                        <div class="d-flex justify-content-between">
+                          <div style="width: 150px;">
+
+                          </div>
+                          <div class="d-flex">
+                            <span style="width: 50px;">R1</span>
+                            <span style="width: 50px;">R2</span>
+                            <span style="width: 50px;">R3</span>
+                          </div>
+                        </div>
+                        <h6>Price Comparison</h6>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <div>
+                            <span class="card-inner-heading">Unit Price :</span>
+                          </div>
+                          <div class="d-flex">
+
+
+                            <span class="card-inner-value">5345</span>
+                            <span class="card-inner-value">5345</span>
+                            <span class="card-inner-value">5345</span>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <div>
+                            <span class="card-inner-heading">Dis. % :</span>
+                          </div>
+                          <div class="d-flex">
+                            <span class="card-inner-value">5</span>
+                            <span class="card-inner-value">45</span>
+                            <span class="card-inner-value">45</span>
+                          </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Dis. Amount :</span>
+                          <span class="card-inner-value">456</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Net Amount :</span>
+                          <span class="card-inner-value">456</span>
+                        </div>
+                        <div class="">
+                          <h6>Technical Response </h6>
+                          <div class="d-flex justify-content-between align-items-center  mb-1">
+                            <div>
+                              <span class="card-inner-heading"> Make : </span>
+                            </div>
+
+                            <div class="d-flex">
+                              <span class="card-inner-value">HP</span>
+                              <span class="card-inner-value">HP</span>
+                              <span class="card-inner-value">HP</span>
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center  mb-1">
+                            <span class="card-inner-heading"> Model : </span>
+                            <span class="card-inner-value"> 345 </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+                 
+                  <div id="kt_docs_card_collapsible1" class="w-400px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 2 </h5>
+                    </div>
+                    <div class="card-body py-3  ">
+                   
+                      <div>
+                        <h6>Price Comparison</h6>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Unit Price :</span>
+                          <span class="card-inner-value">5345</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Dis. % :</span>
+                          <span class="card-inner-value">45</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Dis. Amount :</span>
+                          <span class="card-inner-value">456</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Net Amount :</span>
+                          <span class="card-inner-value">456</span>
+                        </div>
+                        <div class="">
+                          <h6>Technical Response </h6>
+                          <div class="d-flex justify-content-between align-items-center  mb-1">
+                            <span class="card-inner-heading"> Make : </span>
+                            <span class="card-inner-value"> HP </span>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center  mb-1">
+                            <span class="card-inner-heading"> Model : </span>
+                            <span class="card-inner-value"> 345 </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="tab-pane fade  show active" id="kt_tab_pane_246" role="tabpanel">
+          <app-line-information [rfqDetail]="rfqDetail"></app-line-information>
+        </div>
+
+        <div class="tab-pane fade" id="kt_tab_pane_244" role="tabpanel">
+          <!--begin::Accordion-->
+          <app-header-information [rfqDetail]="rfqDetail"></app-header-information>
+          <!--end::Accordion-->
+
+
+          <!-- <div class="d-md-flex comparison-box ">
+            <div>
+           
+            </div>
+            <div class="  pb-3  hover-scroll-x">
+              <div class="d-flex ">
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">1000</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Fixed</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">20</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Cash Only</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">50% Advance</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">10 Days</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible1" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible12" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 2</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible13" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 5</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible15" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+                
+                  <div id="kt_docs_card_collapsible16" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+                     
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Packing :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Charge Type :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Logistic :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Payment Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Delivery Terms :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+          <!-- <div class="d-md-flex comparison-box ">
+            <div>
+           
+            </div>
+            <div class="  pb-3  hover-scroll-x">
+              <div class="d-flex ">
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Accepted</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Accepted</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Accepted</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible1" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Accepted</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Remark</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible12" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 6</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible13" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+
+                  <div id="kt_docs_card_collapsible15" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="border rounded d-flex  me-3">
+                
+                  <div id="kt_docs_card_collapsible16" class="w-300px">
+                    <div class="card-header align-items-center  bg-light">
+                      <h5 class="text-dark mb-0"> Vendor 4</h5>
+                    </div>
+                    <div class="card-body py-3  ">
+                     
+                      <div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term1 : </span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term2 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term3 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Technical Term4 :</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Terms And Condition Remarks:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center  mb-1">
+                          <span class="card-inner-heading">Wonder Cement Terms and
+                            Conditions:</span>
+                          <span class="card-inner-value">Value</span>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <h6 class="text-blue  mt-10"> Non Pricing</h6> -->
+
+          <!-- <h6 class="text-blue mt-10"> Incoterms</h6> -->
+
+        </div>
+        <div class="tab-pane fade" id="kt_tab_pane_245" role="tabpanel">
+          <!-- <div class=" mt-5 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <label class="fw-bold mb-0 fs-6">Technical Approver Comment</label>
+              <button class="btn btn-sm btn-light-primary p-2 px-3">Submit</button>
+            </div>
+
+            <textarea class="form-control min-h-50px" placeholder="Leave a comment here"></textarea>
+
+          </div> -->
+          <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+            [data]="gridViewvendoranalysis" [group]="state.group" [filter]="state.filter" [filterable]="false"
+            [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+            pageSizes: true,
+            info: true
+          }" [sortable]="{
+            allowUnsort: true,
+            mode: 'multiple'
+          }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+
+            <!-- Kendo Default Loader -->
+            <ng-template kendoGridLoadingTemplate>
+              <div *ngIf="loading">
+                <app-wonder-loader></app-wonder-loader>
+              </div>
+            </ng-template>
+            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+              [width]="ExtraSmallColumnWidth">
+              <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                }}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column cell [headerClass]="headerStyle" field="vendorcode" title="Vendor Code"
+              [width]="columnWidth"></kendo-grid-column>
+
+
+
+
+            <kendo-grid-column [headerClass]="headerStyle" field="vendorname" title="Vendor Name"
+              [width]="MediumColumnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="statusvendor" title="Status"
+              [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="participatestatus" title="Participation"
+              [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="tnc" title="T & C"
+              [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="technical" title="Technical"
+              [width]="columnWidth"></kendo-grid-column>
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="sarogateBidding" title="Surrogate
+            Bidding"
+              [width]="columnWidth"></kendo-grid-column> -->
+            <kendo-grid-column *ngIf="techApprovalCondition()" [headerClass]="headerStyle" field="technicalApprove"
+              title="Tech Approve" [width]="columnWidth">
+              <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                  <div container="body"
+                    class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                    <div class="col-md-12 ">
+                      <select [disabled]="isTechApprovalAndScoreDisabled()" [(ngModel)]="item.technicalApprove"
+                        class="form-select" aria-label="Select example" type="type" name="type">
+
+                        <option value="">Select </option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Not Approved">Not Approved</option>
+
+                      </select>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column *ngIf="scoreCondition()" [headerClass]="headerStyle" field="technicalScore" title="Score"
+              [width]="columnWidth">
+              <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                  <div container="body"
+                    class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                    <div class="col-md-12 ">
+                      <input [disabled]="isTechApprovalAndScoreDisabled()"
+                        [ngClass]="item.technicalScore > 100 ?'border border-danger':'' " type="number"
+                        class="form-control py-1" type="number" [(ngModel)]="item.technicalScore" />
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column *ngIf="techApprovalCondition();" [headerClass]="headerStyle" field="scoreDocPath"
+              title="Document" [width]="250">
+              <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                <ng-container>
+                  <!-- <button (click)="uploadNewDocument($event ,rowIndex)" type="file" type="button"
+                    class="btn btn-light-success btn-sm me-3 " icon="file-excel" title="Upload New Document">
+
+                    <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon  m-0"></span>
+
+
+                  </button> -->
+                  <input class="form-control py-2" *ngIf="uploadButtonCondition()"
+                    [disabled]="uploadFileDisabledCondition()" (change)="uploadNewDocument($event , rowIndex )"
+                    [value]="item?.fileDetail?.url" type="file">
+                </ng-container>
+              </ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="" title="Submit" [width]="100">
+              <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                <ng-container>
+                  <!-- <button type="button" (click)="ScoringByCollaborator(rowIndex)" class="btn btn-primary btn-sm">
+                    Submit
+                  </button> -->
+                  <div [hidden]="lineSubmitVisibilty(item)" class="mt-2">
+                    <a (click)="submithandler(rowIndex)" class="cursor-pointer me-5">
+                      <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path
+                          d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                      </svg>
+                    </a>
+                    <a (click)="cancelButtonHandler(rowIndex)" class="cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                      </svg>
+                    </a>
+                  </div>
+
+                </ng-container>
+              </ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+            field="scoreDocPath" title="Download" [width]="SmallColumnWidth">
+
+
+            <ng-template kendoGridCellTemplate let-item>
+              <span *ngIf="item.scoreDocPath" (click)="downloadAttachment(item.scoreDocPath)"
+                class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                <!-- download-svg -->
+                <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-3 text-blue"
+                  title="Pricebid Attachment Download"></span>
+              </span>
+            </ng-template>
+
+          </kendo-grid-column>
+
+          </kendo-grid>
+          <br>
+
+        </div>
+        <div class="tab-pane fade " id="kt_tab_pane_20" role="tabpanel">
+          <div class="row border-bottom border-gray-300 ">
+      
+      
+            <div class=" mb-5 col-md-6 col-lg-4">
+              <div class=" mb-5">
+                <h4 class="me-4 min-w-150px mb-0 "> Select Rounds : </h4>
+                <span class="text-gray-700  form-check text-blue  text-hover-primary  d-flex align-items-center">
+                  <input class="form-check-input h-20px w-20px my-5 pb-5 me-3 fs-5" type="checkbox" value="" id=" "
+                    [(ngModel)]="selectAllrounds" (change)="selectallrounds()" />Select All Rounds</span>
+              </div>
+      
+              <div class="round-box w-100">
+      
+      
+                <div class="round-inner-box" *ngFor="let roundItem of roundlist let index=index">
+                  <div class="form-check">
+                    <input class="form-check-input h-20px w-20px " [(ngModel)]="roundItem.isroundenabled"
+                      (change)="checkboxChnageHandler(roundItem)" type="checkbox" value="" id=" " />
+                  </div>
+                  <span>R{{index+1}}</span>
+      
+                </div>
+      
+              </div>
+      
+            </div>
+            <div class=" col-md-6 col-lg-8">
+      
+              <div class=" mb-5">
+                <h4 class="me-4 min-w-150px mb-0"> Select Vendors : </h4>
+                <span class="text-gray-700  form-check text-blue  text-hover-primary  d-flex align-items-center">
+                  <input class="form-check-input  h-20px w-20px my-5 pb-5 me-3 fs-5" type="checkbox" value="" id=" "
+                    [(ngModel)]="selectAllvendor" (change)="selectallvendor()" />Select All Vendors</span>
+              </div>
+              <div class="vendorname-box">
+      
+      
+                <div class=" vendor-box mb-2" *ngFor="let vendorItem of vendorslistdata">
+                  <div class="form-check">
+                    <input class="form-check-input h-20px w-20px " [(ngModel)]="vendorItem.isvendorEnabled"
+                      (change)="vendorboxChnageHandler(vendorItem)" type="checkbox" value="" id=" " />
+                  </div>
+                  <span>{{vendorItem.vendorname}}</span>
+      
+                </div>
+      
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-5">
+            <button class=" btn btn-sm btn-light-success" (click)="downloadCsComparisionSheet()"> Download CS
+              Sheet</button>
+          </div>
+        </div>
+        <!-- <div class="tab-pane fade" id="kt_tab_pane_3345" role="tabpanel">
+              ...
+          </div> -->
+      </div>
+    </kendo-pdf-export>
+
+  </div>
+
+</div>

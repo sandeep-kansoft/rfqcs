@@ -1,0 +1,42 @@
+div {
+    // Firefox
+    scrollbar-width: thin;
+  
+    // Webkit
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  
+  li {
+    cursor: pointer;
+  }
+  
+  a {
+    cursor: pointer;
+  }
+  
+  .fixed-header {
+    height: 75vh;
+  }
+  
+  .excel-export {
+    display: flex;
+    flex: 1;
+  
+    justify-content: flex-end;
+  }
+    
+  .dropdown-toggle::after {
+    display: none;
+  }
+  
+  
+  .item {
+    width: auto;
+    height: auto;
+    margin: 10px auto;
+    border: 1px solid #eaeaea;
+    padding: 10px;
+  }

@@ -1,0 +1,340 @@
+<div class="d-flex mt-10 creat-rfq-box">
+
+
+    <span (click)="backButtonClick()" _ngcontent-ieb-c632="" class="justify-content-center fullscreen-back-icon"
+        ng-reflect-inline-s-v-g="../../../../assets/media/wonde"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+            height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z">
+            </path>
+        </svg></span>
+    <h3 class="card-title fw-bolder text-dark  ms-5">Create RFQ / Auction</h3>
+</div>
+<div class="card shadow-none rounded-0 w-100 rfq-form-sidebar mt-10">
+    <!-- <div class="card-header" id="">
+
+        <div _ngcontent-ieb-c632="" class="card-title m-0">
+
+        </div>
+
+    </div> -->
+    <div *ngIf="currentSelectedPage==='form'" class="card-body w-100 ">
+        <form [formGroup]="formGroup" (submit)="eventFormSubmit()">
+
+
+            <div class="">
+                <div class=" mb-5 w-100 me-5">
+                    <label for="floatingname" class="required text-gray-800 mb-2">Type of RFQ</label>
+
+                    <select formControlName="typeOfRfq" class="form-select" aria-label="Select example">
+
+                        <option value="RFQ">RFQ</option>
+                        <option value="Auction">Auction</option>
+
+                    </select>
+                </div>
+
+                <div *ngIf="formGroup.get('typeOfRfq')?.value === 'Auction'" class="mb-5 w-100">
+                    <label for="floatingname" class="required text-gray-800 mb-2">Type of Auction</label>
+
+                    <select formControlName="typeOfAuction" class="form-select" aria-label="Select example">
+
+                        <option value="REVAUC">Reverse Auction</option>
+                        <option value="FWDAUC">Forward Auction</option>
+
+                    </select>
+                </div>
+                <div *ngIf="formGroup.get('typeOfRfq')?.value === 'Auction' && isAuctionModelVisible"
+                    class=" mb-5 w-100 me-5">
+                    <label for="floatingname" class="required text-gray-800 mb-2">Auction Mode </label>
+                    <select formControlName="AuctionMode" class="form-select" aria-label="Select example">
+
+                        <option value="Both">Both</option>
+                        <option value="Color">Color</option>
+                        <option value="Rank">Rank</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class=" mb-5 w-100 me-5">
+                <label for="floatingname" class="required text-gray-800 mb-2">{{formGroup.get('typeOfRfq')?.value ===
+                    'Auction' ?
+                    'Auction' : 'RFQ' }} Title </label>
+
+                <input type="name" formControlName="title" class="form-control" placeholder="RFQ / Auction Title" />
+                <div>
+                    <p *ngIf="getValidation('title')" class="pt-2 ps-1">
+                        <span class="fw-400 font-size-12 "
+                            [ngClass]="getValidation('title') ? 'mat-error-text' : '' ">Title
+                            {{formGroup.get('typeOfRfq')?.value ===
+                            'Auction' ?
+                            'Auction' : 'RFQ' }} Title Field is required</span>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class=" mb-5 w-100">
+                <label for="floatingname " formControlName="title"
+                    class="text-gray-800 mb-2 required">{{formGroup.get('typeOfRfq')?.value === 'Auction' ?
+                    'Auction' : 'RFQ' }} Description
+                </label>
+
+                <input [ngClass]="getValidation('description') ? 'mat-error-text' : '' " formControlName="description"
+                    type="name" class="form-control" placeholder="RFQ / Auction Description " />
+
+                <div>
+                    <p *ngIf="getValidation('description')" class="pt-2 ps-1">
+                        <span class="fw-400 font-size-12 "
+                            [ngClass]="getValidation('description') ? 'mat-error-text' : '' ">Description Field is
+                            required</span>
+                    </p>
+                </div>
+            </div>
+            <div class=" card-footer py-5 text-end site-draw-form">
+
+
+                <div class="mb-5 w-100 me-5">
+                    <button type="submit" class="btn btn-select btn-sm">Select PR</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="currentSelectedPage==='mypr'" class="card-body w-100 ">
+        <h4 class="fw-bolder m-0 mb-3">Select Purchase Requisition</h4>
+        <!-- <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }"
+            [data]="gridView" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="true"
+            [sortable]="{allowUnsort: true,mode: 'multiple' }" [sort]="state.sort" [navigable]="true"
+            (dataStateChange)="onStateChange($event)">
+
+
+            <kendo-grid-column field="rowIndex" title="Sr. No." [width]="100"><ng-template kendoGridCellTemplate
+                    let-rowIndex="rowIndex">{{rowIndex+1}}     </ng-template>   
+            </kendo-grid-column>
+            <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="pR_NUM"
+                title="Item Selected" [width]="columnWidth">
+                <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                    <ng-container>
+                        <a (click)="onItemClick(item ,rowIndex)" class="color-secondary text-center hand-pointer">
+                            {{item.itemSelected? item.itemSelected : 'Item Selected'}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+
+
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="pR_NUM" title="PR no"
+                [width]="columnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a class="color-secondary text-center">{{item.pR_NUM}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" title="PR description" [width]="longColumnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        {{item.description}}
+                    </ng-container>
+                </ng-template></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="enterdate" filter="date" [width]="220"
+                title="Created Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.enterdate | date: 'dd-MMM-yyyy H:mm'}}
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="PROJECT_NAME" title="Project ID"
+                [width]="columnWidth"></kendo-grid-column>
+
+            <kendo-grid class="fixed-header"
+                [loading]="loading"
+                [columnMenu]="{ filter: true ,sort : true  }"
+                [data]="gridView"
+                [resizable]="true"
+                [skip]="state.skip"
+                [pageSize]="pageSize"
+                [pageable]="true"
+                [sortable]="{allowUnsort: true,mode: 'multiple' }"
+                [sort]="state.sort"
+                [navigable]="true"
+                scrollable="none"
+                kendoGridFocusable
+                (dataStateChange)="onStateChange($event)">
+
+
+                <kendo-grid-column field="rowIndex" title="Sr. No." [width]="100"><ng-template kendoGridCellTemplate
+                        let-rowIndex="rowIndex">{{rowIndex+1}}     </ng-template>   
+                </kendo-grid-column>
+                <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="pR_NUM"
+                    title="Item Selected" [width]="columnWidth">
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                        <ng-container>
+                            <a (click)="onItemClick(item ,rowIndex)" class="color-secondary text-center hand-pointer">
+                                {{item.itemSelected? item.itemSelected : 'Item Selected'}}</a>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+
+                <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="pR_NUM" title="PR no"
+                    [width]="columnWidth">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <a class="color-secondary text-center">{{item.pR_NUM}}</a>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" title="PR description" [width]="longColumnWidth">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            {{item.description}}
+                        </ng-container>
+                    </ng-template></kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="enterdate" filter="date" [width]="220"
+                    title="Created Date">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.enterdate | date: 'dd-MMM-yyyy H:mm'}}
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column [headerClass]="headerStyle" field="PROJECT_NAME" title="Project ID"
+                    [width]="columnWidth"></kendo-grid-column>
+
+            </kendo-grid>
+
+        </kendo-grid> -->
+
+
+        <kendo-grid #grid [data]="gridView" [loading]="loading" [resizable]="true" [skip]="state.skip"
+            [pageSize]="state.take" [pageable]="{
+                                pageSizes:true,
+                                info: true
+                            }" [sortable]="{allowUnsort: true,mode: 'multiple' }" [sort]="state.sort"
+            [navigable]="true" (dataStateChange)="onStateChange($event)" class="grid-padding">
+
+            <!-- Kendo Default Loader -->
+            <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+            </ng-template>
+            <!-- Kendo End Default Loader -->
+
+            <ng-template kendoGridToolbarTemplate>
+                <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between padding-x-0 mb-3">
+                    <div class="d-block d-md-flex align-items-center justify-content-between">
+                        <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+
+                        <button class="k-button" class="btn btn-light-blue btn-sm ms-0 ms-md-2 me-2"
+                            (click)="expandAll(grid)" title="Expand all">Expand
+                            All</button>
+                        <button class="k-button" class="btn btn-light-blue btn-sm ml-2" (click)="collapseAll(grid)"
+                            title="Collapse all">Collapse All</button>
+                    </div>
+                    <div class="d-flex align-items-end align-self-end excel-export">
+                        <button id="sumbitbtn" (click)="createRfqManually()" type="submit"
+                            class="btn btn-select btn-sm ">
+                            <span class="indicator-label">
+                                {{this.pageType=='PRICE_BID'?'Update':'Submit'}}
+                            </span>
+                            <span class="indicator-progress">
+                                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+
+            <kendo-grid-column field="rowIndex" [headerClass]="headerStyle" title="#" [width]="50"><ng-template
+                    kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" title="Item Selected"
+                [width]="110">
+                <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                    <ng-container>
+                        <a style="pointer-events: none;">
+                            {{item.lineCount? item.lineCount : 0}}
+                        </a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="project_name" title="Project Name"
+                [width]="MediumColumnWidth"></kendo-grid-column>
+
+
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="prNum" title="PR No"
+                [width]="MediumColumnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a (click)="openLinesModel(item,true);" class="color-secondary text-center">{{item.prNum}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="PR Description"
+                [width]="XtraXtraLargeColumnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        {{item.prDescription}}
+                    </ng-container>
+                </ng-template></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="siteName" title="Site"
+                [width]="70"></kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="department" title="Department"
+                [width]="150"></kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" field="createdDate" filter="date" [width]="LargeColumnWidth"
+                title="Created Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.createdDate | date: 'dd-MMM-yyyy H:mm'}}
+                </ng-template>
+            </kendo-grid-column>
+
+
+
+            <ng-template kendoGridDetailTemplate let-dataItem let-rowIndex="rowIndex">
+                <app-pr-lines-detail (updateCountEmitter)="updateUserDetail($event,dataItem,grid,rowIndex)"
+                    [prLineData]="dataItem.prLineItems"></app-pr-lines-detail>
+            </ng-template>
+        </kendo-grid>
+
+
+        <!-- selected pr lines start -->
+        <!-- <h4 class="fw-bolder mt-5 mb-5">Event Item Information</h4>
+        <kendo-grid [data]="selectedPRLineGridView">
+            <kendo-grid-column field="sno" title="LINE NO" [width]="100">
+                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="itemcode" title="Item Code"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="iteM_DESCRIPTION" title="item description"
+                [width]="350"></kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="uom" title="Requestor"
+                [width]="columnWidth"></kendo-grid-column>
+
+            <kendo-grid-column headerClass="grid-header-menu" field="enterQty" title="quantity"
+                [width]="columnWidth"></kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="uom" title="UOM" [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="Line Item Number"
+                [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="PR No" [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="PR Information"
+                [width]="columnWidth">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="Project Name" [width]="columnWidth">
+            </kendo-grid-column>
+
+
+        </kendo-grid> -->
+
+        <!-- selected pr lines end -->
+
+
+    </div>
+</div>
+<!--end::Alert-->

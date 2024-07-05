@@ -1,0 +1,288 @@
+<!-- <div class="container-fluid overflow-auto shadow-none p-0">
+    <div class="modal-content shadow-none mb-5 mb-xl-10 over-view-box"> -->
+        <div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details"
+            aria-expanded="true" aria-controls="kt_account_profile_details">
+            <div class="modal-title m-0">
+                <h3 class="fw-bolder m-0">PR Detail Form</h3>
+            </div>
+            <div class="card-title m-0" (click)="closeModel()">
+                <span class="justify-content-center " [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+            </div>
+        </div>
+        <div class="modal-body shadow-none">
+            <div id="purchaseRequisitionLine" class="fs-6 collapse show ">
+                <div class="bg-white px-6 mt-2">
+
+                    <div class="row">
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Item ID</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="PrLinesDetail.itemcode ?PrLinesDetail.itemcode :''" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Pending PO :</span></label>
+                            <input disabled type="tel" [value]="(PrLinesDetail.pendingPO ? PrLinesDetail.pendingPO:'')"
+                                class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Pending PR :</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+
+
+
+                        <div class="col-md-4 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>In Process PR
+                                    :</span></label>
+                            <input disabled type="tel" value="{{(PrLinesDetail.inProcessPR ? PrLinesDetail.inProcessPR:'')}}"
+                                class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Available Stock
+                                    :</span></label>
+                            <input disabled [value]="(PrLinesDetail.availableStock ? PrLinesDetail.availableStock:'')" type="tel"
+                                class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span> Stock In Other Warehouse
+                                    :</span></label>
+                            <input disabled [value]="(PrLinesDetail.stockInOtherWarehouse ? PrLinesDetail.stockInOtherWarehouse:'')" type="tel"
+                                class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+
+
+                        <div class="col-md-8 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Product
+                                    Description</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.itemname ? PrLinesDetail.itemname:'')" name="contactPhone" />
+                        </div>
+
+                        <div class="col-md-12 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Product Long
+                                    Description</span></label>
+                            <textarea disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.iteM_DESCRIPTION ? PrLinesDetail.iteM_DESCRIPTION:'')" name="contactPhone"></textarea>
+                        </div>
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Status</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.status ? PrLinesDetail.status:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">No Of Manpower </label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.noofManpower ? PrLinesDetail.noofManpower:'')" name="company" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Quantity</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.quantity ? PrLinesDetail.quantity:'')" name="contactPhone" />
+                        </div>
+
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">UOM</label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.uom ? PrLinesDetail.uom:'')" name="company" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Unit Price</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.uniT_PRICE ? PrLinesDetail.uniT_PRICE:'')" name="contactPhone" />
+                        </div>
+
+                        <!-- statrt -->
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Net Amount</label>
+                            <input disabled type="number" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.netAmount ? PrLinesDetail.netAmount:'')" name="company" />
+                        </div>
+
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Last Purchase
+                                    Price</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.lastPurchasePrice ? PrLinesDetail.lastPurchasePrice:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>
+                                    Currency</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.currency ? PrLinesDetail.currency:'')" name="contactPhone" />
+                        </div>
+
+
+                        <div class="col-md-8 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Remark</label>
+                            <input disabled type="text" [value]="(PrLinesDetail.remark ? PrLinesDetail.remark:'')"
+                                class="form-control form-control-lg " name="company" />
+                        </div>
+
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Consumption Date</label>
+                            <input disabled type="text" class="form-control form-control-lg " name="company"
+                                [value]="(PrLinesDetail.consumptionDate ? PrLinesDetail.consumptionDate:'')" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Delivery
+                                    Name</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.deliveryName ? PrLinesDetail.deliveryName:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Procument
+                                Category</label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.procumentCategory ? PrLinesDetail.procumentCategory:'')" name="company" />
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Delivery
+                                    Address</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.deliveryAddress ? PrLinesDetail.deliveryAddress:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">State</label>
+                            <input disabled type="text" class="form-control form-control-lg " name="company"
+                                [value]="(PrLinesDetail.stateName ? PrLinesDetail.stateName:'')" />
+                        </div>
+
+                        <div class="col-md-12 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Business Justification -
+                                    Details</span></label>
+                            <textarea disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.bjDetails ? PrLinesDetail.bjDetails:'')" name="contactPhone"></textarea>
+                        </div>
+
+
+
+                        <div class="col-md-4 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Attention
+                                    information</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.attentionInformation ? PrLinesDetail.attentionInformation:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Project ID</label>
+                            <input disabled type="text" class="form-control form-control-lg " name="company"
+                                [value]="(PrLinesDetail.projecT_ID ? PrLinesDetail.projecT_ID:'')" />
+                        </div>
+
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Ledger Account </label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.ledgerAccountName ? PrLinesDetail.ledgerAccountName:'')" name="company" />
+                        </div>
+                        <!-- end -->
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>GLA</span></label>
+                            <input disabled [value]="(PrLinesDetail.gla ? PrLinesDetail.gla:'')" type="tel"
+                                class="form-control form-control-lg " name="contactPhone" />
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">TEFR ID </label>
+                            <input disabled type="text" [value]="(PrLinesDetail.tefrId ? PrLinesDetail.tefrId:'')"
+                                class="form-control form-control-lg " name="company" />
+                        </div>
+
+
+
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Business
+                                    Unit</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.busiUnit ? PrLinesDetail.busiUnit:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">
+                                Cost Center
+                            </label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.costCenter ? PrLinesDetail.costCenter:'')" name="company" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Cost Center
+                                    Group</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.costElementValue ? PrLinesDetail.costElementValue:'')" name="contactPhone" />
+                        </div>
+
+
+
+
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Department</label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.department ? PrLinesDetail.department:'')" name="company" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Inventory
+                                    Site</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.inventorySite ? PrLinesDetail.inventorySite:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Inventory
+                                Warehouse</label>
+                            <input disabled type="text" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.invWarehouse ? PrLinesDetail.invWarehouse:'')" name="company" />
+                        </div>
+
+
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label fw-bold fs-6"><span>Inventory Item
+                                    Configuration</span></label>
+                            <input disabled type="tel" class="form-control form-control-lg "
+                                [value]="(PrLinesDetail.configCode ? PrLinesDetail.configCode:'')" name="contactPhone" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="col-form-label  fw-bold fs-6">Inventory Warehouse
+                                Location</label>
+                            <input disabled type="text" [value]="(PrLinesDetail.warehouseCode ? PrLinesDetail.warehouseCode:'')"
+                                class="form-control form-control-lg " name="company" />
+                        </div>
+
+
+                        <div class="row mb-auto">
+                            <div class="col-md-12">
+                                <label class="col-form-label   fw-bold fs-6">Attachment</label>
+                                <!-- <div class="d-flex flex-row">
+                                                                                                                        <div class="form-control form-control-lg">
+                                                                                                                            File Name :
+                                                                                                                        </div>
+                                                                                                                    </div> -->
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-striped border gy-7 gs-7">
+                                        <thead>
+                                            <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                <th class="min-w-200px text-primary py-2">File Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let file of PrLinesDetail?.doc">
+                                                <td class="py-2">{{file.filename}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+
+    <!-- </div>
+
+</div> -->

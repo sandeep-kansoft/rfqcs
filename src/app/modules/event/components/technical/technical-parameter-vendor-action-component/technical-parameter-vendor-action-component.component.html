@@ -1,0 +1,99 @@
+<!-- <div class="container-fluid overflow-auto"><div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">Vendor Technical Parameters</h3>
+    </div>
+    <div class="card-title m-0 btn btn-icon btn-sm btn-active-light-primary ms-2">
+
+        <!-- close-svg -->
+
+        <span (click)="closeModel()" [inlineSVG]="'./assets/media/svg/close.svg'"
+            class="svg-icon m-0 svg-icon-2"></span>
+
+        <!-- close-svg -->
+    </div>
+</div>
+
+
+<!-- Item Technical Parameter start -->
+<div class="modal-body">
+    <!-- <div>
+        <label class="col-form-label  fw-bold fs-6">Item Code : </label>
+        <label class="col-form-label   fs-6">{{itemCode}} </label>
+    </div>
+    <div>
+        <label class="col-form-label  fw-bold fs-6">Item Name : </label>
+        <label class="col-form-label   fs-6">{{ itemName}} </label>
+    </div> -->
+
+    <kendo-grid [data]="gridView" [loading]="isLoading" [pageSize]="state.take" [resizable]="true" [skip]="state.skip"
+        [pageable]="{
+         pageSizes:true,
+         info: true
+         }" [sortable]="{
+  allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <kendo-grid-column field="sno" title="#" [width]="50">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1 === 0 ? '':
+                rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="parameter" title="Parameter" [width]="300">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <label [ngClass]="{'required': item.isrequired}" for="floatingname"
+                        class="text-gray-800 form-label-text mb-2 ">{{item.parameter}}</label>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column editor="numeric" title="Remark/Confirmation">
+            <ng-template let-rowIndex="rowIndex" kendoGridCellTemplate let-item>
+                <ng-container>
+
+                    <div class=" remark-box w-300px">
+                        <div class="form-check form-switch form-check-custom form-check-solid ">
+
+                            <input (input)="item.isEdited=true" [ngClass]="inValidate && ((item.vendor_Remark === ''|| item.vendor_Remark === undefined || item.vendor_Remark === undefined) && item.isrequired)?
+                            'border-danger' :'' " class="form-control border input-group-lg"
+                                [(ngModel)]="item.vendor_Remark" type="text" class="form-control py-1" />
+                            <!-- <a class="cursor-pointer" *ngIf="item.isEditMode"
+                                (click)="remarkActionHandler(rowIndex,'Save')">
+                                <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                </svg>
+                            </a>
+                            <a class="cursor-pointer" *ngIf="item.isEditMode"
+                                (click)="remarkActionHandler(rowIndex,'Cancel')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-x" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </a>
+                            <a class="cursor-pointer ms-2 text-blue" *ngIf="!item.isEditMode &&  editButtonCondition() "
+                                (click)="remarkActionHandler(rowIndex,'Edit')">
+                                <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue "></span>
+                            </a> -->
+                        </div>
+                    </div>
+
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+
+    </kendo-grid>
+</div>
+
+<div class="modal-footer">
+    <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+        <button type="button" (click)="closeModel()" class="btn me-5 btn-light btn-sm">Cancel</button>
+        <button *ngIf="submitConditionHandler()" (click)="saveConditionCheck()" class="btn btn-primary btn-sm">
+            <span class="indicator-label">Save</span>
+        </button>
+    </div>
+</div>

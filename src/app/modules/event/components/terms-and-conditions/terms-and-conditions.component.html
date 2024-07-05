@@ -1,0 +1,217 @@
+<div class="card mb-5 ">
+  <!-- card header -->
+  <!-- <div class="card-header pt-0 hh-50px align-items-center">
+        <h3 class="card-title flex-column my-0">
+            <span class="card-label fw-bold text-gray-800">Terms &amp; Conditions</span>
+        </h3>
+
+        <div class="card-toolbar my-0">
+            <div class="d-flex align-items-center my-3">
+
+            </div>
+        </div>
+    </div> -->
+  <!-- card header -->
+  <div class="card-body terms-tab py-3">
+
+    <div *ngIf="!isVendorContent()" class="">
+      <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-4">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_4">Commercial
+            T&amp;C</a>
+        </li>
+        <li *ngIf="vendorDeviationTabCondition()" class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_5">Vendor Deviation</a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="kt_tab_pane_4" role="tabpanel">
+
+          <div class="my-5">
+            <!-- template list -->
+            <kendo-grid [loading]="loading" [data]="gridViewTemplate" [group]="state.group" [filter]="state.filter"
+              [filterable]="false" [reorderable]="true" [pageable]="{
+                                 pageSizes:true,
+                                 info: true
+                                 }" [resizable]="true" [skip]="state.skip" [pageSize]="state.take"
+              (dataStateChange)="onStateChange($event)" [sort]="state.sort" (edit)="editHandler($event)"
+              (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)"
+              (add)="addHandler($event)" class="grid-padding">
+
+              <!-- <ng-template kendoGridToolbarTemplate>
+                                <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                                    <app-filter-view
+                                        (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+
+                                </div>
+
+                            </ng-template>
+                             -->
+              <ng-template kendoGridToolbarTemplate *ngIf="gridCommandCondition()">
+                <div class="d-block d-md-flex w-100 justify-content-between mb-3 btn-box">
+                  <div>
+
+                    <button aria-role-check="yes" kendoGridAddCommand type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_ADD_NEW_BUTTON)"
+                      class="btn btn-light-blue mb-3 mb-md-0  btn-sm me-3" title="Add New">
+                      <!-- add-svg -->
+
+                      <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon m-0 "></span>
+
+                      <!-- add-svg ---->
+                      New </button>
+
+
+
+                    <button aria-role-check="yes" (click)="uploadExcelFile()" type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_UPLOAD_EXCEL_BUTTON)"
+                      class="btn btn-light-blue btn-sm me-3 mb-3 mb-md-0" icon="file-excel" title="import from Excel">
+                      <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+                      Excel </button>
+
+                    <button aria-role-check="yes" type="button" (click)='openTemplateListModel()' *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_IMPORT_TEMPLATE_BUTTON)"
+                      class=" btn btn-light-blue btn-sm me-3 mb-3 mb-md-0" title="Import from Template">
+                      <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+
+                      <!-- download-svg ---->
+
+                      From Template </button>
+
+                  </div>
+                  <div class="d-block d-md-flex excel-export" style="flex-shrink: unset;">
+
+                    <button aria-role-check="yes" type="button" kendoGridExcelCommand *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_EXPORT_EXCEL_BUTTON)"
+                      class="btn btn-light-success btn-sm me-3 mb-3 mb-md-0" title="Export to Excel">
+                      <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon m-0 "></span>
+
+                      <!-- download-svg ---->
+
+                      Excel </button>
+
+                    <button aria-role-check="yes" (click)="saveTemplateModel()" *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_SAVE_TEMPLATE_BUTTON)"
+                      class="btn btn-primary btn-sm me-3 mb-3 mb-md-0 ">Save
+                      Template</button>
+                  </div>
+                </div>
+              </ng-template>
+
+
+              <!-- Kendo Default Loader -->
+              <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+              </ng-template>
+              <!-- Kendo End Default Loader -->
+
+
+              <kendo-grid-column [headerClass]="headerStyle" field="sno" title="#" [width]="50">
+                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1 === 0 ? '':
+                  rowIndex+1 }}</ng-template>
+              </kendo-grid-column>
+
+              <!-- <kendo-grid-command-column [headerClass]="headerStyle" title="Actions" [width]="50">
+                                <ng-template kendoGridCellTemplate let-item>
+                                    <ng-container>
+                                        <div class="d-flex">
+                                            <a (click)="deleteTermModal(item)"
+                                                class="btn btn-icon btn-active-white btn-active-color-primary btn-sm me-1 text-primary cursor-pointer-imp">
+                                                <span class="svg-icon  text-primary">
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                        height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                            fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path
+                                                                d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z"
+                                                                fill="currentcolor" fill-rule="nonzero" />
+                                                            <path
+                                                                d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
+                                                                fill="currentcolor" opacity="0.7" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </kendo-grid-command-column> -->
+
+
+              <kendo-grid-command-column *ngIf="gridCommandCondition()" title="Command" [headerClass]="headerStyle"
+                [width]="100">
+
+                <ng-template kendoGridCellTemplate let-isNew="isNew">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <button aria-role-check="yes" kendoGridEditCommand type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_EDIT_ACTION_BUTTON)"
+                      class="bg-img-none bg-opacity-0 border-0  cursor-pointer-imp" title="Edit">
+                      <!-- [primary]="true" -->
+                      <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue m-0 "></span>
+                    </button>
+                    <button  aria-role-check="yes" kendoGridRemoveCommand type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TERMS_CONDITION_COMMERCIAL_T_C_REMOVE_ACTION_BUTTON)"
+                      class="bg-img-none bg-opacity-0 border-0 me-0 cursor-pointer-imp" title="Remove">
+                      <span [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon text-primary m-0 "></span>
+                    </button>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <button kendoGridSaveCommand type="button" class="bg-img-none border-0  shadow-none  bg-opacity-0">
+                      <!-- {{ isNew ? 'Add' : 'Update' }} -->
+                      <span *ngIf="isNew" [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon text-blue m-0 "
+                        title="Add"></span>
+                      <span *ngIf="!isNew" [inlineSVG]="'./assets/media/svg/update.svg'"
+                        class="svg-icon text-success m-0 " title="Update"></span>
+                    </button>
+                    <button kendoGridCancelCommand type="button"
+                      class="bg-img-none border-0  shadow-none  bg-opacity-0 cursor-pointer-imp">
+                      <!-- {{ isNew ?
+                                        'Discard changes' :
+                                        'Cancel'
+                                        }} -->
+                      <span *ngIf="isNew" [inlineSVG]="'./assets/media/svg/close.svg'"
+                        class="svg-icon text-primary m-0 " title="cancel"></span>
+                      <span *ngIf="!isNew" [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-blue m-0 "
+                        title="Discard Change"></span>
+
+
+                    </button>
+                  </div>
+                </ng-template>
+              </kendo-grid-command-column>
+              <kendo-grid-column field="terms" title="Clause Name" [headerClass]="headerStyle">
+                <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+
+                  <div class="row">
+                    <div class="col-12 mb-0">
+                      <kendo-textbox [(ngModel)]="dataItem.terms" class="form-control form-control-lg" name="terms"
+                        required></kendo-textbox>
+                    </div>
+                  </div>
+
+                </ng-template>
+              </kendo-grid-column>
+
+              <!-- WHEN NAVIGATED FROM PR NUMBER END -->
+              <kendo-grid-excel [fetchData]="allData" fileName="Terms And Condations.xlsx">
+
+              </kendo-grid-excel>
+
+            </kendo-grid>
+            <!-- template list -->
+          </div>
+        </div>
+        <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
+          <app-terms-and-condition-vendor-deviation [contentFor]="'Buyer'" [eventStatus]="rfqDetail.eventStatus"
+            [eventId]="rfqDetail.eventid" [rfqDetail]="rfqDetail"></app-terms-and-condition-vendor-deviation>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="isVendorContent()">
+      <app-terms-and-condition-vendor-deviation (updateCheckList$)="updateCheckList()" [contentFor]="'Vendor'"
+        [rfqDetail]="rfqDetail" [eventId]="rfqDetail.eventid"
+        [eventStatus]="rfqDetail.eventStatus"></app-terms-and-condition-vendor-deviation>
+    </div>
+  </div>
+</div>

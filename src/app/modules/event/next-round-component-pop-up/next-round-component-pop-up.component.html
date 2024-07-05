@@ -1,0 +1,261 @@
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title">
+        <div>
+            <div class="d-flex align-items-center">
+                <div class="">
+                    <span class=" fs-3 fw-semibold card-label fw-bold text-gray-800">Select Vendors</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" m-0" (click)="closeModel()" class="btn btn-icon btn-sm btn-active-light-primary ">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  m-0 svg-icon-2"></span>
+    </div>
+</div>
+
+
+
+
+<div class="modal-body ">
+
+    <div class="card-body h-350px overflow-auto">
+        <div *ngIf="loading">
+            <app-wonder-loader></app-wonder-loader>
+        </div>
+
+        <div class="h-350px overflow-auto">
+            <div class="me-4 mb-3">
+                <div class="form-check form-check-sm form-check-custom form-check-solid mt-3">
+
+                    <input [(ngModel)]="SelectAllenabled" (change)="selectAllChangeHandler()" class="form-check-input me-3 " type="checkbox"
+                        value="1">
+                        <span class="fw-bold text-gray-700 fs-5">
+                            Select All Vendors
+                        </span> 
+                        
+                </div>
+            </div>
+            <div *ngFor="let vendorItem of selectedVendorsList;let i=index " class="" (scroll)="onScroll($event)">
+                <div>
+                    <!--begin::Description-->
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <div class="me-4 mb-3">
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid mt-3">
+                                        <input [(ngModel)]="vendorItem.enabled" class="form-check-input" type="checkbox"
+                                            value="1">
+                                    </div>
+                                </div>
+                                <span class="text-muted fw-semibold d-block">{{vendorItem.vendorCode}}</span>
+                                <!-- <span class="badge badge-light-success fs-8 fw-bold ms-5">Status</span> -->
+                                <span class="vertical-line-seperator me-3 ms-3"></span>
+                                <a href="#"
+                                    class="d-flex text-gray-800 text-hover-primary fw-bold fs-6 my-2">{{vendorItem.vendorName}}</a>
+                                <span class="vertical-line-seperator d-none d-md-block me-3 ms-3"></span>
+                                <!-- <a href="#" class="btn btn-sm btn-icon bg-light-blue w-30px h-30px ms-5">
+                                                        <span class="svg-icon svg-icon-blue svg-icon-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="currentColor"/>
+                                                            <rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor"/>
+                                                            <rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor"/>
+                                                            </svg>
+                                                        </span>                    
+                                                    </a> -->
+                                <span class="text-muted fw-semibold d-none d-md-block">{{vendorItem.city}}</span>
+
+                            </div>
+                            <div class="d-flex align-items-center py-0 px-0 me-6 mb-1">
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        class="text-muted fw-bold me-3">Overall&nbsp;({{vendorItem.overAllRating}})</label>
+                                    <app-rating [rating]="vendorItem.overAllRating"></app-rating>
+                                </div>
+                                <span class="vertical-line-seperator me-3 ms-3 d-block d-md-none"></span>
+                                <span class="text-muted fw-semibold d-block d-md-none">{{vendorItem.city}}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="accordion-header" id="kt_accordion_1_header_1">
+                                <button class="accordion-button fs-4 fw-bold w-auto p-2 ms-4" type="button"
+                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#kt_accordion_'+i+'_body_'+i"
+                                    aria-expanded="true" [attr.aria-controls]="'kt_accordion_'+i+'_body_'+i">
+
+                                </button>
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div [id]="'kt_accordion_'+i+'_body_'+i" class="accordion-collapse collapse "
+                        [attr.aria-labelledby]="'kt_accordion_'+i+'_header_'+i"
+                        [attr.data-bs-parent]="'#kt_accordion_'+i">
+                        <div class="accordion-body p-0">
+                            <div class="d-flex">
+
+
+
+                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-0 pe-2">
+                                    <a href="#"
+                                        class="d-flex align-items-center text-gray-400 text-hover-blue me-5 mb-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                        <span class="svg-icon svg-icon-4 me-1"><svg width="18" height="18"
+                                                viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.3"
+                                                    d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                                                    fill="currentColor"></path>
+                                                <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor">
+                                                </rect>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        {{vendorItem.primaryContactPerson}}
+                                    </a>
+                                    <div *ngIf="vendorItem?.vendorEmail && vendorItem?.vendorEmail==null">
+                                        <a href="#"
+                                            class="d-flex align-items-center text-gray-400 text-hover-blue mb-1">
+                                            <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+                                            <span class="svg-icon svg-icon-4 me-1"><svg width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.3"
+                                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                        fill="currentColor"></path>
+                                                    <path
+                                                        d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                            {{vendorItem.vendorEmail}}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-gray-400 text-hover-blue" *ngIf="vendorItem?.contactNo">
+                                    <span class="svg-icon svg-icon svg-icon-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <path
+                                                    d="M11.914857,14.1427403 L14.1188827,11.9387145 C14.7276032,11.329994 14.8785122,10.4000511 14.4935235,9.63007378 L14.3686433,9.38031323 C13.9836546,8.61033591 14.1345636,7.680393 14.7432841,7.07167248 L17.4760882,4.33886839 C17.6713503,4.14360624 17.9879328,4.14360624 18.183195,4.33886839 C18.2211956,4.37686904 18.2528214,4.42074752 18.2768552,4.46881498 L19.3808309,6.67676638 C20.2253855,8.3658756 19.8943345,10.4059034 18.5589765,11.7412615 L12.560151,17.740087 C11.1066115,19.1936265 8.95659008,19.7011777 7.00646221,19.0511351 L4.5919826,18.2463085 C4.33001094,18.1589846 4.18843095,17.8758246 4.27575484,17.613853 C4.30030124,17.5402138 4.34165566,17.4733009 4.39654309,17.4184135 L7.04781491,14.7671417 C7.65653544,14.1584211 8.58647835,14.0075122 9.35645567,14.3925008 L9.60621621,14.5173811 C10.3761935,14.9023698 11.3061364,14.7514608 11.914857,14.1427403 Z"
+                                                    fill="currentColor" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    {{vendorItem?.contactNo}}
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap align-items-center">
+
+                                <div class="d-flex align-items-center py-0 px-0 me-6 mb-1">
+                                    <label
+                                        class="text-muted fw-bold me-3">Quality&nbsp;({{vendorItem.qualityRating}})</label>
+                                    <app-rating [rating]="vendorItem.qualityRating"></app-rating>
+                                </div>
+                                <div class="d-flex align-items-center py-0 px-0 me-6 mb-1">
+                                    <label
+                                        class="text-muted fw-bold me-3">Delivery&nbsp;({{vendorItem.deliveryRating}})</label>
+                                    <app-rating [rating]="vendorItem.deliveryRating"></app-rating>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end::Description-->
+                    <!-- <div class="">
+                                <div class="ms-0 mb-5"> -->
+                    <!-- <span class="btn btn-sm btn-icon btn-success w-25px h-25px ms-2 mb-2 d-block pt-2px">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                                                stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path d="M2 12.88V11.12C2 10.08 2.85 9.22 3.9 9.22C5.71 9.22 6.45 7.94 5.54 6.37C5.02 5.47 5.33 4.3 6.24 3.78L7.97 2.79C8.76 2.32 9.78 2.6 10.25 3.39L10.36 3.58C11.26 5.15 12.74 5.15 13.65 3.58L13.76 3.39C14.23 2.6 15.25 2.32 16.04 2.79L17.77 3.78C18.68 4.3 18.99 5.47 18.47 6.37C17.56 7.94 18.3 9.22 20.11 9.22C21.15 9.22 22.01 10.07 22.01 11.12V12.88C22.01 13.92 21.16 14.78 20.11 14.78C18.3 14.78 17.56 16.06 18.47 17.63C18.99 18.54 18.68 19.7 17.77 20.22L16.04 21.21C15.25 21.68 14.23 21.4 13.76 20.61L13.65 20.42C12.75 18.85 11.27 18.85 10.36 20.42L10.25 20.61C9.78 21.4 8.76 21.68 7.97 21.21L6.24 20.22C5.33 19.7 5.02 18.53 5.54 17.63C6.45 16.06 5.71 14.78 3.9 14.78C2.85 14.78 2 13.92 2 12.88Z"
+                                                                stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </span>          
+                                                </span> -->
+
+                    <!-- <span class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-25px h-25px ms-2 mb-2 d-block pt-2px">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M9.30957 14.7002L10.8096 16.2002L14.8096 12.2002" stroke="#3A3A3A"
+                                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M10 6H14C16 6 16 5 16 4C16 2 15 2 14 2H10C9 2 8 2 8 4C8 6 9 6 10 6Z"
+                                                                stroke="#3A3A3A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path
+                                                                d="M16 4.02002C19.33 4.20002 21 5.43002 21 10V16C21 20 20 22 15 22H9C4 22 3 20 3 16V10C3 5.44002 4.67 4.20002 8 4.02002"
+                                                                stroke="#3A3A3A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </span>                    
+                                                </span> -->
+
+                    <!-- <span class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-25px h-25px ms-2 mb-2 d-block pt-2px">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M20.0105 18.5101L15.0605 13.5601" stroke="#3A3A3A" stroke-width="1.5"
+                                                                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path
+                                                                d="M15.0602 13.56L11.5202 17.1C10.7402 17.88 9.47024 17.88 8.69024 17.1L4.45023 12.86C3.67023 12.08 3.67023 10.81 4.45023 10.03L11.5202 2.96C12.3002 2.18 13.5702 2.18 14.3502 2.96L18.5902 7.20002C19.3702 7.98002 19.3702 9.25001 18.5902 10.03L15.0602 13.56Z"
+                                                                stroke="#3A3A3A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path d="M2 21H8" stroke="#3A3A3A" stroke-width="1.5" stroke-miterlimit="10"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M6.56055 7.92004L13.6306 14.99" stroke="#3A3A3A" stroke-width="1.5"
+                                                                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </span>                    
+                                                </span> -->
+                    <!-- </div>
+                                <div class="text-center"> -->
+                    <!-- <a href="#" class="btn btn-sm btn-icon bg-light-blue w-30px h-30px ms-5">
+                                                    <span class="svg-icon svg-icon-blue svg-icon-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="currentColor"/>
+                                                        <rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor"/>
+                                                        <rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor"/>
+                                                        </svg>
+                                                    </span>                    
+                                                </a> -->
+                    <!-- </div>
+                            </div> -->
+                </div>
+
+                <!-- -->
+                <div class="separator separator-dashed my-4"></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button (click)="close()" type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
+    <button (click)="nextEventHandler()" type="button" class="btn btn-primary btn-sm">
+        <ng-container *ngIf="saveEventLoader">
+            <span class="indicator-progress" [style.display]="'block'">
+                Please wait...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="!saveEventLoader">
+            <span [style.display]="'block'">
+                Save
+
+            </span>
+        </ng-container>
+    </button>
+</div>
+<!-- </div></div> -->
+<!-- 
+<div class="container-fluid overflow-auto p-0"><div class="card mb-5 mb-xl-10 card-gray"></div></div> -->

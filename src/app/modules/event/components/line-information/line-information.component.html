@@ -1,0 +1,163 @@
+<div class="">
+
+  <button (click)="expandAll()" *ngIf="!isExpandAll" class="btn btn-light-blue btn-sm ms-0  me-2"
+    title="Expand all">Expand
+    all</button>
+  <button (click)="collapseAll()" *ngIf="!isExpandAll" class="btn btn-light-blue btn-sm ml-2"
+    title="Collapse all">Collapse
+    all</button>
+  <div class="accordion mt-3" id="kt_accordion_1">
+    <!-- <h4></h4> -->
+    <div *ngFor="let itemBid of itemBidComparisonsList;let i=index" class="accordion-item">
+      <h2 class="accordion-header" [id]="'kt_accordion_1_header_'+i">
+        <button (click)="itemBid.isShow=!itemBid.isShow" class="accordion-button fs-4 fw-semibold py-3" type="button"
+          data-bs-toggle="collapse" [ngClass]="itemBid.isShow?'':'collapsed'">
+          <div class="fs-6 fw-semibold" style="width: 95%;">
+            <div class="d-md-flex align-items-center mb-1">
+              <div class="d-flex align-items-center">
+
+                <div *ngIf="itemBid.isManPowerProduct" class="d-flex">
+                  <span
+                    class="symbol d-flex align-items-center h-20px w-20px 
+                  justify-content-center bg-light-danger  border-primary fw-bold text-primary fs-8 me-2 lh-1 border-solid border symbol-circle ">M</span>
+                </div>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Code</span>{{itemBid.itemCode}}
+                  </div>
+                </div>
+                <span class="vertical-line-seperator me-3 ms-3"></span>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Qty</span>{{itemBid.quantity}}
+                  </div>
+                </div>
+                <span class="vertical-line-seperator me-3 ms-3"></span>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">UOM</span>{{itemBid.uom}}
+                  </div>
+                </div>
+              </div>
+              <span class="vertical-line-seperator me-3 ms-3 d-none d-md-block"></span>
+              <div class="d-flex">
+
+
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Last PO
+                      Price</span>{{itemBid.lastPoPrice}}
+                  </div>
+                </div>
+                <span class="vertical-line-seperator me-3 ms-3"></span>
+                <div class="d-flex">
+                  <div class="text-gray-700 fw-bold"><span class="text-gray-400 me-3">Last PR
+                      Price</span>{{itemBid.lastPrPrice}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-1 mt-1">{{itemBid.itemName}}</p>
+          </div>
+
+        </button>
+      </h2>
+      <div [id]="'kt_accordion_1_header_'+i" [ngClass]="itemBid.isShow?'show':''" class="accordion-collapse collapse">
+        <div class="accordion-body px-0 comparison-box">
+          <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="itemBid.comparisonParamList"
+            [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true" [resizable]="true"
+            [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+               allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+
+            <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+              title="Comparison" [width]="200">
+              <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                  <div class="text-start"> {{item.value}} </div>
+                </ng-container>
+              </ng-template>
+            </kendo-grid-command-column>
+
+
+            <kendo-grid-column-group headerClass="suggested-vendors"
+              *ngFor="let vendorItem of itemBid.vendorBidComparisons" [title]="vendorItem.vendorName">
+
+              <ng-template kendoGridHeaderTemplate let-columnIndex="columnIndex" let-column="column">
+                {{vendorItem.vendorName}}
+              </ng-template>
+              <kendo-grid-column [title]="bidRounds.roundName" [width]="150"
+                [hidden]="hiddenColumns.indexOf(bidRounds.roundName) > -1"
+                *ngFor="let bidRounds of vendorItem.bidRounds">
+                <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                    <div>{{getValueFromKey(item.key,bidRounds.comparisonVendorParams)}}</div>
+                  </ng-container>
+                </ng-template>
+              </kendo-grid-column>
+
+            </kendo-grid-column-group>
+
+
+            <kendo-grid-column-group title=" ">
+              <kendo-grid-column title=" " *ngFor="let vendorItem of [1,2,3]" [width]="150">
+              </kendo-grid-column>
+            </kendo-grid-column-group>
+            <kendo-grid-column-group title=" ">
+              <kendo-grid-column title=" " *ngFor="let vendorItem of [1,2,3]" [width]="150">
+              </kendo-grid-column>
+            </kendo-grid-column-group>
+          </kendo-grid>
+
+
+          <!-- sub item -->
+          <div *ngFor="let subItem of itemBid.subItems">
+
+
+            <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="itemBid.spanParams"
+              [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true" [resizable]="true"
+              [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+             allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+
+              <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                title="Comparison" [width]="200">
+                <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+                    <div class="text-start"> {{item.value}} </div>
+                  </ng-container>
+                </ng-template>
+              </kendo-grid-command-column>
+
+
+              <kendo-grid-column-group headerClass="suggested-vendors" *ngFor="let vendorItem of subItem.vendorSubItems"
+                [title]="vendorItem.vendorName">
+
+                <ng-template kendoGridHeaderTemplate let-columnIndex="columnIndex" let-column="column">
+                  {{vendorItem.vendorName}}
+                </ng-template>
+                <!-- <kendo-grid-column [title]="bidRounds.roundName" [width]="100"
+                  [hidden]="hiddenColumns.indexOf(bidRounds.roundName) > -1"
+                  *ngFor="let bidRounds of vendorItem.bidRounds">
+                  <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                      <div>{{getValueFromKey(item.key,bidRounds.comparisonVendorParams)}}</div>
+                    </ng-container>
+                  </ng-template>
+                </kendo-grid-column> -->
+
+              </kendo-grid-column-group>
+
+
+              <kendo-grid-column-group title=" ">
+                <kendo-grid-column title=" " *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                </kendo-grid-column>
+              </kendo-grid-column-group>
+              <kendo-grid-column-group title=" ">
+                <kendo-grid-column title=" " *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                </kendo-grid-column>
+              </kendo-grid-column-group>
+            </kendo-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

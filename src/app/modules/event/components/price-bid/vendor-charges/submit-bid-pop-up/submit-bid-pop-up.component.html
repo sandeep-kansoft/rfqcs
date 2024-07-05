@@ -1,0 +1,68 @@
+
+   
+        <div class="modal-header" id="kt_activities_header">
+            <h3 class="modal-title fw-bolder text-dark">Price Bid Submit</h3>
+            <div class="modal-toolbar">
+                <span (click)="cancelButtonClick()" 
+                    class="btn btn-sm btn-icon btn-active-light-primary ">
+                    <span  [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  svg-icon-2  m-0">
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="modal-body" id="kt_activities_body">
+          
+                <div class="form-sidebar w-100 h-100">
+
+                    <div class=" mb-5 w-100 me-5">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2">
+                            Price Bid Date</label>
+                        <input [disabled]="true" [(ngModel)]="currentDate" type="text" class="form-control"
+                            placeholder="" />
+                    </div>
+
+
+                    <div class=" mb-5 w-100 me-5">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2">
+                            Attachment Name</label>
+                        <input [(ngModel)]="attachName" type="text" class="form-control" placeholder="" />
+                    </div>
+                    <div class="mb-5 w-100">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2">Validity In
+                            Days</label>
+                        <div>
+                            <div>
+                                <input [(ngModel)]="validityInDays" 
+                                (input)="calculateValidityInDays()"
+                                type="number" class="form-control" placeholder="" />
+                            </div>
+                            <div>
+                                <label for="floatingname" class="text-gray-800 form-label-text mb-2">{{validityDate}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5 w-100">
+
+                        <input [(ngModel)]="imageData" (change)="onSelected($event)" type="file" class="form-control  ">
+                    </div>
+
+                </div>
+           
+        </div>
+        <div class="modal-footer text-end " id="kt_activities_footer">
+            <!-- <button (click)="cancelButtonClick()" type="button"
+                class="btn me-5 btn-light btn-sm">Cancel</button> -->
+            <button id="submit-bid-btn" type="submit" (click)="submitPopUp()" class="btn btn-submit btn-primary btn-sm">
+                <ng-container *ngIf="formSubmitLoader">
+                    <span class="indicator-progress" [style.display]="'block'">
+                        Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="!formSubmitLoader">
+                    <span class="indicator-label">Submit</span>
+                </ng-container>
+            </button>
+        </div>
+   

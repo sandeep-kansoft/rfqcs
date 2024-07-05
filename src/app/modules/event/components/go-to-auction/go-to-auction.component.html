@@ -1,0 +1,345 @@
+<div class="card">
+    <div class="card-body py-3">
+        <div class="d-md-flex mb-4 align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3 class="fs-4">
+                    Live Auction
+                </h3>
+                <button class="btn-sm btn btn-light-blue d-block d-md-none" title="Refresh Auction">
+                    <span class="svg-icon m-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                            viewBox="0 0 32 32">
+                            <path fill="currentcolor"
+                                d="M 16 4 C 10.886719 4 6.617188 7.160156 4.875 11.625 L 6.71875 12.375 C 8.175781 8.640625 11.710938 6 16 6 C 19.242188 6 22.132813 7.589844 23.9375 10 L 20 10 L 20 12 L 27 12 L 27 5 L 25 5 L 25 8.09375 C 22.808594 5.582031 19.570313 4 16 4 Z M 25.28125 19.625 C 23.824219 23.359375 20.289063 26 16 26 C 12.722656 26 9.84375 24.386719 8.03125 22 L 12 22 L 12 20 L 5 20 L 5 27 L 7 27 L 7 23.90625 C 9.1875 26.386719 12.394531 28 16 28 C 21.113281 28 25.382813 24.839844 27.125 20.375 Z">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <div>
+                <div class="d-md-flex fs-5 align-items-center ">
+                    <div class="d-flex align-items-center ">
+                        <span class="d-block ">Current Lot Bid :
+                        </span>
+                        <label for="" class="ms-2 fw-bold">{{rankAndColorList?.totalAmount}}</label>
+                    </div>
+                    <span class="vertical-line-seperator d-none d-md-block me-3 ms-3"></span>
+                    <div class="d-flex">
+                        <div class="d-flex fs-5 mt-3 mt-md-0 btn btn-sm bg-light-blue align-items-center ">
+                            <span class="d-block ">Auction Rank :
+                            </span>
+
+                            <label for="" class="ms-2 fw-bold">{{ rankAndColorList?.vendorRank ?
+                                rankAndColorList?.vendorRank : ''}}</label>
+                        </div>
+                        <div class="d-flex  mt-3 mt-md-0 py-0 btn btn-sm bg-light-blue">
+                            <span class="svg-icon svg-icon-2hx h-35px  m-0">
+                                <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                                    <style>
+                                        .cls-1 {
+                                            fill: #4d91bb;
+                                        }
+
+                                        .cls-2 {
+                                            fill: #2175aa;
+                                        }
+
+                                        .cls-3 {
+                                            fill: #c3edf5;
+                                        }
+
+                                        .cls-4 {
+                                            fill: #7ad0cb;
+                                        }
+
+                                        .cls-5 {
+                                            fill: #4dbab4;
+                                        }
+                                    </style>
+                                    <g data-name="23 Page Rank Badge" id="_23_Page_Rank_Badge">
+                                        <path class="cls-1"
+                                            d="M43.22,61,64,73,40,114.53,35.65,98.07l-16.43,4.46Zm41.57,0L64,73l24,41.57,4.35-16.46,16.43,4.46Z" />
+                                        <polygon class="cls-2"
+                                            points="39.48 67.43 39.48 81.48 55.02 81.48 57.59 84.06 64 72.97 43.22 60.97 39.48 67.43" />
+                                        <polygon class="cls-2"
+                                            points="92.52 74.36 84.78 60.97 64 72.97 71.87 86.6 76.98 81.48 92.52 81.48 92.52 74.36" />
+                                        <rect class="cls-3" height="53.03" width="53.03" x="37.48" y="24.45" />
+                                        <rect class="cls-3" height="53.03"
+                                            transform="translate(54.78 -30.33) rotate(45)" width="53.03" x="37.48"
+                                            y="24.45" />
+                                        <circle class="cls-4" cx="64" cy="50.97" r="15" />
+                                        <path class="cls-5"
+                                            d="M52.74,51A15,15,0,0,1,65.87,36.09a15,15,0,1,0,0,29.74A15,15,0,0,1,52.74,51Z" />
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button (click)="openBroadcastDrawer()" title="Broadcast" class="btn position-relative btn-sm btn-sm btn-primary d-md-block  p-0 px-5 ">
+                        <span class="position-absolute top-0 start-100 translate-middle  badge badge-circle bg-warning text-primary">{{commonServices._msgCount$ | async}}</span>
+                        <span class="svg-icon svg-icon-2 m-0">
+                            <svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <g>
+                                    <path fill="none" d="M0 0h24v24H0z"/>
+                                    <path fill="currentcolor" d="M4.929 2.929l1.414 1.414A7.975 7.975 0 0 0 4 10c0 2.21.895 4.21 2.343 5.657L4.93 17.07A9.969 9.969 0 0 1 2 10a9.969 9.969 0 0 1 2.929-7.071zm14.142 0A9.969 9.969 0 0 1 22 10a9.969 9.969 0 0 1-2.929 7.071l-1.414-1.414A7.975 7.975 0 0 0 20 10c0-2.21-.895-4.21-2.343-5.657L19.07 2.93zM7.757 5.757l1.415 1.415A3.987 3.987 0 0 0 8 10c0 1.105.448 2.105 1.172 2.828l-1.415 1.415A5.981 5.981 0 0 1 6 10c0-1.657.672-3.157 1.757-4.243zm8.486 0A5.981 5.981 0 0 1 18 10a5.981 5.981 0 0 1-1.757 4.243l-1.415-1.415A3.987 3.987 0 0 0 16 10a3.987 3.987 0 0 0-1.172-2.828l1.415-1.415zM12 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 2c.58 0 1.077.413 1.184.983L14.5 22h-5l1.316-7.017c.107-.57.604-.983 1.184-.983z"/>
+                                </g>
+                            </svg>
+                            </span>
+                    </button>
+
+                    <button (click)="refreshButtonHandler()" class="btn-sm btn btn-light-blue d-none d-md-block ms-5"
+                        title="Refresh Auction">
+                        <span class="svg-icon m-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                                viewBox="0 0 32 32">
+                                <path fill="currentcolor"
+                                    d="M 16 4 C 10.886719 4 6.617188 7.160156 4.875 11.625 L 6.71875 12.375 C 8.175781 8.640625 11.710938 6 16 6 C 19.242188 6 22.132813 7.589844 23.9375 10 L 20 10 L 20 12 L 27 12 L 27 5 L 25 5 L 25 8.09375 C 22.808594 5.582031 19.570313 4 16 4 Z M 25.28125 19.625 C 23.824219 23.359375 20.289063 26 16 26 C 12.722656 26 9.84375 24.386719 8.03125 22 L 12 22 L 12 20 L 5 20 L 5 27 L 7 27 L 7 23.90625 C 9.1875 26.386719 12.394531 28 16 28 C 21.113281 28 25.382813 24.839844 27.125 20.375 Z">
+                                </path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div>
+
+            <div class="d-md-flex mt-5 justify-content-between">
+                <div class="w-100 mb-5 mb-md-0 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <kendo-chart class="h-200px">
+                                <kendo-chart-category-axis>
+                                    <kendo-chart-category-axis-item [maxDivisions]="maxDivisions">
+                                        <kendo-chart-category-axis-item-labels
+                                            [rotation]="315" format="dd/MM/yyyy"></kendo-chart-category-axis-item-labels>
+                                    </kendo-chart-category-axis-item>
+                                </kendo-chart-category-axis>
+                                <kendo-chart-tooltip>
+                                    <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
+                                      <div>Date: {{category }} - Value: {{value}}</div>
+                                    </ng-template>
+                                  </kendo-chart-tooltip>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item *ngFor="let item of list" type='line'
+                                        categoryField="category" [data]="item" [name]="item[0].vendorName" field="value"
+                                        >
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart>
+                            <!-- <kendo-chart>
+                                <kendo-chart-title text="Units sold"></kendo-chart-title>
+                                <kendo-chart-category-axis>+
+
+                                    <kendo-chart-category-axis-item type="date" [baseUnit]="'months'"
+                                        [title]="{ text: 'Months' }"  [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']">
+                                        <kendo-chart-category-axis-item-labels [step]="1"
+                                            [format]="'dd/MM/yyyy'"></kendo-chart-category-axis-item-labels>
+                                    </kendo-chart-category-axis-item>
+                                </kendo-chart-category-axis>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item type="line" [data]="[123, 276, 310, 212, 240, 156, 98]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="line" [data]="[165, 210, 287, 144, 190, 167, 212]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="line" [data]="[56, 140, 195, 46, 123, 78, 95]">
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart> -->
+
+                            <!-- line chart -->
+                            <!-- <kendo-chart>
+                                <kendo-chart-title text="Units sold"></kendo-chart-title>
+                                <kendo-chart-category-axis>
+                                    <kendo-chart-category-axis-item [title]="{ text: 'Months' }">
+                                    </kendo-chart-category-axis-item>
+                                </kendo-chart-category-axis>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item type="line" [data]="[123, 276, 310, 212, 240, 156, 98]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="line" [data]="[165, 210, 287, 144, 190, 167, 212]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="line" [data]="[56, 140, 195, 46, 123, 78, 95]">
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart> -->
+
+                            <!-- Pie chart -->
+                            <!-- <kendo-chart title="World Population by Broad Age Groups">
+                                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                                <kendo-chart-series>
+                                    <kendo-chart-series-item type="pie" [data]="pieData" field="value"
+                                        categoryField="category" [labels]="{ visible: true, content: labelContent }">
+                                    </kendo-chart-series-item>
+                                </kendo-chart-series>
+                            </kendo-chart> -->
+                            <!--   <app-no-data-found></app-no-data-found> -->
+                        </div>
+                    </div>
+                </div>
+                <div class=" mb-5 mb-md-0 ms-5">
+
+
+                    <div class="card">
+
+                        <div class="card-body py-3 w-300px">
+                            <span class=" d-block mb-2 fw-semibold">Current Status</span>
+                            <div class="d-flex align-items-center mb-1 bg-light-success rounded ">
+                                <span
+                                    class="bullet bullet-bar bg-success align-self-stretch h-auto w-10px rounded-0"></span>
+                                <div class="d-flex flex-column flex-grow-1 mr-2">
+                                    <span class="fw-bold text-dark mb-1 p-5">Near to the lowest bid.</span>
+
+
+                                </div>
+                                <span *ngIf="low"
+                                    class="fw-bold  rounded ms-2 py-1 px-3 bg-success text-white me-2 fs-8 ">YOU</span>
+
+
+                            </div>
+                            <div class="d-flex align-items-center mb-1 bg-light-warning rounded ">
+                                <span
+                                    class="bullet bullet-bar bg-warning align-self-stretch h-auto w-10px rounded-0"></span>
+                                <div class="d-flex flex-column flex-grow-1 mr-2">
+                                    <span class="fw-bold text-dark mb-1 p-5">Middle of the lowest & far bid.</span>
+
+                                </div>
+
+                                <span *ngIf="mid"
+                                    class="fw-bold  rounded ms-2 py-1 px-3 bg-warning me-2 fs-8 ">YOU</span>
+
+                            </div>
+                            <div class="d-flex align-items-center mb-1 bg-light-danger rounded ">
+                                <span
+                                    class="bullet bullet-bar bg-danger align-self-stretch h-auto w-10px rounded-0"></span>
+                                <div class="d-flex flex-column flex-grow-1 mr-2">
+                                    <span class="fw-bold text-dark mb-1  p-5">Far from lowest bid / bid not submitted.</span>
+
+                                </div>
+                                <span *ngIf="high"
+                                    class="fw-bold  rounded ms-2 py-1 px-3 bg-danger text-white me-2 fs-8 ">YOU</span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-5">
+            <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+                [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                      pageSizes: true,
+                      info: true
+                    }" [sortable]="{
+                      allowUnsort: true,
+                      mode: 'multiple'
+                    }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+                <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                    [width]="ExtraSmallColumnWidth">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                        }}</ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="itemCode" title="Item Code"
+                    [width]="140">
+
+                </kendo-grid-column>
+
+
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+                <kendo-grid-column [headerClass]="headerStyle" field="itemDesc" title="Item description" [width]="300">
+
+                </kendo-grid-column>
+
+                <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM" [width]="90"></kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="quantity" title="QTY"
+                    [width]="90"></kendo-grid-column>
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="round" title="Line Item No"
+                    [width]="100"></kendo-grid-column> -->
+
+
+                <kendo-grid-column [headerClass]="headerStyle" field="currencY_CODE" title="Currency"
+                    [width]="130"></kendo-grid-column>
+
+                <kendo-grid-column [headerClass]="headerStyle" field="startingBid" title="Starting Bid"
+                    [width]="120"></kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="currentBid" title="Current Bid" [width]="240">
+
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                        <ng-container>
+                            <div class="  main-column-class pricebid-box d-flex justify-content-between align-items-center">
+
+                                <div class="d-flex row-class ">
+                                    <label>Net Amount : </label>
+                                    <div class="d-flex word-break">
+                                        {{item?.currentBid}}
+                                    </div>
+                                </div>
+                                <div class="d-flex row-class  justify-content-end">
+                                    <button (click)="openSubItemVendorModal(item,rowIndex)" *ngIf="templateId==2"
+                                        class="border-0 bg-img-none shadow-none bg-opacity-0 me-2" type="button"
+                                        data-bs-auto-close="outside" title="update items">
+
+
+                                        <!-- add-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon text-primary ">
+                                        </span>
+                                        <!-- add-svg -->
+                                    </button>
+
+
+                                    <button (click)="openVendorEditCharges(item,rowIndex)"
+                                        class="border-0 bg-img-none shadow-none bg-opacity-0" type="button"
+                                        data-bs-auto-close="outside" title="update items">
+
+
+                                        <!-- edit-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue  ">
+                                        </span>
+                                        <!-- edit-svg -->
+
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+
+                </kendo-grid-column>
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="convertedAmt" title="Converted Amount"
+                    [width]="130"></kendo-grid-column> -->
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="currencY_CODE" title="Currency"
+                        [width]="120"></kendo-grid-column>  -->
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="Rank"
+                    [width]="130"></kendo-grid-column> -->
+            </kendo-grid>
+        </div>
+        <div class="bg-light-blue mt-5 p-4 w-300px ms-auto  ">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+                <h5 class="mb-0">Lot Total :
+                </h5>
+                <span id="lblGT" class="d-block">{{lotTotal}}</span>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="card-footer text-end">
+        <button *ngIf="submitBidCondition()" (click)="openSubmitBidPop()" id="sumbit_btn_bid" type="button"
+            class="btn btn-primary btn-sm mt-3 mt-md-0">
+            <span class="indicator-label">
+                Submit Bid
+            </span>
+            <span class="indicator-progress">
+                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+    </div>
+</div>

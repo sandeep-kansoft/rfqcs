@@ -1,0 +1,102 @@
+
+            <div class="modal-header">
+                <h3 class="modal-title">RFQ PR Information</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" 
+                (click)="close()">
+                    <span [inlineSVG]="'./assets/media/svg/close.svg'"
+                        class="svg-icon m-0 svg-icon-2"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="d-block mb-3 align-items-center d-md-flex justify-content-between">
+                    <div>
+                        <h5>RFQ Name : <span class="ms-2 text-gray-700">{{rfqDetail.eventTitle}}</span></h5>
+                    </div>
+                    <!-- <div class="d-flex ">
+                        <div class="d-block me-5">
+                            <select class="form-select form-select-sm" aria-label="Select example">
+                                <label for=""> records</label> -->
+                                <!-- <option value="1">All</option> -->
+                                <!-- <option value="2">5</option>
+                                <option value="3">20</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center ">
+                                <span class="svg-icon svg-icon-2 position-absolute ms-3"
+                                    [inlineSVG]="'./assets/media/svg/search.svg'">
+
+                                </span>
+                                <input _type="text" id="" placeholder="Search"
+                                    class="form-control form-control-solid border-body w-100px btn btn-sm ps-10"
+                                    style="background-color: #f1f1f1;">
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <h4 class="fs-5">RFQ Item Information</h4>
+                
+               
+                <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+                [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                  pageSizes: true,
+                  info: true
+                }" [sortable]="{
+                  allowUnsort: true,
+                  mode: 'multiple'
+                }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+             
+                <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                    title="#" [width]="ExtraSmallColumnWidth">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                        }}</ng-template>
+                </kendo-grid-column>
+              <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="itemCode" title="Item Code"
+                [width]="130">
+                
+            </kendo-grid-column>
+            
+               
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+                
+            <kendo-grid-column [headerClass]="headerStyle" field="itemDesc"    title="Item description"
+                    [width]="300">
+                   
+                </kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="requester" title="Requestor"
+            [width]="170">
+            
+        </kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM"
+                    [width]="90"></kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="quantity" title="QTY"
+                    [width]="90"></kendo-grid-column>
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="round" title="Line Item No"
+                [width]="100"></kendo-grid-column> -->
+               
+                
+                <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="Project Name"
+                    [width]="100"></kendo-grid-column>
+                
+                    <kendo-grid-column [headerClass]="headerStyle" field="prCode" title="PR No"
+                    [width]="100"></kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="PR Description"
+                    [width]="100"></kendo-grid-column>
+               
+            </kendo-grid>
+              
+                
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light btn-sm" (click)="close()">Close</button>
+
+            </div>
+ 

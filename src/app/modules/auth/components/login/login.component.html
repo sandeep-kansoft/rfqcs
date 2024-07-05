@@ -1,0 +1,316 @@
+<!--begin::Form-->
+<form  class="form w-100 w-lg-400px px-10 pt-8 pb-8 mx-auto bg-white rounded shadow-sm position-relative"
+  [formGroup]="loginForm" id="kt_login_signin_form" (submit)="submit(false)">
+  <!--begin::Heading-->
+
+  <div class="d-none">
+    <div class="text-center mb-10">
+      <h1 class="text-dark mb-3">Partner Sign In</h1>
+      <button type="button" (click)="$event.stopPropagation();loginPopup()" class="btn-sm  emp-log-btn"> Employee Log in
+        <span class="svg-icon text-primary ms-2 me-0 pulse">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+              fill="currentColor" />
+          </svg>
+          <span class="pulse-ring"></span>
+        </span>
+      </button>
+    </div>
+
+
+    <!-- begin::Alert error-->
+    <ng-container *ngIf="isInvalidate && isSubmitButtonClicked && hasError">
+      <div class="mb-lg-15 alert alert-danger">
+        <div class="alert-text font-weight-bold">
+          {{errorMessage}}
+        </div>
+      </div>
+    </ng-container>
+    <!-- end::Alert error-->
+
+    <!--begin::Form group-->
+    <div class="fv-row mb-10">
+      <label class="form-label fs-6 fw-bolder text-dark">Username Or Email</label>
+      <input class="form-control form-control-lg" type="text" name="email" formControlName="email" autocomplete="off"
+        [ngClass]="isInvalidate ? {
+        'is-invalid': isSubmitButtonClicked && loginForm.controls['email'].invalid,
+        'is-valid':  isSubmitButtonClicked && loginForm.controls['email'].valid
+      } : {}" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'Email is required',
+        control: loginForm.controls['email']
+      }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'email',
+        message: 'Email is invalid',
+        control: loginForm.controls['email']
+      }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'minLength',
+        message: 'Email should have at least 3 symbols',
+        control: loginForm.controls['email']
+      }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'Email should have maximum 360 symbols',
+        control: loginForm.controls['email']
+      }"></ng-container>
+    </div>
+    <!--end::Form group-->
+
+    <!--begin::Form group-->
+    <div class="fv-row mb-10">
+
+      <label class="form-label fs-6 fw-bolder text-dark">Password</label>
+      <input class="form-control form-control-lg" type="password" name="password" autocomplete="off"
+        formControlName="password" [ngClass]=" isInvalidate ? {
+        'is-invalid': isSubmitButtonClicked &&loginForm.controls['password'].invalid,
+        'is-valid': isSubmitButtonClicked && loginForm.controls['password'].valid
+      }:{}" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'Password is required',
+        control: loginForm.controls['password']
+      }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'minlength',
+        message: 'Password should have at least 3 symbols',
+        control: loginForm.controls['password']
+      }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'Password should have maximum 100 symbols',
+        control: loginForm.controls['password']
+      }"></ng-container>
+    </div>
+
+    <div class="text-center d-md-flex align-items-center justify-content-center">
+      <div class="w-100">
+        <button type="submit" id="kt_sign_in_submit" class="btn btn-sm btn-primary w-100  mb-5"
+          [disabled]="loginForm.invalid">
+          <ng-container *ngIf="isLoading">
+            <span class="indicator-progress" [style.display]="'block'">
+              Please wait...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="!isLoading">
+            <span class="indicator-label">Sign In</span>
+          </ng-container>
+        </button>
+      </div>
+    </div>
+    <!--end::Action-->
+
+
+
+    <div class="login-social-icon mt-5">
+      <a href="https://twitter.com/wondercement" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-twitter twitter-icon"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/wonder-cement-limited/?originalSubdomain=in" target="_blank"
+        rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-linkedin-in linked-icon"></i>
+      </a>
+      <a href="https://www.facebook.com/wondercement?ref=br_tf" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-facebook fb-icon"></i>
+      </a>
+
+      <a href="https://www.instagram.com/WonderCement/" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fab fa-instagram-square instagram-icon"></i>
+      </a>
+
+
+      <a href="https://www.youtube.com/user/WonderCementLtd" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-youtube youtube-icon"></i>
+      </a>
+    </div>
+
+
+
+    <div class="login-social-icon mt-5 d-none">
+      <a href="https://twitter.com/wondercement" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-twitter twitter-icon"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/wonder-cement-limited/?originalSubdomain=in" target="_blank"
+        rel="noreferrer">
+        <i class="fa-brands fa-linkedin-in linked-icon"></i>
+      </a>
+      <a href="https://www.facebook.com/wondercement?ref=br_tf" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-facebook fb-icon"></i>
+      </a>
+
+      <a href="https://www.instagram.com/WonderCement/" target="_blank" rel="noreferrer">
+        <i class="fab fa-instagram-square instagram-icon"></i>
+      </a>
+
+
+      <a href="https://www.youtube.com/user/WonderCementLtd" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-youtube youtube-icon"></i>
+      </a>
+    </div>
+
+    <div class="login-social-icon mt-5 d-none">
+      <a href="https://twitter.com/wondercement" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-twitter twitter-icon"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/wonder-cement-limited/?originalSubdomain=in" target="_blank"
+        rel="noreferrer">
+        <i class="fa-brands fa-linkedin-in linked-icon"></i>
+      </a>
+      <a href="https://www.facebook.com/wondercement?ref=br_tf" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-facebook fb-icon"></i>
+      </a>
+
+      <a href="https://www.instagram.com/WonderCement/" target="_blank" rel="noreferrer">
+        <i class="fab fa-instagram-square instagram-icon"></i>
+      </a>
+
+
+      <a href="https://www.youtube.com/user/WonderCementLtd" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-youtube youtube-icon"></i>
+      </a>
+    </div>
+  </div>
+
+
+  <div>
+    <!-- <h1 class="text-dark mb-5 text-center"> Sign In</h1> -->
+    <ng-container *ngIf="isSubmitButtonClicked && hasError">
+      <div class="my-5 alert alert-danger text-center">
+        <div class="alert-text font-weight-bold">
+          {{errorMessage}}
+        </div>
+      </div>
+    </ng-container>
+    <div class="d-flex align-items-center justify-content-center py-5 my-5 mt-0 pt-0">
+      <div>
+        <ul class="nav nav-tabs nav-line-tabs mb-0 fs-6 ms-0 me-md-5 border-0">
+          <li type="button" class="nav-item">
+            <a class="nav-link btn-sm btn btn-primary text-white text-hover-white fs-6 me-2 me-md-5 fw-normal"
+              data-bs-toggle="tab" href="#kt_tab_pane_1">Supplier Log in</a>
+          </li>
+
+        </ul>
+
+      </div>
+      <div>
+        <button (click)="$event.stopPropagation();loginPopup()" type="button"
+          class="btn btn-sm btn-primary fs-6 fw-normal">
+          Employee Log in
+        </button>
+      </div>
+    </div>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade " id="kt_tab_pane_1" role="tabpanel">
+
+        <div class="fv-row mb-5">
+          <label class="form-label fs-6 fw-bolder text-dark">Username Or Email</label>
+          <input class="form-control form-control-lg"  type="text" name="email" formControlName="email"
+            autocomplete="off" [ngClass]="{
+              'is-invalid': isSubmitButtonClicked && loginForm.controls['email'].invalid,
+              'is-valid':  isSubmitButtonClicked && loginForm.controls['email'].valid
+            }" />
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Email is required',
+              control: loginForm.controls['email']
+            }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'email',
+              message: 'Email is invalid',
+              control: loginForm.controls['email']
+            }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'minLength',
+              message: 'Email should have at least 3 symbols',
+              control: loginForm.controls['email']
+            }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Email should have maximum 360 symbols',
+              control: loginForm.controls['email']
+            }"></ng-container>
+        </div>
+        <div class="fv-row mb-5">
+
+          <label class="form-label fs-6 fw-bolder text-dark">Password</label>
+          <input class="form-control form-control-lg" type="password" name="password" autocomplete="off"
+            formControlName="password" [ngClass]="{
+              'is-invalid': isSubmitButtonClicked &&loginForm.controls['password'].invalid,
+              'is-valid': isSubmitButtonClicked && loginForm.controls['password'].valid
+            }" />
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Password is required',
+              control: loginForm.controls['password']
+            }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Password should have at least 3 symbols',
+              control: loginForm.controls['password']
+            }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Password should have maximum 100 symbols',
+              control: loginForm.controls['password']
+            }"></ng-container>
+        </div>
+        <div class="text-center d-md-flex align-items-center justify-content-center">
+          <div class="w-100">
+            <button type="submit" id="kt_sign_in_submit" class="btn btn-sm btn-primary w-100  mb-5"
+              [disabled]="loginForm.invalid">
+              <ng-container *ngIf="isLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                  Please wait...
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+              <ng-container *ngIf="!isLoading">
+                <span class="indicator-label">Sign In</span>
+              </ng-container>
+            </button>
+            <a (click)="forgotPasswordPopup()" class="link-primary d-flex flex-row justify-content-start cursor cursor-pointer bottomUnderLine " > Vendor Forgot Password </a>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="login-social-icon mt-5">
+      <a href="https://twitter.com/wondercement" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-twitter twitter-icon"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/wonder-cement-limited/?originalSubdomain=in" target="_blank"
+        rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-linkedin-in linked-icon"></i>
+      </a>
+      <a href="https://www.facebook.com/wondercement?ref=br_tf" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-facebook fb-icon"></i>
+      </a>
+
+      <a href="https://www.instagram.com/WonderCement/" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fab fa-instagram-square instagram-icon"></i>
+      </a>
+
+
+      <a href="https://www.youtube.com/user/WonderCementLtd" target="_blank" rel="noreferrer" class="icon-shadow">
+        <i class="fa-brands fa-youtube youtube-icon"></i>
+      </a>
+    </div>
+  </div>
+</form>
+<!--end::Form-->
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <span role="alert">
+        {{ message }}
+      </span>
+    </div>
+  </ng-container>
+</ng-template>

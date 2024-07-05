@@ -1,0 +1,855 @@
+<div class="card ">
+    <!-- card header -->
+    <!-- <div class="card-header pt-0 hh-50px align-items-center my-2">
+        <label class="col-form-label text-right d-block">
+            <h3 class="card-title flex-column my-0">
+                <span class="card-label fw-bold text-gray-800 py-0">Price Bid</span>
+            </h3>
+        </label>
+
+    </div> -->
+    <!-- card header -->
+    <div class="card-body py-3">
+        <div class="d-sm-flex justify-content-between">
+
+
+            <div class="form-group d-flex align-items-center ">
+                <div aria-role-check="yes" *ngIf="bidTemplatesList.length!==0 && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SELECT_TEMPALTE_DROPDOWN) " class="d-block me-2">
+                    <select [disabled]="!checkConditionForAccess(typeAccess.SELECT_PRICE_BID_TEMPLATE) || !checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SELECT_TEMPALTE_DROPDOWN_ENABLED)"
+                        class="form-control selectpicker py-2 px-3" (change)="checkTempAndCurr(1,$event)"
+                        class="form-select py-2 fs-6" aria-label="Select tempalte">
+
+                        <option *ngFor="let item of bidTemplatesList" [value]="item.templateId"
+                            [selected]="item.templateId==templateId">
+                            {{item.templateName}}
+                        </option>
+
+                    </select>
+                </div>
+                <div aria-role-check="yes" *ngIf="currenciesList.length!==0 && (checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SELECT_CURRENCY_DROPDOWN) || checkVendorCondition())   " class="d-flex">
+                    <select class="form-control selectpicker "
+                        [disabled]="!checkConditionForAccess(typeAccess.CURRENCY) || (!checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SELECT_CURRENCY_DROPDOWN_ENABLED) && !checkVendorCondition())" (change)="checkTempAndCurr(2,$event)"
+                        class="form-select py-2 me-4 fs-6" aria-label="Select currency">
+
+                        <option *ngFor="let currencyData of currenciesList" [value]="currencyData.currencymastid"
+                            [selected]="currencyData.currencymastid==currencyId">
+                            {{currencyData.currencY_CODE}}
+                        </option>
+
+                    </select>
+                    <!-- <a *ngIf="changeTempCurr" (click)="saveTemplateAndCurrency()"
+                        class="btn btn-sm btn-primary">Save</a> -->
+                </div>
+
+            </div>
+
+
+            <div *ngIf="userType=='Buyer'" class="card-toolbar my-0">
+                <div class="d-md-flex align-items-center ">
+
+                    <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PRICE_BID_CHARGES)" [disabled]="!checkConditionForAccess(typeAccess.ADD_PRICE_BID_CHARGES)"
+                        style="border: 0;background: transparent; " (click)="openPriceBidPopUp()">
+                        <a
+                            class="btn btn-link btn-color-primary btn-active-color-primary me-5 mb-sm-0 py-0 fs-7 my-3 my-sm-0 fw-bold">Pricebid
+                            Charges</a>
+                    </button>
+
+                    <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_OTHER_REMARKS)" [disabled]="!checkConditionForAccess(typeAccess.CHARGES_REMARKS_COLOUMNS) "
+                        style="border: 0;background: transparent;" (click)="openOtherChargesPopUp()">
+
+                        <a
+                            class="btn btn-link btn-color-primary btn-active-color-primary me-5 mb-sm-0 py-0 my-3 my-sm-0 fs-7 fw-bold">Other
+                            Remarks</a>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div *ngIf="priceBidLinesList" class="">
+            <kendo-grid *ngIf="userType=='Buyer'" [loading]="loading" [data]="priceBidLinesList" [reorderable]="true"
+                [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="false"
+                [sortable]="{allowUnsort: true, mode: 'multiple' }" [sort]="state.sort"
+                (dataStateChange)="onStateChange($event)" class="grid-padding">
+                <ng-template kendoGridToolbarTemplate class="ps-0 ">
+                    <div class="cs-kend-grid-toolbar d-block d-sm-flex align-items-center mb-3 justify-content-between">
+                        <div class="d-flex align-items-center my-1">
+                            <h3 class="fs-5 mb-3 mb-md-0">Line Item Information</h3>
+                        </div>
+                        <div class="d-flex">
+                            <!-- BY PANKAJ KUMAR FOR HIDING FOR ROUND 2 -->
+                            <div *ngIf="addItemCondition() && templateId==3 && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_MAN_POWER)" class="d-flex excel-export me-5">
+
+                                <button aria-role-check="yes"  [disabled]="!checkConditionForAccess(typeAccess.ADD_MAN_POWER_ITEM) "
+                                    (click)="openManPowerModal()" type="button"
+                                    class="btn btn-light-blue btn-sm btn-active-icon-white" icon="file-excel"
+                                    title="Add man power item">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+                                    Man Power Item</button>
+
+                            </div>
+
+                            <div *ngIf="addItemCondition() && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_ITEM)" class="d-flex excel-export">
+                                <button aria-role-check="yes" (click)="updateRfqManually()"
+                                    [disabled]="!checkConditionForAccess(typeAccess.ADD_ITEMS)" type="button"
+                                    class="btn btn-light-blue btn-sm btn-active-icon-white" icon="file-excel">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+                                    {{'Add Item'}}</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </ng-template>
+                <!-- Kendo Default Loader -->
+                <ng-template kendoGridLoadingTemplate>
+                    <app-wonder-loader></app-wonder-loader>
+                </ng-template>
+                <!-- Kendo End Default Loader -->
+
+                <kendo-grid-column [headerClass]="headerStyle" [filterable]="false" [sortable]="false"
+                    [columnMenu]="false" field="sno" title="#" [width]="35">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+                </kendo-grid-column>
+
+
+                <kendo-grid-column [headerClass]="headerStyle" [filterable]="false" [sortable]="false"
+                    [columnMenu]="false" field="sno" title="PO History" [width]="100">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-item>
+                        <div class="text-center">
+
+
+                            <button type="button" class="btn btn-light-blue btn-sm p-2" title="PO History" *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PO_HISTORY_BUTTON)">
+                                <span (click)="openPoHistoryModel(item)" class="svg-icon m-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="history">
+                                        <path fill="currentcolor"
+                                            d="M437.11 74.98c-99.974-99.974-262.064-99.973-362.038.001-12.09-12.09-32.776-5.827-36.129
+                                 10.939l-14.142 70.71c-2.996 14.979 10.211 28.186 25.19 25.19l70.711-14.142c16.766-3.353 23.029-24.039 10.939-36.129
+                                 68.622-68.622 180.279-68.622 248.901-.001 68.9 68.899 68.9 180.003 0 248.903-68.623 68.622-180.279 68.622-248.901-.001C97.329
+                                 346.14 80.174 301.07 80.174 256h-.082c0-22.215-18.109-40.2-40.37-39.998-22.076.2-39.694 18.688-39.629 40.765.194 65.26 25.187
+                                 130.46 74.98 180.253 99.974 99.974 262.064 99.974 362.038.001 99.729-99.73 99.729-262.312-.001-362.041z">
+                                        </path>
+                                        <path fill="currentcolor"
+                                            d="m336.837 267.978-50.746-29.298v-88.596c0-16.569-13.431-30-30-30-16.569 0-30 13.431-30 30V256c0 11.103 6.036 20.79 15.002 25.978l-.002.003 65.746 37.958c14.349 8.284 32.696 3.368 40.981-10.981 8.284-14.348 3.368-32.696-10.981-40.98z">
+                                        </path>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-command-column  [headerClass]="headerStyle" [columnMenu]="false" title="Action" [width]="100">
+                    <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                        <ng-container>
+                            <div container="body">
+                                <div class="button_class d-flex justify-content-center ">
+                                    <button  aria-role-check="yes"  (click)="openSubItemModal(item)" *ngIf="templateId==2 && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_SOME_ITEM)"
+                                        class="border-0 bg-img-none shadow-none bg-opacity-0 " type="button"
+                                        data-bs-auto-close="outside" title="Add some item">
+
+
+                                        <!-- add-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon text-blue  ">
+                                        </span>
+                                        <!-- add-svg -->
+                                    </button>
+                                    <button aria-role-check="yes" *ngIf="addItemCondition() && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_DELETE_ITEM)" (click)="deleteModalConfirmation(item,rowIndex)"
+                                        class="border-0 bg-img-none shadow-none bg-opacity-0" type="button"
+                                        data-bs-auto-close="outside" title="Delete">
+                                        <!-- delete-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/delete.svg'"
+                                            class="svg-icon text-primary  "> </span>
+                                        <!-- delete-svg -->
+
+                                    </button>
+                                    <button aria-role-check="yes" *ngIf="shortClosecondition(item) && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SHORT_CLOSE_BUTTON)" (click)="openShortcloseModel(item)" class="btn btn-sm btn ms-2  btn-sm  p-1 px-2 py-1" title="Short Close">
+                                        <span [inlineSVG]="'./assets/media/svg/short-close.svg'" class="svg-icon  text-primary">
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-command-column>
+
+
+
+                <kendo-grid-column field="itemCode" [headerClass]="headerStyle" title="Item Code" [width]="170">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div class="d-flex word-break ">
+                                <div>
+                                    {{item.itemCode}}
+                                </div>
+                                <div class="d-flex">
+                                    <span *ngIf="item.isManpower"
+                                        class="symbol d-flex align-items-center h-20px w-20px
+                                 justify-content-center bg-light-danger  border-primary fw-bold text-primary fs-9 ms-2 border-solid border symbol-circle ">M</span>
+                                    <span style=" cursor: pointer;" title="Info Button" class="svg-icon ms-3  text-blue"
+                                        (click)="infoButtonHandler(item)">
+
+
+                                        <svg enable-background="new 0 0 48 48" height="48px" id="Layer_3" version="1.1"
+                                            viewBox="0 0 48 48" width="48px" xml:space="preserve"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            <path
+                                                d="M24,0.125C10.814,0.125,0.125,10.814,0.125,24c0,13.187,10.689,23.875,23.875,23.875
+                                         c13.186,0,23.875-10.688,23.875-23.875C47.875,10.814,37.186,0.125,24,0.125z M23.449,14.162c0.098-0.576,0.387-1.062,0.861-1.466
+                                          c0.469-0.407,0.993-0.609,1.569-0.609c0.573,0,1.037,0.202,1.392,0.609c0.356,0.403,0.478,0.89,0.38,1.466
+                                           c-0.104,0.572-0.391,1.062-0.86,1.467c-0.473,0.403-0.998,0.605-1.57,0.605c-0.572,0-1.029-0.202-1.367-0.605
+                                            C23.515,15.225,23.378,14.734,23.449,14.162z M30.084,31.445c0,0-0.02,0.029-0.05,0.072c-0.04,0.052-0.082,0.108-0.131,0.167
+                                            c-0.551,0.695-2.374,2.772-5.146,3.804c-0.097,0.037-0.195,0.074-0.292,0.105c-0.039,0.014-0.076,0.029-0.116,0.043
+                                             c-0.004-0.002-0.006-0.004-0.01-0.004c-0.586,0.181-1.16,0.281-1.716,0.281c-1.228,0-1.843-0.562-1.843-1.685
+                                              c0-0.476,0.252-1.937,0.756-4.379l0.986-4.728l0.251-1.195l0.202-0.957c0.085-0.406,0.127-0.745,0.127-1.023
+                                                c0-0.309-0.09-0.506-0.227-0.646c-0.19-0.157-0.488-0.13-0.645-0.094c-0.337,0.089-0.721,0.247-0.872,0.312
+                                                  c-1.996,0.998-3.185,2.531-3.185,2.531c-0.316-0.196-0.476-0.394-0.476-0.59c0-0.251,0.124-0.533,0.36-0.843l-0.002,0.001
+                                                   l0.009-0.011c0.182-0.237,0.426-0.49,0.745-0.762c0.415-0.383,1.013-0.858,1.762-1.332c0.037-0.024,0.061-0.043,0.101-0.069
+                                                    c2.766-1.823,4.633-1.682,4.633-1.682l-0.005,0.008c0.284,0.023,0.695,0.127,1.137,0.487c0.042,0.034,0.058,0.064,0.088,0.098
+                                                     c0.028,0.028,0.056,0.058,0.082,0.089c0.029,0.042,0.051,0.082,0.066,0.122c0.177,0.274,0.287,0.611,0.287,1.055
+                                                     c0,0.232-0.068,0.708-0.201,1.427l-0.226,1.162c-0.021,0.093-0.11,0.562-0.278,1.408l-1.035,4.969l-0.253,1.111
+                                                       c-0.221,1.102-0.33,1.834-0.33,2.205c0,0.449,0.184,0.687,0.523,0.73c0.12-0.01,0.492-0.046,0.891-0.188
+                                                       c0.135-0.062,0.271-0.114,0.401-0.185c0.006-0.006,0.015-0.01,0.024-0.014c1.511-0.837,2.672-2.236,2.984-2.632
+                                                        c0.052-0.076,0.104-0.141,0.156-0.216c0.446,0.187,0.677,0.365,0.677,0.54c0,0.128-0.076,0.299-0.217,0.505H30.084z"
+                                                fill="currentcolor" />
+                                        </svg>
+                                    </span>
+
+                                    <div class="modal fade" tabindex="-1" id="kt_modal_info">
+                                        <div class="modal-dialog  modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title">Technical Specification</h3>
+
+                                                    <!--begin::Close-->
+                                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                        <span [inlineSVG]="'./assets/media/svg/close.svg'"
+                                                            class="svg-icon svg-icon-2  "> </span>
+                                                    </div>
+                                                    <!--end::Close-->
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <input type="text" class="form-control mb-2"
+                                                        placeholder="disable entry" disabled>
+                                                    <input type="text" class="form-control mb-2"
+                                                        placeholder="disable entry" disabled>
+                                                    <input type="text" class="form-control mb-2"
+                                                        placeholder="disable entry" disabled>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light btn-sm"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+
+
+
+                <kendo-grid-column [filterable]="true" field="itemName" [headerClass]="headerStyle"
+                    title="Item Description" [width]="310">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            {{item.itemDesc}}
+                        </ng-container>
+                    </ng-template></kendo-grid-column>
+                    
+                    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="Delivery Name"
+                    field="deliveryAddress" [width]="350">
+                  </kendo-grid-column>
+
+                <kendo-grid-command-column [headerClass]="headerStyle" title="Order Qty" [columnMenu]="false"
+                    [width]="210">
+                    <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                        <div class="remark-box">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <div class=" ">
+                                    <input type="number" [disabled]="!dataItem.isEditedModeQty"
+                                        [(ngModel)]="dataItem.quantity" class="form-control form-control-lg" />
+                                </div>
+                                <a class="cursor-pointer"  *ngIf="dataItem.isEditedModeQty"
+                                    (click)="qtyCancelButton(rowIndex,'Save')">
+                                    <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                    </svg>
+                                </a>
+                                <a class="cursor-pointer" *ngIf="dataItem.isEditedModeQty"
+                                    (click)="qtyCancelButton(rowIndex,'Cancel')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </a>
+
+                                <button aria-role-check="yes"  class="border-0 px-3" style="background: transparent;"
+                                    *ngIf="!dataItem.isEditedModeQty && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_OTHER_QUANTITY_EDIT_BUTTON)" (click)="qtyCancelButton(rowIndex,'Edit')"
+                                    [disabled]="!checkConditionForAccess(typeAccess.LINE_ITEMS_QTY)">
+                                    <a class="">
+                                        <!-- edit-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue  ">
+                                        </span>
+                                        <!-- edit-svg -->
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-grid-command-column>
+
+                <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM" [width]="70"></kendo-grid-column>
+
+                <kendo-grid-column [headerClass]="headerStyle" field="deliveryLocation" title="Delivery Location"
+                    [width]="150"></kendo-grid-column>
+
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="deliveryAddress" title="Delivery Address"
+                    [width]="220"></kendo-grid-column> -->
+
+                <!-- <kendo-grid-column cell [headerClass]="headerStyle" field="siteCode" title="Site"
+                    [width]="90"></kendo-grid-column> -->
+
+                <kendo-grid-command-column [headerClass]="headerStyle" title="Remarks" [columnMenu]="false"
+                    [width]="190">
+                    <!-- <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                        <ng-container>
+
+
+                            <div class="form-check form-switch form-check-custom form-check-solid me-10 ">
+                                <div class="col-12 col-md-12 ">
+                                    <input [disabled]="!dataItem.isEditedMode" [(ngModel)]="dataItem.remarks"
+                                        class="form-control form-control-lg" />
+                                </div>
+                                <a *ngIf="dataItem.isEditedMode" (click)="parameterCancelButton(rowIndex,'Save')">
+                                    <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                    </svg>
+                                </a>
+                                <a *ngIf="dataItem.isEditedMode" (click)="parameterCancelButton(rowIndex,'Cancel')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </a>
+                                <a *ngIf="!dataItem.isEditedMode" (click)="parameterCancelButton(rowIndex,'Edit')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                        </ng-container>
+                    </ng-template> -->
+
+                    <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                        <div class="remark-box">
+                            <div class="form-check form-switch form-check-custom form-check-solid ">
+                                <div class="">
+                                    <input maxlength="200" [disabled]="!dataItem.isEditedMode"
+                                        [(ngModel)]="dataItem.remarks" class="form-control form-control-lg" />
+                                </div>
+                                <a class="cursor-pointer" *ngIf="dataItem.isEditedMode"
+                                    (click)="parameterCancelButton(rowIndex,'Save')">
+                                    <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                    </svg>
+                                </a>
+                                <a class="cursor-pointer" *ngIf="dataItem.isEditedMode"
+                                    (click)="parameterCancelButton(rowIndex,'Cancel')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </a>
+
+                                <button aria-role-check="yes" class="border-0 px-3" style="background: transparent;" *ngIf="!dataItem.isEditedMode && checkPermission(permissionEnum.DASHBOARD_PRICE_BID_REMARKS_EDIT_BUTTON)"
+                                    (click)="parameterCancelButton(rowIndex,'Edit')"
+                                    [disabled]="!checkConditionForAccess(typeAccess.ADD_LINE_ITEM_REMARK)">
+
+                                    <a class="cursor-pointer">
+                                        <!-- edit-svg -->
+                                        <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue  ">
+                                        </span>
+                                        <!-- edit-svg -->
+
+
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </kendo-grid-command-column>
+
+                <kendo-grid-column *ngFor="let priceBid of priceBidParameterList" [headerClass]="headerStyle"
+                    [title]="priceBid?.headerName" [width]="columnWidth" editor="numeric">
+
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div container="body"
+                                class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                                <div class="col-md-12 ">
+                                    <input type="numeric" class="form-control form-control-lg" [disabled]="true" />
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column *ngFor="let otherCharge of otherChargesParameterList" [headerClass]="headerStyle"
+                    [title]="otherCharge?.headerName" [width]="columnWidth" editor="numeric">
+
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div container="body"
+                                class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                                <div class="col-md-12 ">
+                                    <input type="numeric" class="form-control form-control-lg" [disabled]="true" />
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+
+            </kendo-grid>
+
+
+            <div *ngIf="userType=='Vendor' && chargeNRemarkList && priceBidParameterList">
+
+                <app-vendor-charges [priceBidLinesList]="priceBidLinesList" [priceBidColumnList]="priceBidColumnList"
+                    [eventId]="rfqDetail.eventid" [templateId]="rfqDetail.templateId"
+                    [publishCheckList]="publishCheckList" [rfqDetail]="rfqDetail"
+                    (updateCheckList$)="updateCheckList()"></app-vendor-charges>
+            </div>
+
+        </div>
+
+
+        <!-- charge details -->
+        <div *ngIf="userType=='Buyer'">
+            <!-- other charges -->
+            <div>
+                <!-- begin::Header -->
+                <div class="border-0 pt-5">
+
+
+                    <div class="d-block d-sm-flex align-items-center mt-3 justify-content-between">
+
+                        <div class="d-flex">
+                            <div class="d-flex excel-export mr-2">
+                                <button aria-role-check="yes" *ngIf=" checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_PRICING_OTHER_CHARGES_BUTTON)" [disabled]="!checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES)"
+                                    (click)="addCharge('OtherCharges')" type="button" class="btn btn-light-blue btn-sm"
+                                    title="Add Other Charge">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+
+                                    Pricing (Other Charges)</button>
+                            </div>
+
+
+                        </div>
+
+
+                        <div>
+
+                            <button aria-role-check="yes" [disabled]="!checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES)"
+                                *ngIf="checkValidationForButton(1) &&  checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PRICING_OTHER_CHARGES_SAVE_CHANGES_BUTTON)" id="sumbitbtn1" (click)="saveButtonClicked(1)"
+                                type="button" class="btn btn-primary btn-sm mt-3 mt-md-0">
+                                <span class="indicator-label">
+                                    Save changes
+                                </span>
+                                <span class="indicator-progress">
+                                    Please wait... <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- end::Header -->
+
+            <!-- begin::Body -->
+            <div class="card-body py-3 overflow-scroll ">
+                <!-- begin::Table container -->
+                <div class="table-responsive">
+                    <!-- begin::Table -->
+                    <table class="table table-row-dashed table-responsive table-row-gray-300 align-middle gs-0 gy-4">
+                        <!-- begin::Table head -->
+                        <thead>
+                            <tr class="fw-bolder text-gray-700">
+                                <th class="">#</th>
+                                <th class="min-w-200px">Type</th>
+                                <th class="min-w-400px min-w-md-500px min-w-lg-600px">Charges</th>
+                                <th *ngIf="checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES)"
+                                    class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <!-- end::Table head -->
+                        <!-- begin::Table body -->
+                        <tbody>
+                            <tr *ngFor="let item of getNonDeletedCharges();let i=index" [hidden]="item.isDeleted">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a class="text-gray-800 text-hover-primary fs-6">
+                                                {{i+1}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class=" word-break">
+                                    <a class="text-gray-800 text-hover-primary d-block fs-6">
+                                        {{item.cR_Type==='OtherCharges'?'Other Charge':'Incoterm'}}
+                                    </a>
+                                    <!-- <a (click)="infoButtonHandler()">
+                                        <span class="svg-icon ms-3  text-blue">
+
+
+                                            <svg enable-background="new 0 0 48 48" height="48px" id="Layer_3"
+                                                version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <path
+                                                    d="M24,0.125C10.814,0.125,0.125,10.814,0.125,24c0,13.187,10.689,23.875,23.875,23.875
+                                     c13.186,0,23.875-10.688,23.875-23.875C47.875,10.814,37.186,0.125,24,0.125z M23.449,14.162c0.098-0.576,0.387-1.062,0.861-1.466
+                                      c0.469-0.407,0.993-0.609,1.569-0.609c0.573,0,1.037,0.202,1.392,0.609c0.356,0.403,0.478,0.89,0.38,1.466
+                                       c-0.104,0.572-0.391,1.062-0.86,1.467c-0.473,0.403-0.998,0.605-1.57,0.605c-0.572,0-1.029-0.202-1.367-0.605
+                                        C23.515,15.225,23.378,14.734,23.449,14.162z M30.084,31.445c0,0-0.02,0.029-0.05,0.072c-0.04,0.052-0.082,0.108-0.131,0.167
+                                        c-0.551,0.695-2.374,2.772-5.146,3.804c-0.097,0.037-0.195,0.074-0.292,0.105c-0.039,0.014-0.076,0.029-0.116,0.043
+                                         c-0.004-0.002-0.006-0.004-0.01-0.004c-0.586,0.181-1.16,0.281-1.716,0.281c-1.228,0-1.843-0.562-1.843-1.685
+                                          c0-0.476,0.252-1.937,0.756-4.379l0.986-4.728l0.251-1.195l0.202-0.957c0.085-0.406,0.127-0.745,0.127-1.023
+                                            c0-0.309-0.09-0.506-0.227-0.646c-0.19-0.157-0.488-0.13-0.645-0.094c-0.337,0.089-0.721,0.247-0.872,0.312
+                                              c-1.996,0.998-3.185,2.531-3.185,2.531c-0.316-0.196-0.476-0.394-0.476-0.59c0-0.251,0.124-0.533,0.36-0.843l-0.002,0.001
+                                               l0.009-0.011c0.182-0.237,0.426-0.49,0.745-0.762c0.415-0.383,1.013-0.858,1.762-1.332c0.037-0.024,0.061-0.043,0.101-0.069
+                                                c2.766-1.823,4.633-1.682,4.633-1.682l-0.005,0.008c0.284,0.023,0.695,0.127,1.137,0.487c0.042,0.034,0.058,0.064,0.088,0.098
+                                                 c0.028,0.028,0.056,0.058,0.082,0.089c0.029,0.042,0.051,0.082,0.066,0.122c0.177,0.274,0.287,0.611,0.287,1.055
+                                                 c0,0.232-0.068,0.708-0.201,1.427l-0.226,1.162c-0.021,0.093-0.11,0.562-0.278,1.408l-1.035,4.969l-0.253,1.111
+                                                   c-0.221,1.102-0.33,1.834-0.33,2.205c0,0.449,0.184,0.687,0.523,0.73c0.12-0.01,0.492-0.046,0.891-0.188
+                                                   c0.135-0.062,0.271-0.114,0.401-0.185c0.006-0.006,0.015-0.01,0.024-0.014c1.511-0.837,2.672-2.236,2.984-2.632
+                                                    c0.052-0.076,0.104-0.141,0.156-0.216c0.446,0.187,0.677,0.365,0.677,0.54c0,0.128-0.076,0.299-0.217,0.505H30.084z"
+                                                    fill="currentcolor" />
+                                            </svg>
+                                        </span>
+                                    </a> -->
+                                </td>
+
+                                <td *ngIf="item.cR_Type==='OtherCharges'"
+                                    class="min-w-400px min-w-md-500px min-w-lg-600px">
+                                    <div class="">
+                                        <div class="d-flex justify-content-start flex-row">
+                                            <select
+                                                [disabled]="!checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES) ||!checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PRICING_OTHER_CHARGES_ENABLED)"
+                                                [(ngModel)]="item.cR_Name" (change)="item.isEdit=true  "
+                                                [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                (change)="item.isError = false;"
+                                                class="form-control selectpicker custom-form-control form-select">
+                                                <option *ngFor="let priceBid of priceBidChargesList"
+                                                    [value]="priceBid.markupCode">
+                                                    {{priceBid.markupCode}}</option>
+                                            </select>
+
+
+                                            <!-- <select2
+                                                [disabled]="!checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES)"
+                                                [(ngModel)]="item.cR_Name" (change)="item.isEdit=true  "
+                                                [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                (change)="item.isError = false;"
+                                                class="form-control selectpicker custom-form-control form-select"
+                                                [overlay]="false" [data]="priceBidChargesDropDown" resettable
+                                                id="selec2-1">
+                                            </select2> -->
+                                            <!-- <i (mouseover)="isShowMessage= true" (mouseout)="isShowMessage= false"
+                                                class="bi w-24 h-24 bi-info-circle"></i> -->
+
+                                        </div>
+                                        <!-- <div *ngIf="isShowMessage" class="fv-plugins-message-container">
+                                            <span role="alert">
+                                                {{ 'test messages' }}
+                                            </span>
+                                        </div> -->
+                                    </div>
+                                </td>
+
+
+
+                                <td *ngIf="checkConditionForAccess(typeAccess.OTHER_HEADER_LEVEL_CHARGES) &&  checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PRICING_OTHER_CHARGES_DELETE_BUTTON)">
+                                    <div class="d-flex justify-content-center flex-shrink-0">
+
+                                        <a aria-role-check="yes" (click)="item.isDeleted=true" class="" title="Delete">
+                                            <!-- delete-svg -->
+                                            <span [inlineSVG]="'./assets/media/svg/delete.svg'"
+                                                class="svg-icon text-primary "></span>
+                                            <!-- delete-svg -->
+
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!-- end::Table body -->
+                    </table>
+                    <!-- end::Table -->
+                </div>
+                <!-- end::Table container -->
+            </div>
+            <!-- begin::Body -->
+        </div>
+
+
+        <!-- pricing detail -->
+
+        <div *ngIf="userType=='Buyer'">
+            <!-- other charges -->
+            <div>
+                <!-- begin::Header -->
+                <div class="border-0 pt-5">
+
+
+                    <div class="d-block d-sm-flex align-items-center mt-3 justify-content-between">
+                        <div class="d-flex">
+                            <div class="d-flex excel-export mr-2">
+                                <button aria-role-check="yes" *ngIf=" checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_NON_PRICING_BUTTON)" [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                    (click)="addPricing('NonPricingTitle')" type="button"
+                                    class="btn btn-light-blue btn-sm " title="Add Non Pricing">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+
+                                    Non Pricing</button>
+                            </div>
+
+                            <div class="d-flex excel-export mr-2" >
+                                <button aria-role-check="yes" *ngIf=" checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_PAYMENT_TERMS_BUTTON)" [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                    (click)="addPricing('PaymentTerms')" type="button"
+                                    class="btn btn-light-blue btn-sm " icon="file-excel" title="Add Payment Term">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+
+                                    Payment Term</button>
+                            </div>
+
+                            <div class="d-flex excel-export" >
+                                <button aria-role-check="yes" *ngIf=" checkPermission(permissionEnum.DASHBOARD_PRICE_BID_ADD_INCOTERMS_BUTTON)" [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                    (click)="addPricing('IncoTerms')" type="button" class="btn btn-light-blue btn-sm "
+                                    icon="file-excel" title="Add Incoterms">
+                                    <!-- add-svg -->
+                                    <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  me-2">
+                                    </span>
+                                    <!-- add-svg -->
+
+
+                                    Incoterms</button>
+                            </div>
+                        </div>
+
+                        <div>
+
+                            <button aria-role-check="yes" [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                *ngIf="checkValidationForButton(2) &&  checkPermission(permissionEnum.DASHBOARD_PRICE_BID_NON_PRICING_SAVE_CHANGES_BUTTON)" id="sumbitbtn2" (click)="saveButtonClicked(2)"
+                                type="button" class="btn btn-primary btn-sm mt-3 mt-md-0">
+                                <span class="indicator-label">
+                                    Save changes
+                                </span>
+                                <span class="indicator-progress">
+                                    Please wait... <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end::Header -->
+
+            <!-- begin::Body -->
+            <div class="card-body py-3 overflow-scroll">
+                <!-- begin::Table container -->
+                <div class="table-responsive">
+                    <!-- begin::Table -->
+                    <table class="table table-row-dashed table-responsive table-row-gray-300 align-middle gs-0 gy-4">
+                        <!-- begin::Table head -->
+                        <thead>
+                            <tr class="fw-bolder text-gray-700">
+                                <th class="">#</th>
+                                <th class="min-w-200px">Type</th>
+                                <th class="min-w-400px min-w-md-500px min-w-lg-600px">Title</th>
+                                <th *ngIf="checkConditionForAccess(typeAccess.NON_PRICING_TITLES)" class="text-center">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <!-- end::Table head -->
+                        <!-- begin::Table body -->
+                        <tbody>
+                            <tr *ngFor="let item of getNonDeletedPricing();let i=index" [hidden]="item.isDeleted">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a class="text-gray-800 text-hover-primary fs-6">
+                                                {{i+1}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <a class="text-gray-800 text-hover-primary d-block fs-6">
+                                        {{item.cR_Type==='NonPricingTitle' ? 'Non Pricing':item.cR_Type=='IncoTerms'?'Inco/Delivery Terms':'Payment Term'}}
+                                    </a>
+                                </td>
+
+                                <td *ngIf="item.cR_Type==='NonPricingTitle'"
+                                    class="min-w-400px min-w-md-500px min-w-lg-600px">
+                                    <div class="">
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <input [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES) ||!checkPermission(permissionEnum.DASHBOARD_PRICE_BID_NON_PRICING_ENABLED)"
+                                                type="text" placeholder="Enter Title"
+                                                class="custom-form-control form-control"
+                                                (input)="item.isEdit=true;item.isError=false"
+                                                [ngClass]="(item.isError || item.cR_Name==='')?'border border-danger':'' "
+                                                [(ngModel)]="item.cR_Name" [value]="item.cR_Name">
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="item.cR_Type==='PaymentTerms'"
+                                    class="min-w-400px min-w-md-500px min-w-lg-600px">
+                                    <div class="">
+                                        <div class=" ">
+                                            <!-- <div class="form-check form-check-custom form-check-solid me-5">
+                                                <input [(ngModel)]="item.iscustomEnabled"
+                                                    (change)="checkboxcustomChangeHandler(item)" class="form-check-input h-20px w-20px"
+                                                    type="checkbox">
+                                            </div> -->
+
+                                             <div
+                                                class="d-flex justify-content-start flex-column">
+                                                <!-- <select2
+                                                    [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                                    [(ngModel)]="item.cR_Name"
+                                                    (change)="item.isEdit=true;item.isError=false"
+                                                    [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                    class="form-control selectpicker custom-form-control form-select "
+                                                    [overlay]="false" [data]="paymentTermsChargeDropdown" resettable
+                                                    id="selec2-1">
+                                                </select2> -->
+
+                                                <select [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)  ||!checkPermission(permissionEnum.DASHBOARD_PRICE_BID_PAYMENT_TERM_ENABLED)" 
+                                                [(ngModel)]="item.cR_Name"
+                                                (change)="item.isEdit=true;item.isError=false"
+                                                [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                class="form-control selectpicker custom-form-control form-select">
+                                                <option *ngFor="let paymentterm of paymentTermsChargeList"
+                                                    [value]="paymentterm.description">
+                                                    {{paymentterm.description}}</option>
+                                            </select>
+
+                                            </div>
+
+
+                                            <!-- <div *ngIf="item.iscustomEnabled"
+                                                class="d-flex justify-content-start flex-column w-100">
+                                                <input
+                                                    [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                                    type="text" placeholder="Enter Title"
+                                                    class="custom-form-control form-control"
+                                                    (input)="item.isEdit=true;item.isError=false"
+                                                    [ngClass]="item.isError?'border border-danger':'' "
+                                                    [(ngModel)]="item.cR_Name" [value]="item.cR_Name">
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="item.cR_Type==='IncoTerms'"
+                                    class="min-w-400px min-w-md-500px min-w-lg-600px">
+                                    <div class="">
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <select [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES) ||!checkPermission(permissionEnum.DASHBOARD_PRICE_BID_INCO_TERM_ENABLED)"
+                                                [(ngModel)]="item.cR_Name"
+                                                (change)="item.isEdit=true;item.isError=false"
+                                                [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                class="form-control selectpicker custom-form-control form-select">
+                                                <option *ngFor="let incoTerm of incoTermsChargeList"
+                                                    [value]="incoTerm.description">
+                                                    {{incoTerm.description}}</option>
+                                            </select>
+
+                                            <!-- <select2
+                                            [disabled]="!checkConditionForAccess(typeAccess.NON_PRICING_TITLES)"
+                                                [(ngModel)]="item.cR_Name"
+                                                (change)="item.isEdit=true;item.isError=false"
+                                                [ngClass]="item.isError ? 'border border-danger' : '' "
+                                                class="form-control selectpicker custom-form-control form-select"
+                                                [overlay]="false" [data]="incotermsdropdown" resettable
+                                                id="selec2-1">
+                                            </select2> -->
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="checkConditionForAccess(typeAccess.NON_PRICING_TITLES)">
+                                    <div class="d-flex justify-content-center flex-shrink-0">
+
+                                        <a aria-role-check="yes" *ngIf=" checkPermission(permissionEnum.DASHBOARD_PRICE_BID_NON_PRICING_DELETE_BUTTON)" (click)="item.isDeleted=true" class="" title="Delete">
+                                            <span [inlineSVG]="'./assets/media/svg/delete.svg'"
+                                                class="svg-icon text-primary "></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!-- end::Table body -->
+                    </table>
+                    <!-- end::Table -->
+                </div>
+                <!-- end::Table container -->
+            </div>
+            <!-- begin::Body -->
+        </div>
+
+
+    </div>
+
+
+</div>

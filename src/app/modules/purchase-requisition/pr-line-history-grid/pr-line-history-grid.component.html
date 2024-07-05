@@ -1,0 +1,45 @@
+<!-- <div class="container-fluid overflow-auto">
+    <div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">
+            View PO History Data</h3>
+    </div>
+    <div class="modal-title m-0" (click)="closeModel()">
+        <span class="justify-content-center " [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+    </div>
+</div>
+<div class="modal-body">
+
+    <kendo-grid [loading]="historyDataLoading" [data]="PoHistorydataGridView"
+        [columnMenu]="{ filter: true ,sort : true  }" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="true" [sortable]="{
+                    allowUnsort: true,
+                    mode: 'multiple'}" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <kendo-grid-column field="vendorcode" title="Vendor Code" [width]="95"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="vendorname" title="Vendor Name" [width]="130"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="pono" title="PO Number" [width]="95" [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="podate" filter="date" title="PO Confirmation Date" [width]="columnWidth"
+            [headerClass]="headerStyle">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.podate | date: 'dd-MMM-yyyy'}}
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="poqty" title="PO Qty" [width]="60" [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="uom" title="UOM" [width]="55" [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="netAmt" title="Unit Price" [width]="70" [headerClass]="headerStyle">
+        </kendo-grid-column>
+        <kendo-grid-column field="discAmt" title="Discount" [width]="60"
+            [headerClass]="headerStyle"></kendo-grid-column>
+    </kendo-grid>
+</div>
+
+<!-- </div>
+
+</div> -->

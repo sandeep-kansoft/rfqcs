@@ -1,0 +1,190 @@
+<!-- <div class="container-fluid overflow-auto"><div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+  aria-controls="kt_account_profile_details">
+  <div class="modal-title m-0">
+    <h3 class="fw-bolder m-0">Technical Parameters</h3>
+  </div>
+  <div class="card-title m-0 btn btn-icon btn-sm btn-active-light-primary ms-2">
+
+    <!-- close-svg -->
+
+    <span (click)="closeModel()" [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+
+    <!-- close-svg -->
+  </div>
+</div>
+<!-- Item Technical Parameter start -->
+<div class="modal-body">
+
+  <kendo-grid [data]="gridView" [loading]="isLoading" [pageSize]="state.take" [resizable]="true" [skip]="state.skip"
+    [pageable]="{
+       pageSizes:true,
+       info: true
+       }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)"
+    (edit)="editHandler($event)" (cancel)="cancelHandler($event)" (save)="saveHandler($event)"
+    (remove)="removeHandler($event)" (add)="addHandler($event)">
+    <ng-template kendoGridToolbarTemplate>
+      <div *ngIf="addAndUpdateCondition()" class="d-block d-md-flex w-100 justify-content-between btn-box">
+        <div>
+
+          <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_ADD_NEW_BUTTON)" kendoGridAddCommand type="button"
+            class="btn btn-light-blue btn-sm mb-3 mb-md-0   me-3" title="Add New">
+            <span class="svg-icon">
+
+              <!-- add-svg -->
+              <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon m-0 "></span>
+              <!-- add-svg -->
+            </span> New </button>
+
+          <button aria-role-check="yes" (click)="uploadExcelFile()" type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_UPLOAD_EXCEL_BUTTON)"
+            class="btn btn-light-blue btn-sm me-3 mb-3 mb-md-0 " icon="file-excel" title="Import from Excel">
+
+            <!-- upload-svg -->
+            <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+            <!-- upload-svg -->
+            Excel </button>
+
+          <button aria-role-check="yes" (click)='openTemplateListModel()' type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_IMPORT_TEMPLATE_BUTTON)"
+            class=" btn btn-light-blue btn-sm me-3 mb-3 mb-md-0" title="Import From Template">
+
+            <!-- upload-svg -->
+            <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon m-0 "></span>
+            <!-- upload-svg -->
+            From Template </button>
+
+        </div>
+        <div class="d-block d-md-flex excel-export" style="flex-shrink: unset;">
+
+
+          <button aria-role-check="yes" type="button" kendoGridExcelCommand *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_EXPORT_EXCEL_BUTTON)"
+            class="btn btn-light-success btn-sm me-3 mb-3 mb-md-0" title="Export To Excel">
+
+            <!-- download-svg -->
+            <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon m-0 "></span>
+            <!-- download-svg -->
+            Excel </button>
+
+
+          <button aria-role-check="yes" (click)='saveTemplateModel()' type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_SAVE_TEMPLATE_BUTTON)"
+            class="btn btn-primary btn-sm me-3 mb-3 mb-md-0 ">Save
+            Template</button>
+        </div>
+      </div>
+    </ng-template>
+    <!-- Kendo Default Loader -->
+    <ng-template kendoGridLoadingTemplate>
+      <app-wonder-loader></app-wonder-loader>
+    </ng-template>
+    <!-- Kendo End Default Loader -->
+    <kendo-grid-column field="sno" title="#" [width]="50">
+      <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1 === 0 ? '': rowIndex+1}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column *ngIf="addAndUpdateCondition()" title="Action" [width]="110">
+      <ng-template kendoGridCellTemplate let-isNew="isNew" class="shadow-none">
+        <div class="d-flex justify-content-center align-items-center">
+
+
+          <button  aria-role-check="yes" kendoGridEditCommand type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_EDIT_ACTION_BUTTON)"
+            class="bg-img-none bg-opacity-0 border-0 shadow-none  me-2 cursor-pointer-imp" title="Edit">
+            <!-- edit-svg -->
+            <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon m-0 text-blue "></span>
+            <!-- edit-svg -->
+          </button>
+          <button aria-role-check="yes" kendoGridRemoveCommand type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_REMOVE_ACTION_BUTTON)"
+            class=" bg-img-none bg-opacity-0 border-0 shadow-none me-0 cursor-pointer-imp" title="Remove">
+
+            <!-- delete-svg -->
+            <span [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon m-0 text-primary "></span>
+            <!-- delete-svg -->
+
+
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+
+
+          <button kendoGridSaveCommand type="button"
+            class=" bg-img-none bg-opacity-0 border-0 shadow-none me-0 cursor-pointer-imp" title="Add">
+            <!-- {{ isNew ? 'Add' : 'Update' }} -->
+            <!-- add-svg -->
+            <span *ngIf="isNew" [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon m-0 text-blue"></span>
+
+
+            <span *ngIf="!isNew" class="svg-icon m-0 text-blue ">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#008000" class="bi bi-check-lg"
+                viewBox="0 0 16 16">
+                <path
+                  d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+              </svg> -->
+              <span [inlineSVG]="'./assets/media/svg/update.svg'" class="svg-icon m-0 text-blue " title="Update"></span>
+            </span>
+
+
+            <!-- add-svg -->
+
+            <!-- <span *ngIf="!isNew" class="svg-icon svg-icon-2 text-success m-0" title="Update">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="sync">
+                <path fill="currentcolor"
+                  d="M22 10.49v4A2.5 2.5 0 0 1 19.5 17h-7.79l2.14 2.15a.48.48 0 0 1 0 .7.48.48 0 0 1-.7 0l-3-3a.36.36 0 0 1-.11-.16.5.5 0 0 1 0-.38.36.36 0 0 1 .11-.16l3-3a.49.49 0 0 1 .7.7L11.71 16h7.79a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 19.5 9h-3a.5.5 0 0 1 0-1h3a2.5 2.5 0 0 1 2.5 2.49zm-9.15-2.64-3 3a.48.48 0 0 1-.7 0 .48.48 0 0 1 0-.7L11.29 8H4.5A1.5 1.5 0 0 0 3 9.49v4A1.5 1.5 0 0 0 4.5 15h3a.5.5 0 0 1 0 1h-3A2.5 2.5 0 0 1 2 13.5v-4A2.5 2.5 0 0 1 4.5 7h6.79L9.15 4.85a.49.49 0 0 1 .7-.7l3 3a.36.36 0 0 1 .11.16.47.47 0 0 1 0 .38.36.36 0 0 1-.11.16z">
+                </path>
+              </svg>
+            </span> -->
+            <!-- add-svg -->
+            <!-- <span *ngIf="!isNew" [inlineSVG]="'./assets/media/svg/update.svg'" class="svg-icon m-0 text-blue svg-icon-2"
+              title="Update"></span> -->
+            <!-- add-svg -->
+
+          </button>
+          <button kendoGridCancelCommand type="button"
+            class="bg-img-none bg-opacity-0 border-0 shadow-none me-0 cursor-pointer-imp" title="Discard changes">
+            <!-- close-svg -->
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 text-primary "></span>
+            <!-- close-svg -->
+
+          </button>
+        </div>
+      </ng-template>
+    </kendo-grid-command-column>
+    <kendo-grid-column field="Parameter" title="Parameter">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <div class="row">
+          <div class="col-12 ">
+            <kendo-textbox [(ngModel)]="dataItem.Parameter" class="form-control form-control-lg" name="Parameter"
+              required></kendo-textbox>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="Required" editor="numeric" title="Required" [width]="280">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <div class="row">
+          <div class="col-12 ">
+            <kendo-dropdownlist class="form-control form-control-lg" [(ngModel)]="dataItem.Required" name="Required"
+              [data]="listItems"></kendo-dropdownlist>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-excel [fetchData]="allData" fileName="Technical Parameter.xlsx"></kendo-grid-excel>
+  </kendo-grid>
+</div>
+
+<div class="modal-footer">
+  <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+    <button type="button" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_CANCEL_BUTTON)" (click)="closeModel()" class="btn me-5 btn-light btn-sm">Cancel</button>
+    <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_ACTION_POPUP_SUBMIT_CHANGE_BUTTON)" (click)="saveParameterHandler()" class="btn btn-primary btn-sm">
+      <ng-container *ngIf="saveChangesLoader">
+        <span class="indicator-progress" [style.display]="'block'">
+          Please wait...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="!saveChangesLoader">
+        <span class="indicator-label">Submit</span>
+      </ng-container>
+      <!-- <span class="indicator-label">Submit</span> -->
+    </button>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+    <path fill="currentcolor"
+      d="M23 7v6.81a1 1 0 1 1-2 0V7a1 1 0 0 0-1-1h-6.93a3 3 0 0 1-2.49-1.34l-.82-1.21A1 1 0 0 0 8.93 3H4a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h9a1 1 0 0 1 0 2H4a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3h4.93a3 3 0 0 1 2.49 1.34l.82 1.21a1 1 0 0 0 .83.45H20a3 3 0 0 1 3 3Zm-.17 11.44a1 1 0 0 1 0 1.12c-.17.25-1.7 2.44-3.83 2.44s-3.66-2.19-3.83-2.44a1 1 0 0 1 0-1.12c.17-.25 1.7-2.44 3.83-2.44s3.66 2.19 3.83 2.44Zm-2.12.56A2.75 2.75 0 0 0 19 18a2.77 2.77 0 0 0-1.71 1A2.72 2.72 0 0 0 19 20a2.77 2.77 0 0 0 1.71-1Z"
+      data-name="Layer 120"></path>
+  </svg>
+   -->
+   <svg height="24" id="icon" viewBox="0 0 32 32" width="24" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="22" cy="24" r="2" fill="currentcolor"></circle>
+   <path d="M29.7769,23.4785A8.64,8.64,0,0,0,22,18a8.64,8.64,0,0,0-7.7769,5.4785L14,24l.2231.5215A8.64,8.64,0,0,0,22,30a8.64,8.64,0,0,0,7.7769-5.4785L30,
+   24ZM22,28a4,4,0,1,1,4-4A4.0045,4.0045,0,0,1,22,28Z" fill="currentcolor"></path><rect height="2" width="5" x="7" y="17" fill="currentcolor"></rect>
+   <rect height="2" width="12" x="7" y="12" fill="currentcolor"></rect><rect height="2" width="12" x="7" y="7" fill="currentcolor"></rect>
+   <path d="M22,2,4,2A2.0058,2.0058,0,0,0,2,4V28a2.0058,2.0058,0,0,0,2,2h8V28H4V4H22V15h2V4A2.0058,2.0058,0,0,0,22,2Z" fill="currentcolor">
+   </path></svg>

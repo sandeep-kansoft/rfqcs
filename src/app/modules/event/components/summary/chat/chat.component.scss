@@ -1,0 +1,46 @@
+.show-pointer {
+   cursor: pointer;
+}
+
+// .ng-select2 {
+//    position: absolute;
+//    top: auto;
+//    bottom: 100%; /* Place the dropdown above the input */
+// }
+.selectedItemList-box{
+.selection{
+   ul{
+      li{
+         color: #333030!important;;
+         background-color: #f7f7f7!important;
+         border-color: #f7f7f7!important;
+         .select2-selection__choice__remove{
+            right: -5!important;
+            width: 20px!important;
+            background-color: #e7e3e3;
+         }
+         span:nth-child(2){
+            display: block!important;
+            margin-right: 20px!important;
+         }
+      }
+   }
+}
+
+
+
+   .select2-container--default .select2-selection--multiple .select2-selection__choice{
+      color: #333030!important;;
+      background-color: #f7f7f7!important;
+      border-color: #f7f7f7!important;
+   }
+.select2-selection__choice span:nth-child(2){
+   display: block;
+   margin-right: 20px;
+}
+   .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+      right: -5!important;
+      width: 20px;
+      background-color: #e7e3e3;
+   }
+}

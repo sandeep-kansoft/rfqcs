@@ -1,0 +1,271 @@
+<kendo-grid [loading]="linesDataLoading" [data]="gridView" [columnMenu]="{ filter: true ,sort : true  }"
+    [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"  [groupable]="false" [resizable]="true"
+    [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+        pageSizes: true,
+        info: true
+      }" [sortable]="{
+allowUnsort: true,
+mode: 'multiple'}" [sort]="state.sort" (dataStateChange)="onStateChange($event)" class="pr-line-modal-table"
+>
+
+    <kendo-grid-column field="sno" [columnMenu]="false" title="#" [headerClass]="headerStyle" [width]="50">
+        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+    </kendo-grid-column>
+
+    <ng-template kendoGridLoadingTemplate>
+        <app-wonder-loader></app-wonder-loader>
+    </ng-template>
+
+    <!-- ONLY PR LINES SHOW START -->
+    <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="actions" [width]="100">
+        <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+                <div ngbDropdown autoClose="'outside'" container="body">
+                    <div class="button_class d-flex justify-content-between ">
+                        <div>
+                            <button (click)="createRfqByLineHandler(item)" class="btn btn-sm  px-0 py-1" type="button"
+                                data-bs-auto-close="outside" title="Create RFQ">
+                                <svg *ngIf="item.isEventCreation" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16 2H8C4 2 2 4 2 8V21C2 21.55 2.45 22 3 22H16C20 22 22 20 22 16V8C22 4 20 2 16 2Z"
+                                        stroke="#f1bc00" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12.9098 7.84003L7.71979 13.03C7.51979 13.23 7.3298 13.62 7.2898 13.9L7.0098 15.88C6.9098 16.6 7.40979 17.1 8.12979 17L10.1098 16.72C10.3898 16.68 10.7798 16.49 10.9798 16.29L16.1698 11.1C17.0598 10.21 17.4898 9.17003 16.1698 7.85003C14.8498 6.52003 13.8098 6.94003 12.9098 7.84003Z"
+                                        stroke="#f1bc00" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.1699 8.58002C12.6099 10.15 13.8399 11.39 15.4199 11.83"
+                                        stroke="#f1bc00" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                                <svg *ngIf="!item.isEventCreation" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16 2H8C4 2 2 4 2 8V21C2 21.55 2.45 22 3 22H16C20 22 22 20 22 16V8C22 4 20 2 16 2Z"
+                                        stroke="#808080" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12.9098 7.84003L7.71979 13.03C7.51979 13.23 7.3298 13.62 7.2898 13.9L7.0098 15.88C6.9098 16.6 7.40979 17.1 8.12979 17L10.1098 16.72C10.3898 16.68 10.7798 16.49 10.9798 16.29L16.1698 11.1C17.0598 10.21 17.4898 9.17003 16.1698 7.85003C14.8498 6.52003 13.8098 6.94003 12.9098 7.84003Z"
+                                        stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.1699 8.58002C12.6099 10.15 13.8399 11.39 15.4199 11.83"
+                                        stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </button>
+                            <button (click)="createAuctionByPrLineHandler(item)" class="btn btn-sm  px-2 py-1"
+                                type="button" data-bs-auto-close="outside" title="Create Auction">
+                                <svg *ngIf="item.isEventCreation" _ngcontent-urs-c636="" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path _ngcontent-urs-c636="" d="M20.0105 18.5101L15.0605 13.5601" stroke="#f1416c"
+                                        stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path _ngcontent-urs-c636=""
+                                        d="M15.0602 13.56L11.5202 17.1C10.7402 17.88 9.47024 17.88 8.69024 17.1L4.45023 12.86C3.67023 12.08 3.67023 10.81 4.45023 10.03L11.5202 2.96C12.3002 2.18 13.5702 2.18 14.3502 2.96L18.5902 7.20002C19.3702 7.98002 19.3702 9.25001 18.5902 10.03L15.0602 13.56Z"
+                                        stroke="#f1416c" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path _ngcontent-urs-c636="" d="M2 21H8" stroke="#f1416c" stroke-width="1.5"
+                                        stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path _ngcontent-urs-c636="" d="M6.56055 7.92004L13.6306 14.99" stroke="#f1416c"
+                                        stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </svg>
+                                <svg *ngIf="!item.isEventCreation" _ngcontent-urs-c636="" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path _ngcontent-urs-c636="" d="M20.0105 18.5101L15.0605 13.5601" stroke="#808080"
+                                        stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path _ngcontent-urs-c636=""
+                                        d="M15.0602 13.56L11.5202 17.1C10.7402 17.88 9.47024 17.88 8.69024 17.1L4.45023 12.86C3.67023 12.08 3.67023 10.81 4.45023 10.03L11.5202 2.96C12.3002 2.18 13.5702 2.18 14.3502 2.96L18.5902 7.20002C19.3702 7.98002 19.3702 9.25001 18.5902 10.03L15.0602 13.56Z"
+                                        stroke="#808080" stroke-width="1.5" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path _ngcontent-urs-c636="" d="M2 21H8" stroke="#808080" stroke-width="1.5"
+                                        stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                    <path _ngcontent-urs-c636="" d="M6.56055 7.92004L13.6306 14.99" stroke="#808080"
+                                        stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+
+                                </svg>
+                            </button>
+                        </div>
+                        <div ngbDropdown autoClose="'outside'" container="body">
+
+                            <button ngbDropdownToggle class="btn btn-sm dot3-btn pr-1 px-2 py-1" type="button"
+                                data-bs-auto-close="outside">
+                                <svg width="4" height="15" viewBox="0 0 4 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M2 4C2.39556 4 2.78224 3.8827 3.11114 3.66294C3.44004 3.44318 3.69639 3.13082 3.84776 2.76537C3.99914 2.39992 4.03874 1.99778 3.96157 1.60982C3.8844 1.22186 3.69392 0.865492 3.41421 0.585787C3.13451 0.306082 2.77814 0.115601 2.39018 0.0384303C2.00222 -0.0387401 1.60009 0.000866562 1.23463 0.152242C0.869182 0.303617 0.556825 0.559962 0.337062 0.88886C0.117299 1.21776 1.07779e-06 1.60444 1.07779e-06 2C1.07779e-06 2.53043 0.210715 3.03914 0.585788 3.41421C0.960861 3.78929 1.46957 4 2 4ZM2 14C1.60444 14 1.21776 14.1173 0.888861 14.3371C0.559963 14.5568 0.303617 14.8692 0.152242 15.2346C0.000866562 15.6001 -0.0387401 16.0022 0.0384303 16.3902C0.115601 16.7781 0.306083 17.1345 0.585788 17.4142C0.865493 17.6939 1.22186 17.8844 1.60982 17.9616C1.99778 18.0387 2.39992 17.9991 2.76537 17.8478C3.13082 17.6964 3.44318 17.44 3.66294 17.1111C3.8827 16.7822 4 16.3956 4 16C4 15.4696 3.78929 14.9609 3.41421 14.5858C3.03914 14.2107 2.53043 14 2 14ZM2 7C1.60444 7 1.21776 7.1173 0.888861 7.33706C0.559963 7.55682 0.303617 7.86918 0.152242 8.23463C0.000866562 8.60009 -0.0387401 9.00222 0.0384303 9.39018C0.115601 9.77814 0.306083 10.1345 0.585788 10.4142C0.865493 10.6939 1.22186 10.8844 1.60982 10.9616C1.99778 11.0387 2.39992 10.9991 2.76537 10.8478C3.13082 10.6964 3.44318 10.44 3.66294 10.1111C3.8827 9.78224 4 9.39556 4 9C4 8.46957 3.78929 7.96086 3.41421 7.58579C3.03914 7.21071 2.53043 7 2 7Z"
+                                        fill="black" />
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu" ngbDropdownMenu>
+                                <li *ngFor="let value of dropdownListdata" ngbDropdownItem>
+                                    <a (click)="dropDownMenuClickHandler(value,item);"
+                                        class="dropdown-item pt-0 pb-0 mt-0 mb-0">
+                                        {{value}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-command-column>
+
+
+    <kendo-grid-column headerClass="grid-header-menu" field="buyerstatus" [columnMenu]="false" title="Status"
+        [headerClass]="headerStyle" [width]="120">
+        <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+                <span [ngClass]="showBadgeStatusColorClass(item.buyerstatus)"
+                    class="badge ">{{item.buyerstatus}}</span>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="rfqStatus" title="RFQ Status" [headerClass]="headerStyle"
+        [width]="130">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="RFQ Status">
+                    RFQ Status
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <!--  ONLY PR LINES SHOW END -->
+
+
+
+
+    <kendo-grid-column headerClass="grid-header-menu" field="itemcode" title="Item Code" [headerClass]="headerStyle"
+        [width]="160">
+
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="iteM_DESCRIPTION" title="Item Description"
+        [headerClass]="headerStyle" [width]="500"></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="uom" title="UOM" [headerClass]="headerStyle" [width]="100">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="UOM">
+                    UOM
+                </div>
+            </ng-container>
+        </ng-template></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="quantity" title="Qty" [headerClass]="headerStyle"
+        [width]="100">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Qty">
+                    Qty
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="inProcessQUANTITY" title="In Process Qty"
+        [headerClass]="headerStyle" [width]="100">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="In Process Qty">
+                    In Process Qty
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="usedQty" title="Used Qty" [headerClass]="headerStyle"
+        [width]="100">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Used Qty">
+                    Used Qty
+                </div>
+            </ng-container>
+        </ng-template></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="Rem Qty" [headerClass]="headerStyle"
+        [width]="100">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Rem Qty">
+                    Rem Qty
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="rate" title="Rate" [headerClass]="headerStyle"
+        [width]="columnWidth">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Rate">
+                    Rate
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="netAmount" title="Amount" [headerClass]="headerStyle"
+        [width]="120">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Amount">
+                    Amount
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="prShortCloseQty" title="Short Close QTY" [headerClass]="headerStyle"
+    [width]="150">
+    <ng-template kendoGridHeaderTemplate>
+        <ng-container>
+            <div data-toggle="tooltip" title="Short Close QTY">
+                Short Close QTY
+            </div>
+        </ng-container>
+    </ng-template>
+</kendo-grid-column>
+<kendo-grid-column headerClass="grid-header-menu" field="shortCloseRemark" title="Short Close Remark" [headerClass]="headerStyle"
+[width]="160">
+<ng-template kendoGridHeaderTemplate>
+    <ng-container>
+        <div data-toggle="tooltip" title="Short Close Remark">
+            Short Close Remark
+        </div>
+    </ng-container>
+</ng-template>
+</kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="assignBuyer" title="Assign To" [headerClass]="headerStyle"
+        [width]="130">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="Assign To">
+                    Assign To
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+    <!-- <kendo-grid-column [hidden]="currentPage == 'Both'" headerClass="grid-header-menu" field="STATUS" title="STATUS"
+    [width]="columnWidth"></kendo-grid-column> -->
+
+    <kendo-grid-column headerClass="grid-header-menu" field="rfqno" title="RFQ No" [headerClass]="headerStyle"
+        [width]="120">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="RFQ No">
+                    RFQ No
+                </div>
+            </ng-container>
+        </ng-template></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="poNo" title="PO No" [headerClass]="headerStyle"
+        [width]="columnWidth">
+        <ng-template kendoGridHeaderTemplate>
+            <ng-container>
+                <div data-toggle="tooltip" title="PO No">
+                    PO No
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>

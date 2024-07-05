@@ -1,0 +1,134 @@
+<form class="form">
+    <div class="row mb-5">
+
+
+        <div class="col-md-4 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Site</span></label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.siteName? PrheaderDetail.siteName :''" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label  fw-bold fs-6">PR Number </label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.pR_NUM? PrheaderDetail.pR_NUM :''" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>PR Type</span></label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.prtype? PrheaderDetail.prtype :''" />
+        </div>
+
+
+
+
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label  fw-bold fs-6">PR Sub Type</label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.prSubType? PrheaderDetail.prSubType :''"
+                name="company" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Request (Created)
+                    Date</span></label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.creatioN_DATE? PrheaderDetail.creatioN_DATE :''|date: 'dd-MMM-yyyy'"
+                name="contactPhone" v />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label class="col-form-label  fw-bold fs-6">Project ID</label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.projecT_NAME? PrheaderDetail.projecT_NAME :''"
+                name="company" />
+        </div>
+
+
+
+
+        <div class="col-md-8 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>PR
+                    Name/description</span></label>
+            <input disabled type="tel" [value]="PrheaderDetail.description? PrheaderDetail.description :''" class="form-control form-control-lg "
+                name="contactPhone" />
+        </div>
+
+
+
+
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>TEFR ID</span></label>
+            <input disabled type="tel" [value]="PrheaderDetail.tefrId? PrheaderDetail.tefrId :''" class="form-control form-control-lg "
+                name="contactPhone" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label  fw-bold fs-6">Consumption Date</label>
+            <input disabled type="text" class="form-control form-control-lg "
+                [value]="PrheaderDetail.mConsumptionDate? PrheaderDetail.mConsumptionDate :'' |date: 'dd-MMM-yyyy'" name="company" />
+        </div>
+
+
+
+        <div class="col-md-8 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Business Justification -
+                    Details</span></label>
+            <textarea disabled type="" [value]="PrheaderDetail.bjDetails? PrheaderDetail.bjDetails :''" class="form-control form-control-lg "
+                name="contactPhone"></textarea>
+        </div>
+
+
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Work Order
+                    Number</span></label>
+            <input disabled type="tel" [value]="PrheaderDetail.woNumber? PrheaderDetail.woNumber :''" class="form-control form-control-lg "
+                name="contactPhone" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label  fw-bold fs-6">Total Value</label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.totalValue? PrheaderDetail.totalValue :''"
+                name="company" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Status</span></label>
+            <input disabled type="tel" class="form-control form-control-lg " [value]="PrheaderDetail.pR_STATUS? PrheaderDetail.pR_STATUS :''"
+                name="contactPhone" />
+        </div>
+
+
+
+        <div class="col-md-2 mb-2">
+            <label class="col-form-label  fw-bold fs-6">Requester</label>
+            <input disabled type="text" class="form-control form-control-lg " [value]="PrheaderDetail.requester? PrheaderDetail.requester :''"
+                name="company" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label class="col-form-label fw-bold fs-6"><span>Department</span></label>
+            <input disabled type="tel" class="form-control form-control-lg " [value]="PrheaderDetail.departmentName? PrheaderDetail.departmentName :''" />
+        </div>
+
+
+        <div class="row mb-auto">
+            <div class="col-md-12">
+                <label class="col-form-label   fw-bold fs-6">Attachment</label>
+                <!-- <div class="d-flex flex-row">
+                                <div class="form-control form-control-lg rounded-end-0">
+                                    File Name :
+                                </div>
+                                <div style="border-left-color: #ffffff;"
+                                class="form-control form-control-lg rounded-start-0   ">
+                                Remarks :
+                            </div>
+                        </div> -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-striped border gy-7 gs-7">
+                        <thead>
+                            <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                <th class="min-w-200px text-primary py-2">File</th>
+                                <th class="min-w-400px text-primary py-2">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let file of (PrheaderDetail.doc? PrheaderDetail.doc :[])">
+                                <td class="py-2">{{file.filename}}</td>
+                                <td class="py-2">{{file.remarks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

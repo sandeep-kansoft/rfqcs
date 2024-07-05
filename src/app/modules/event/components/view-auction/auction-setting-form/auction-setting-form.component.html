@@ -1,0 +1,184 @@
+<div class="modal-header">
+    <h3 class="modal-title">Auction Settings</h3>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"  (click)="close()" aria-label="Close">
+      <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+    </div>
+    <!--end::Close-->
+  </div>
+  <div class="modal-body auction-setting-box" >
+<div class="d-md-flex">
+    <div class="w-sm-500px me-sm-10">
+        <div class="mb-3 ">
+            <label for=""> Auction Type</label>
+            <select class="form-select" aria-label="Floating label select example">
+                <option selected>Reverse Auction</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            
+        </div>
+        <div class="mb-3 ">
+            <label for=""> Auction Mode</label>
+            <select class="form-select" aria-label="Floating label select example">
+                <option selected>Both</option>
+                <option value="1">Color</option>
+                <option value="2">Rank</option>
+                <option value="3">Three</option>
+            </select>
+            
+        </div>
+        <div class="mb-3 ">
+            <div class=" align-items-center ">
+               <label for="">   Auction Start Date & Time</label>
+                  
+                
+               <input type="text" class="form-control form-control-lg">
+            </div>
+            
+        </div>
+        <div class="mb-3 ">
+            <div class=" align-items-center ">
+               <label for="">Auction Close Date & Time</label>
+                  
+                
+               <input type="text" class="form-control form-control-lg">
+            </div>
+            
+        </div>
+        <div class="mb-3 ">
+            <div class="d-flex align-items-center mb-3">
+                <label for="">Is Auto Extended Enable ?</label>
+                <div class=" ms-3 form-check form-check-sm form-check-custom form-check-solid ">
+                    <input class="form-check-input" type="checkbox"
+                        value="1">
+                </div>
+            </div>  
+           <div>
+           <div class="mb-3">
+            <label for="">No of Times Auto Extended</label>
+            <input type="text" class="form-control form-control-lg">
+           </div>
+           <div class="mb-3">
+            <label for="">Auto Extended Minutes</label>
+            <input type="text" class="form-control form-control-lg">
+           </div>
+           </div>
+        </div>
+        <div class="mb-3 ">
+            <div class="d-flex align-items-center mb-3">
+                <label for="">Target Price Applicable</label>
+                <div class="ms-3 form-check form-check-sm form-check-custom form-check-solid ">
+                    <input class="form-check-input" type="checkbox"
+                        value="1">
+                </div>
+            </div>  
+           
+        </div>
+    </div>
+
+
+    <div class="w-sm-500px" >
+        <div class="mb-3 ">
+            <label for=""> Min Bid</label>
+            <div class="d-flex">
+                <input type="text" class="form-control form-control-lg">
+                <select class=" ms-3 form-select" aria-label="Floating label select example">
+                    <option selected>Percentage</option>
+                    <option value="1">Value</option>
+                   
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 ">
+            <label for=""> Max Bid</label>
+            <div class="d-flex">
+                <input type="text" class="form-control form-control-lg">
+                <select class=" ms-3 form-select" aria-label="Floating label select example">
+                    <option selected>Percentage</option>
+                    <option value="1">Value</option>
+                   
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 ">
+            <label for="">Tie Prevention Lot Level</label>
+            <select class="form-select" aria-label="Floating label select example">
+                <option selected>Yes</option>
+                <option value="1">No</option>
+               
+            </select>
+        </div>
+        <div class="mb-3 ">
+            <label for="">Tie Prevention Item Level</label>
+            <select class="form-select" aria-label="Floating label select example">
+                <option selected>Yes</option>
+                <option value="1">No</option>
+               
+            </select>
+        </div>
+        <div class="mb-3 ">
+            <label for="">Extend Auction (In Minutes)</label>
+                <input type="text" class="form-control form-control-lg">
+        </div>
+    </div>
+</div>
+<div class="bg-light p-5">
+    <label for="">  <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+        [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+          pageSizes: true,
+          info: true
+        }" [sortable]="{
+          allowUnsort: true,
+          mode: 'multiple'
+        }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+     
+        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+            title="#" [width]="ExtraSmallColumnWidth">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                }}</ng-template>
+        </kendo-grid-column>
+      <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="itemCode" title="Item Code"
+        [width]="140">
+        
+    </kendo-grid-column>
+    
+       
+        <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+        <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+        
+    <kendo-grid-column [headerClass]="headerStyle" field="itemDesc"    title="Item description"
+            [width]="300">
+           
+        </kendo-grid-column>
+    <kendo-grid-column [headerClass]="headerStyle" field="requester" title="Requestor"
+    [width]="170">
+    
+</kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM"
+            [width]="90"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="quantity" title="QTY"
+            [width]="90"></kendo-grid-column>
+            <!-- <kendo-grid-column [headerClass]="headerStyle" field="round" title="Line Item No"
+        [width]="100"></kendo-grid-column> -->
+       
+        
+        <kendo-grid-column [headerClass]="headerStyle" field="projectName" title="Project Name"
+            [width]="100"></kendo-grid-column>
+        
+            <kendo-grid-column [headerClass]="headerStyle" field="prCode" title="Pr No"
+            [width]="100"></kendo-grid-column>
+            <kendo-grid-column [headerClass]="headerStyle" field="prDescription" title="Pr Description"
+            [width]="100"></kendo-grid-column>
+       
+    </kendo-grid></label>
+    
+   </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-light me-3" (click)="close()">Close</button>
+    <button class="btn btn-sm btn-primary">Save</button>
+  </div>

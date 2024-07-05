@@ -1,0 +1,239 @@
+<h3 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-5">RFQ / Auctions List(s)</h3>
+<div class="card over-view-box">
+    <div class="card-body">
+        <!-- <div class="card-header"><div class="card-title"><h3></h3></div></div> -->
+        <div class="vendor-dashbord d-flex justify-content-between">
+           
+            
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_23" role="tabpanel">
+                <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+                    [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                    [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                      pageSizes: true,
+                      info: true
+                    }" [sortable]="{
+                      allowUnsort: true,
+                      mode: 'multiple'
+                    }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                    <ng-template kendoGridToolbarTemplate>
+                        <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                            <app-filter-view   (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                                ></app-filter-view>
+        
+                            <!-- <div class="d-flex excel-export">
+                                <button type="button" (click)="goToCreateRfq()" class="btn btn-light-success btn-sm"
+                                    icon="file-excel">Create RFQ / Auction</button>
+                            </div> -->
+                        </div>
+                    </ng-template>
+                    <ng-template kendoGridLoadingTemplate>
+                        <app-wonder-loader></app-wonder-loader>
+                    </ng-template>
+                    <!-- Kendo End Default Loader -->
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                        title="#" [width]="ExtraSmallColumnWidth">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                            }}</ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" [filterable]="false" [sortable]="false"
+                        [columnMenu]="false" field="" title="Action" [width]="250">
+                        <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                            <ng-container>
+                                <!-- <button *ngIf="rowIndex==0" type="button" title="Go To Event"
+                                    class="badge border-0 badge-light-blue">
+                                    Go To Event </button> -->
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-light-blue p-1 me-2 " title="Go To Event" (click)="gotoEventDashboard(item)">
+                                        Go To Event 
+                                    </button>
+                                    <button (click)="participateconfirmation(item,rowIndex)" type="button"
+                                    *ngIf="participatecondition(item)"
+                                    class="btn me-3  btn-sm btn-light-info p-1" title="Participate">
+                                    Participate
+                                    <span *ngIf="item.isLoading" class="spinner-border text-danger" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </span>
+                                </button>
+                                
+                                    <div *ngIf="regretCondition(item)">
+                                        <button type="button" class="btn btn-light-danger btn-sm me-3 p-1"
+                                            (click)="openregretmodel(item)" title="Regret">
+                                            <!-- <span class="svg-icon m-0 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" id="remove-circle">
+                                                    <g data-name="Remove Circle" transform="translate(-384 -216)">
+                                                        <path fill="none" d="M0,0H24V24H0Z" data-name="Path 3675"
+                                                            transform="translate(384 216)"></path>
+                                                        <path fill="currentcolor"
+                                                            d="M11245,13547.6a9.6,9.6,0,1,1,9.6,9.6A9.6,9.6,0,0,1,11245,13547.6Zm1.8,0a7.8,7.8,0,1,0,7.8-7.8A7.81,7.81,0,0,0,11246.8,13547.6Zm4.277,1.352a1.351,1.351,0,1,1,0-2.7h7.295a1.351,1.351,0,1,1,0,2.7Z"
+                                                            data-name="Minus Circle"
+                                                            transform="translate(-10858.6 -13319.6)"></path>
+                                                    </g>
+                                                </svg>
+                                            </span> -->
+                                            Regret
+                                        </button>
+                                    </div>
+                                    <!-- <div (click)="openprmodal(item)">
+                                        <button type="button" class="btn  btn-sm btn-light-blue me-3 p-1"
+                                            title="View PR">
+                                            <span class="svg-icon m-0 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view">
+                                                    <g data-name="32. Veiw">
+                                                        <path fill="currentcolor"
+                                                            d="M23.91 11.58C21.94 7.31 17.5 3 12 3S2.06 7.31.09 11.58a1.025 1.025 0 0 0 0 .84C2.06 16.69 6.5 21 12 21s9.94-4.31 11.91-8.58a1.025 1.025 0 0 0 0-.84ZM12 17a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z">
+                                                        </path>
+                                                        <circle fill="currentcolor" cx="12" cy="12" r="3"></circle>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </button>
+                                    </div> -->
+
+
+
+                                    <div>
+                                        <!-- <button (click)="openChatDrawer(item)" type="button"
+                                            class="btn  btn-sm btn-light-blue me-3 p-1" title="Chat"
+                                            id="kt_drawer_chat_toggle_vendor">
+                                            <span class="svg-icon m-0">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 
+                            18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 
+                            18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z"
+                                                        fill="currentColor">
+                                                    </path>
+                                                    <rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor">
+                                                    </rect>
+                                                    <rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor">
+                                                    </rect>
+                                                </svg></span>
+                                        </button> -->
+                                       
+                                        <div class="modal fade" tabindex="-1" id="kt_modal_101">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Change Status</h3>
+                                                        <!--begin::Close-->
+                                                        <div class="btn btn-icon btn-sm btn-active-light-primary "
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <span class="justify-content-center "
+                                                                [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+                                                        </div>
+                                                        <!--end::Close-->
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="mb-0">Are you sure to Participate ?</h5>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light btn-sm"
+                                                            data-bs-dismiss="modal">No</button>
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-sm">Yes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="eventStatus"
+                        title="Status" [width]="140">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <span [ngClass]="showBadgeStatusColorClass(item.eventStatus)"
+                                    class="badge">{{item.eventStatus}}</span>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="participatestatus"
+                        title="Participation Status" [width]="140">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <span [ngClass]="showparticipateStatusColorClass(item.participatestatus)"
+                                    class="badge">{{item.participatestatus}}</span>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="round" title="Round"
+                    [width]="100">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <a (click)="gotoEventDashboard(item)"
+                                class="color-secondary text-center">{{item.round}}</a>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+                    <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="eventNo"
+                        title="Number" [width]="MediumColumnWidth">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <a (click)="gotoEventDashboard(item)"
+                                    class="color-secondary text-center">{{item.eventNo}}</a>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+                    <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="eventName"
+                        title="RFQ/Auction Name" [width]="210">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <a (click)="gotoEventDashboard(item)"
+                                    class="color-secondary text-center">{{item.eventName}}</a>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="EventType" title="Type"
+                        [width]="90"></kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="PROJECTNAME" title="Project Name"
+                        [width]="columnWidth"></kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="buyerName" title="Buyer Name" [width]="140">
+                        <!-- <button type="button" class="btn btn-light-primary btn-sm" title="View">
+                            <span class="svg-icon m-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"
+                                    id="view">
+                                    <path
+                                        d="M50 34c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16zm0 28c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12zm44.4-13.4l-8.6-8.7C76.3 30.3 63.6 25 50 25s-26.3 5.3-35.8 14.9l-8.6 8.7c-.8.8-.8 2 0 2.8l8.6 8.7C23.7 69.7 36.4 75 50 75s26.3-5.3 35.8-14.9l8.6-8.7c.8-.8.8-2 0-2.8zM83 57.3C74.2 66.1 62.5 71 50 71s-24.2-4.9-33-13.7L9.8 50l7.2-7.3C25.8 33.9 37.5 29 50 29s24.2 4.9 33 13.7l7.2 7.3-7.2 7.3z">
+                                    </path>
+                                    <path fill="currentcolor" d="M944-790V894H-840V-790H944m8-8H-848V902H952V-798z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </button> -->
+                    </kendo-grid-column>
+                    
+                    <kendo-grid-column [headerClass]="headerStyle" field="remDays" title="Remaining Days"
+                        [width]="100"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="" format="dd-MMM-yyyy" filter="date"
+                        title="Bid Start Date" [width]="170">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.eventtype=="3"? dateTimeZoneConverter(dataItem.bidStartDate,"default",dataItem.timeZoneShortName) : dataItem.bidStartDate }}
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="" format="dd-MMM-yyyy" filter="date"
+                        title="Bid Closing Date" [width]="170">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.eventtype=="3"?dateTimeZoneConverter(dataItem.bidClosingDate,"default",dataItem.timeZoneShortName):dataItem.bidClosingDate }}
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+                    [width]="columnWidth"></kendo-grid-column> -->
+                    <!-- <kendo-grid-excel [fetchData]="allData" fileName="My PR.xlsx"></kendo-grid-excel> -->
+                </kendo-grid>
+
+            </div>
+
+
+
+        </div>

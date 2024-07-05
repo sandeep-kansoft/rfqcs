@@ -1,0 +1,233 @@
+<!-- <div class="container-fluid overflow-auto"><div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">Sub Items</h3>
+    </div>
+    <!-- <div class="card-title m-0">
+        <span (click)="closeModel()" class="justify-content-center "
+            [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+    </div> -->
+    <div (click)="closeModel()" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+        aria-label="Close">
+        <span class="svg-icon svg-icon-1 m-0">
+            <!-- close-svg -->
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  m-0"> </span>
+            <!-- close-svg -->
+
+        </span>
+    </div>
+</div>
+<!-- Item Technical Parameter start -->
+<div class="modal-body">
+    <kendo-grid #grid="kendoGrid" class="fixed-header" [data]="gridView" [loading]="isLoading" [groupable]="true" [pageable]="true" [navigable]="true" [reorderable]="true" [resizable]="true"  [pageSize]="gridState.take" [skip]="gridState.skip"
+        [sort]="gridState.sort" [pageable]="{
+            pageSizes:true,
+            info: true
+            }" [sortable]="true" (dataStateChange)="onStateChange($event)"
+        (edit)="editHandler($event)" (cancel)="cancelHandler($event)" (save)="saveHandler($event)"
+        (remove)="removeHandler($event)" (add)="addHandler($event)" [navigable]="true">
+        <ng-template kendoGridToolbarTemplate>
+            <div class="d-block d-md-flex w-100  align-items-center">
+                <div *ngIf="userType=='Buyer'" class="justify-content-between subitem-btn-div">
+
+                    <div>
+                        <button *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SUB_ITEMS_ADD_NEW)" [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" kendoGridAddCommand
+                            type="button" class="btn btn-sm btn-light-blue" title="Add new item">
+                            <!-- add-svg -->
+                            <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon  m-0"> </span>
+                            <!-- add-svg -->
+                            New</button>
+
+                    </div>
+
+                    <div>
+                        <button *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SUB_ITEMS_IMPORT_FROM_EXCEL)" [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)"
+                            (click)="uploadExcelFile()" type="button"
+                            class="btn btn-light-blue btn-sm me-3 mb-3 mb-md-0" title="Import From Excel">
+                            <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon m-0 "></span>
+
+                            <!-- download-svg ---->
+
+                            Excel </button>
+
+                        <button  kendoGridExcelCommand
+                            type="button" class="btn btn-light-success btn-sm me-3 mb-3 mb-md-0"
+                            title="Export to Excel">
+                            <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon m-0 "></span>
+                            Excel </button>
+                    </div>
+                </div>
+                <div class="d-block d-md-flex excel-export" style="flex-shrink: unset;">
+
+                </div>
+            </div>
+        </ng-template>
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <kendo-grid-column field="sno" title="#" [width]="50">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"> {{rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SUB_ITEMS_ACTION_COLUMN)"  title="Action" [width]="80">
+            <ng-template kendoGridCellTemplate let-isNew="isNew">
+                <div class="d-flex justify-content-center">
+                    <button [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" kendoGridEditCommand
+                        type="button" class="border-0 bg-opacity-0 bg-img-none shadow-none me-0 cursor-pointer-imp me-2"
+                        title="Edit">
+                        <!-- [primary]="true" -->
+
+                        <!-- edit-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue  m-0"> </span>
+                        <!-- edit-svg -->
+                    </button>
+                    <button [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" kendoGridRemoveCommand
+                        type="button" class="border-0 bg-opacity-0 bg-img-none shadow-none me-0 cursor-pointer-imp"
+                        title="Remove">
+
+
+                        <!-- delete-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon text-primary  m-0"> </span>
+                        <!-- delete-svg -->
+
+
+                    </button>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" kendoGridSaveCommand
+                        type="button" class="bg-img-none shadow-none border-0 me-0 bg-opacity-0 cursor-pointer-imp"
+                        title="Add">
+
+
+                        <!-- add-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/add.svg'" class="svg-icon text-blue  m-0"> </span>
+                        <!-- add-svg -->
+                    </button>
+                    <button [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" kendoGridCancelCommand
+                        type="button" class="bg-img-none shadow-none border-0 bg-opacity-0 me-0 cursor-pointer-imp"
+                        title="Discard change">
+                        <!-- close-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-primary  m-0"> </span>
+                        <!-- close-svg -->
+
+                        <!-- {{ isNew ? 'Discard changes' :
+                    'Cancel'
+                    }} -->
+                        <!-- close-svg -->
+                        <!-- <span *ngIf="isNew" [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon text-blue  m-0"> </span> -->
+                        <!-- close-svg -->
+                    </button>
+                </div>
+            </ng-template>
+        </kendo-grid-command-column>
+
+        <kendo-grid-column field="itemCode" title="Item Code" [width]="100">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.itemCode" type="number" numbersOnly
+                            class="form-control form-control-lg" name="Item Code" required></kendo-textbox> -->
+
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM) || userType=='Vendor'"
+                            type="number" class="form-control form-control-lg" [(ngModel)]="dataItem.itemCode"
+                            required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="itemName" title="Item Name" [width]="350">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.itemName" class="form-control form-control-lg"
+                            name="Item Name" required></kendo-textbox> -->
+
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM) || userType=='Vendor'"
+                            type="text" class="form-control form-control-lg" [(ngModel)]="dataItem.itemName" required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="uom" title="UOM" [width]="70">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.uom" class="form-control form-control-lg" name="UOM"
+                            required></kendo-textbox> -->
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM) || userType=='Vendor'"
+                            type="text" class="form-control form-control-lg" [(ngModel)]="dataItem.uom" required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="quantity" title="Quantity" [width]="100">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.quantity" class="form-control form-control-lg"
+                            name="Quantity" type="number" required></kendo-textbox> -->
+
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM) || userType=='Vendor'"
+                            type="number" class="form-control form-control-lg" [(ngModel)]="dataItem.quantity"
+                            required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column *ngIf="userType=='Vendor'" field="rate" title="Rate" [width]="120">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.rate" class="form-control form-control-lg" name="Rate"
+                            type="number" required></kendo-textbox> -->
+
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" type="number"
+                            class="form-control form-control-lg" [(ngModel)]="dataItem.rate" required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="remarks" title="Remarks" [width]="120">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="row">
+                    <div class="col-12 ">
+                        <!-- <kendo-textbox [(ngModel)]="dataItem.remarks" class="form-control form-control-lg"
+                            name="Remarks" required></kendo-textbox> -->
+
+                        <input [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM) || userType=='Vendor'"
+                            type="text" class="form-control form-control-lg" [(ngModel)]="dataItem.remarks" required />
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-excel [fetchData]="allData" fileName="Sub Items.xlsx">
+
+        </kendo-grid-excel>
+    </kendo-grid>
+</div>
+
+<div class="modal-footer">
+    <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+        <button *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SUB_ITEMS_CANCEL_BUTTON)" type="button" (click)="closeModel()" class="btn me-5 btn-light btn-sm ">Cancel</button>
+        <button *ngIf="checkPermission(permissionEnum.DASHBOARD_PRICE_BID_SUB_ITEMS_SAVE_CHANGES)" [disabled]="!checkConditionForAccess(typeAccess.ADD_SUB_ITEM)" id="submitbtn"
+            (click)="saveButtonClicked()" class="btn btn-sm btn-submit">
+            <span class="indicator-label">
+                Save changes
+            </span>
+            <span class="indicator-progress">
+                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+    </div>
+</div>
+
+<!-- </div></div> -->
+<ng-template kendoGridToolbarTemplate>
+
+    <button kendoGridAddCommand type="button">Add new</button>
+</ng-template>

@@ -1,0 +1,44 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">Line Item Information</h3>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+    (click)="close()">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'"
+            class="svg-icon m-0 svg-icon-2"></span>
+    </div>
+    <!--end::Close-->
+</div>
+
+<div class="modal-body">
+    <div class="d-block mb-3 align-items-center d-md-flex justify-content-between">
+        <div>
+            <h5>Item Code : <span class="ms-2 text-gray-700">{{itemCode}}</span></h5>
+
+        </div>
+        <div>
+            <h5>Short Close Qty : <span class="ms-2 text-gray-700">{{shortcloseqty}}</span></h5>
+
+        </div>
+
+    </div>
+        <h6 class="fs-5">Are you sure you want to short close this line item?</h6>
+        <div class=" mb-5 w-100 me-5">
+            <label for="floatingname"
+                class="text-gray-800 form-label-text mb-2 required">Reason</label>
+            <input type="name" [(ngModel)]="value"
+                [ngClass]="this.inValidate && (this.value === ''|| this.value === undefined)? 'border-danger' :'' " class="form-control border"
+                placeholder="" />
+        </div>
+
+
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-sm"(click)="close()">Close</button>
+    <button (click)="save()" type="button" class="btn btn-primary btn-sm">Save</button>
+
+</div>
+

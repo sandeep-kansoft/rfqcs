@@ -1,0 +1,104 @@
+<!-- <div class="container-fluid overflow-auto">
+    <div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">Po History</h3>
+    </div>
+    <div class="card-title m-0" (click)="closeModel()">
+        <div class=" btn btn-icon btn-sm btn-active-light-primary">
+
+
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0">
+
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-body pr-history-table">
+    <div *ngIf="noDataFound">
+        <div class="card">
+            <div class="card-body">
+                <app-no-data-found [errMessage]="'No Data Found'"></app-no-data-found>
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!noDataFound">
+        <kendo-grid class="fixed-header" [loading]="isLoading" [data]="gridView" [reorderable]="true" [resizable]="true"
+            [skip]="state.skip" [pageSize]="state.take" [pageable]="true" (dataStateChange)="onStateChange($event)"
+            [sortable]="{
+            allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+            <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+            </ng-template>
+
+
+
+            <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate
+                    let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="vendorcode" [headerClass]="headerStyle" title="Vendor Code"
+                [width]="MediumColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="vendorname" [headerClass]="headerStyle" title="Vendor Name"
+                [width]="XtraXtraLargeColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="pono" [headerClass]="headerStyle" title="PO Number"
+                [width]="LargeColumnWidth">
+            </kendo-grid-column>
+
+            <!-- <kendo-grid-column [filterable]="true" field="poId" [headerClass]="headerStyle" title="PO ID"
+                [width]="SmallColumnWidth">
+            </kendo-grid-column> -->
+
+            <kendo-grid-column [filterable]="true" field="itemcode" [headerClass]="headerStyle" title="Item Code"
+                [width]="MediumColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="itemdescription" [headerClass]="headerStyle"
+                title="Description" [width]="XtraXtraLargeColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="uom" [headerClass]="headerStyle" title="UOM"
+                [width]="MediumColumnWidth">
+            </kendo-grid-column>
+
+
+
+            <kendo-grid-column [filterable]="true" field="poqty" [headerClass]="headerStyle" title="PO Qty"
+                [width]="SmallColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="podate" [headerClass]="headerStyle" title="Date"
+                [width]="MediumColumnWidth">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.podate}}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [filterable]="true" field="porate" [headerClass]="headerStyle" title="Unit Price"
+            [width]="MediumColumnWidth">
+        </kendo-grid-column>
+            <kendo-grid-column [filterable]="true" field="unitprice" [headerClass]="headerStyle" title="PO Amount"
+                [width]="MediumColumnWidth">
+            </kendo-grid-column>
+
+            <kendo-grid-column [filterable]="true" field="discPercent" [headerClass]="headerStyle"
+                title="Discount %" [width]="MediumColumnWidth">
+            </kendo-grid-column>
+
+        </kendo-grid>
+    </div>
+
+</div>
+
+<!-- </div>
+    
+    </div> -->

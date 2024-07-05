@@ -1,0 +1,34 @@
+<!-- wonder logo -->
+<div class="sidebar-logo-mobile">
+  <img src="assets/media/wonder/RED-LOGO-BG-Horizontal-transprant.png" class="app-logo" style="height:50px;display:block;margin:0 auto;" />
+</div>
+
+<div style="height: 20px"></div>
+
+<div class="flex-column-fluid">
+  <div class="sidemenu-container-mobile">
+    <!-- Pages -->
+
+  <div *ngFor="let menu of menuList" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <span class="menu-link">
+      <span *ngIf="menu.filePath" class="menu-icon">
+        <span class="svg-icon svg-icon-2" inlineSVG={{menu.filePath}}></span>
+      </span>
+      <span class="menu-title" data-link="/crafted/account">{{menu.menuName}}</span>
+      <span class="menu-arrow"></span>
+    </span>
+    <div *ngFor="let childMenu of menu?.childmenu" class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+      <div *ngIf="childMenu" class="menu-item">
+        <a class="menu-link without-sub" routerLinkActive="active" [ngClass]="childMenu.menuCode==getActiveLink()? 'active' : ''" routerLinkActive="active" (click)="clickOnItem(menu,childMenu)">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">{{childMenu.menuName}}</span></a>
+      </div>
+    </div>
+
+  </div>
+ 
+  
+</div>
+</div>

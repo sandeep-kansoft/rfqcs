@@ -1,0 +1,127 @@
+
+<h3 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-5">RFQ / Auctions List(s)</h3>
+<div class="card over-view-box">
+    <div class="card-body">
+        <!-- <div class="card-header"><div class="card-title"><h3></h3></div></div> -->
+        <div class="vendor-dashbord d-flex justify-content-between">
+        
+               
+            
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_23" role="tabpanel">
+                <kendo-grid class="fixed-header" [columnMenu]="{ filter: true, sort: true }" [groupable]="true"
+                    [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+                    [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+                      pageSizes: true,
+                      info: true
+                    }" [sortable]="{
+                      allowUnsort: true,
+                      mode: 'multiple'
+                    }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                    <ng-template kendoGridToolbarTemplate>
+                        <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                            <app-filter-view   (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                                ></app-filter-view>
+        
+                            
+                        </div>
+                    </ng-template>
+                    <ng-template kendoGridLoadingTemplate>
+                        <app-wonder-loader></app-wonder-loader>
+                    </ng-template>
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                        title="#" [width]="ExtraSmallColumnWidth">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+                            }}</ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="evenT_ROUND" title="Round"
+                    [width]="100">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <a (click)="gotoEventDashboard(item)"  class="color-secondary text-center show-pointer ">{{item.evenT_ROUND}}</a>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+                    <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="evenT_NO" title="Number"
+                [width]="MediumColumnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a (click)="gotoEventDashboard(item)"  class="color-secondary text-center show-pointer ">{{item.evenT_NO}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" [width]="220" field="evenT_NAME" title="RFQ/Auction Name"
+            >
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <a (click)="gotoEventDashboard(item)"    class="color-secondary text-center show-pointer">{{item.evenT_NAME}}</a>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [filterable]="true" filter="numeric" [headerClass]="headerStyle" field="pR_NO" title="PR No"
+                [width]="MediumColumnWidth">
+                <ng-template kendoGridCellTemplate let-item>
+                    <ng-container>
+                        <a (click)="gotoEventDashboard(item)" class="color-secondary text-center">{{item.pR_NO}}</a>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+       
+                    
+                   
+                <kendo-grid-column [headerClass]="headerStyle" field="pR_VALUE" title="PR Value"
+                [width]="100"></kendo-grid-column>
+                          <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="evenT_STATUS" title="Status"
+                            [width]="140">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <span [ngClass]="showBadgeStatusColorClass(item.evenT_STATUS)"
+                                        class="badge">{{item.evenT_STATUS}}</span>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-column>
+                       
+                <kendo-grid-column [headerClass]="headerStyle" field=""   format="dd-MMM-yyyy" filter="date" title="Created Date"
+                        [width]="170">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.createD_DATE | date: 'dd-MMM-yyyy HH:mm'}}
+                        </ng-template>
+                    </kendo-grid-column>
+                <kendo-grid-column [headerClass]="headerStyle" field="closinG_TIME"   format="dd-MMM-yyyy" filter="date" title="Bid Closing Date"
+                [width]="170">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.closinG_TIME | date: 'dd-MMM-yyyy HH:mm'}}
+                </ng-template>
+            </kendo-grid-column>
+                    <kendo-grid-column [headerClass]="headerStyle" field="projecT_NAME" title="Project Name"
+                        [width]="columnWidth"></kendo-grid-column>
+                        <kendo-grid-column [headerClass]="headerStyle" field="event_Type" title="Type"
+                        [width]="90"></kendo-grid-column>
+                       
+                    <kendo-grid-column [headerClass]="headerStyle" field="createD_BY" title="Created By Person"
+                        [width]="140">
+                        <!-- <button type="button" class="btn btn-light-primary btn-sm" title="View">
+                            <span class="svg-icon m-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"
+                                    id="view">
+                                    <path
+                                        d="M50 34c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16zm0 28c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12zm44.4-13.4l-8.6-8.7C76.3 30.3 63.6 25 50 25s-26.3 5.3-35.8 14.9l-8.6 8.7c-.8.8-.8 2 0 2.8l8.6 8.7C23.7 69.7 36.4 75 50 75s26.3-5.3 35.8-14.9l8.6-8.7c.8-.8.8-2 0-2.8zM83 57.3C74.2 66.1 62.5 71 50 71s-24.2-4.9-33-13.7L9.8 50l7.2-7.3C25.8 33.9 37.5 29 50 29s24.2 4.9 33 13.7l7.2 7.3-7.2 7.3z">
+                                    </path>
+                                    <path fill="currentcolor" d="M944-790V894H-840V-790H944m8-8H-848V902H952V-798z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </button> -->
+                    </kendo-grid-column>
+                    
+                   
+                    
+                   
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="BUYERSTATUS" title="HISTORY"
+                    [width]="columnWidth"></kendo-grid-column> -->
+                    <!-- <kendo-grid-excel [fetchData]="allData" fileName="My PR.xlsx"></kendo-grid-excel> -->
+                </kendo-grid>
+
+            </div>
+        </div>

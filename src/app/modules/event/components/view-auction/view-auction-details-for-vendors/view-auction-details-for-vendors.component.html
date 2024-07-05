@@ -1,0 +1,67 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">Auction Details For Vendor </h3>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="closeModel()" data-bs-dismiss="modal"
+        aria-label="Close">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+    </div>
+    <!--end::Close-->
+</div>
+
+<div class="modal-body">
+
+
+    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: false ,sort : false  }"
+        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="false" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+             pageSizes:true,
+             info: true
+             }" [sortable]="{
+    allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)" >
+
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+
+
+
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="itemCode"
+            title="Item Code" [width]="130">
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="itemDesc"
+            title="Item Description" [width]="500">
+
+        </kendo-grid-column>
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="currencY_CODE"
+            title="Currency" [width]="100">
+
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="QTY" field="quantity"
+            [width]="80">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="startingBid"
+            title="Starting Bid" [width]="120">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" field="currentBid" [headerClass]="headerStyle"
+            [width]="120" title="Current Bid">
+
+        </kendo-grid-column>
+
+
+        <!-- <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="convertedAmt" title="Converted Amount"
+            [width]="170"></kendo-grid-column> -->
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="itemRank" title="Rank"
+            [width]="170"></kendo-grid-column>
+
+
+    </kendo-grid>
+</div>
+

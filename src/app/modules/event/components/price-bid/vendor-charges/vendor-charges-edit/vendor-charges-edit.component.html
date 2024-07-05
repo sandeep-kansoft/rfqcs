@@ -1,0 +1,438 @@
+<div class="modal-header">
+    <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">{{itemLineInfo.itemCode}}</span>
+    </h3>
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+        <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ms-2">
+
+            <!-- close-svg -->
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0"> </span>
+            <!-- close-svg -->
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div>
+        <!-- begin::Body -->
+
+
+
+        <div class="row mb-5">
+
+            <div class="d-md-flex">
+                <div class="w-md-300px me-md-3 mb-5 mb-md-0 pe-md-3">
+
+                    <div
+                        class="align-items-center justify-content-between d-flex mb-2 pb-2 border-bottom border-gray-300">
+                        <label class="  fw-bold fs-6">Qty :</label>
+                        <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.quantity}}</a>
+                    </div>
+                    <div
+                        class="align-items-center justify-content-between d-flex mb-2 pb-2 border-bottom border-gray-300">
+                        <label class=" fw-bold fs-6"><span>Unit :</span></label>
+                        <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.uom}}</a>
+                    </div>
+                    <div class=" mb-2 border-bottom pb-2 border-gray-300">
+                        <label class="l fw-bold fs-6"><span>Description :</span></label>
+                        <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.itemDesc}}</a>
+                    </div>
+                </div>
+                <div class="w-auto">
+                    <div class="d-flex">
+                        <div class=" mb-2 me-3">
+                            <label class="pb-1 fw-bold fs-6">Unit Price</label>
+                            <input type="number" (input)="calculateItemAmountInfo()" [disabled]="templateId==2"
+                                [(ngModel)]="itemAmountInfo.unitPrice"
+                                [ngClass]="isInvalidate && itemAmountInfo.unitPrice==0?'border border-danger':''"
+                                class=" form-control form-control-lg" [value]="itemAmountInfo.unitPrice"
+                                name="company" />
+                        </div>
+
+                        <div class=" mb-2">
+                            <label class=" pb-1 fw-bold fs-6"><span>Amount</span></label>
+                            <input disabled type="number" class=" form-control form-control-lg "
+                                [value]="itemAmountInfo.amount" name="contactPhone" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="d-flex">
+                        <div class=" mb-2 me-3">
+                            <label class=" pb-1 fw-bold fs-6">Discount %</label>
+                            <input type="number" (input)="calculateItemAmountInfo()"
+                                [ngClass]="isInvalidate && (itemAmountInfo.discountPer < 0 || itemAmountInfo.discountPer > 100)?'border border-danger':''"
+                                class=" form-control form-control-lg " [(ngModel)]="itemAmountInfo.discountPer"
+                                [value]="itemAmountInfo.discountPer" />
+                        </div>
+
+                        <div class=" mb-2">
+                            <label class=" pb-1  fw-bold fs-6">Discount Amount</label>
+                            <input disabled type="number" class=" form-control form-control-lg "
+                                [value]="itemAmountInfo.totalDiscount" />
+                        </div>
+                    </div>
+
+
+                    <div class=" mb-2">
+                        <label class=" pb-1 fw-bold fs-6"><span>Item Total</span></label>
+                        <input disabled type="number" class=" form-control form-control-lg "
+                            [value]="itemAmountInfo.totalAmount" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-10 mb-2">
+                <label class="col-form-label fw-bold fs-6"><span>Description</span></label>
+                <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.itemDesc}}</a>
+            </div>
+            <div class="col-md-1 mb-2">
+                <label class="col-form-label  fw-bold fs-6">Qty </label>
+                <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.quantity}}</a>
+            </div>
+            <div class="col-md-1 mb-2">
+                <label class="col-form-label fw-bold fs-6"><span>Unit</span></label>
+                <a class="text-gray-800 text-hover-primary d-block fs-6">{{itemLineInfo.uom}}</a>
+            </div>
+
+            <div class="col-md-2 mb-2">
+                <label class="col-form-label  fw-bold fs-6">Unit Price</label>
+                <input type="text" (input)="calculateItemAmountInfo()" [(ngModel)]="itemAmountInfo.unitPrice"
+                    [ngClass]="isInvalidate && itemAmountInfo.unitPrice==0?'border border-danger':''"
+                    class=" form-control form-control-lg" [value]="itemAmountInfo.unitPrice"
+                    name="company" />
+            </div>
+
+            <div class="col-md-2 mb-2">
+                <label class="col-form-label fw-bold fs-6"><span>Amount</span></label>
+                <input disabled type="text" class=" form-control form-control-lg "
+                    [value]="itemAmountInfo.amount" name="contactPhone" />
+            </div>
+
+            <div class="col-md-2 mb-2">
+                <label class="col-form-label  fw-bold fs-6">Discount %</label>
+                <input type="text" (input)="calculateItemAmountInfo()"
+                    class=" form-control form-control-lg " [(ngModel)]="itemAmountInfo.discountPer"
+                    [value]="itemAmountInfo.discountPer" />
+            </div>
+
+            <div class="col-md-3 mb-2">
+                <label class="col-form-label  fw-bold fs-6">Discount Amount</label>
+                <input disabled type="text" class=" form-control form-control-lg "
+                    [value]="itemAmountInfo.totalDiscount" />
+            </div>
+
+            <div class="col-md-3 mb-2">
+                <label class="col-form-label fw-bold fs-6"><span>Item Total</span></label>
+                <input disabled type="text" class=" form-control form-control-lg "
+                    [value]="itemAmountInfo.totalAmount" />
+            </div> -->
+
+        </div>
+
+
+
+
+        <!-- begin::Body -->
+        <div class="card-body py-3">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+                <!-- begin::Table -->
+                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                    <!-- begin::Table head -->
+                    <thead>
+                        <tr class="text-gray-800  fw-semibold">
+                            <th class="w-50px fw-bold">#</th>
+                            <!-- <th class="min-w-140px">Assessable</th> -->
+                            <th class=" w-150px min-w-200px fw-bold">Charges Code</th>
+                            <th class="min-w-300px fw-bold">Charges Type</th>
+                            <!-- <th class="min-w-150px fw-bold">Include in Tax</th> -->
+                            <th class="min-w-150px fw-bold">Charges Value</th>
+                            <!-- <th class="min-w-100px text-end">Currency</th> -->
+                        </tr>
+                    </thead>
+                    <!-- end::Table head -->
+                    <!-- begin::Table body -->
+                    <tbody>
+                        <tr *ngFor="let item of itemAmountInfo?.pBLines;let i=index"
+                            [hidden]="item.headerType=='Other'">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-gray-800 fs-6">
+                                            {{i+1}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-gray-800 text-hover-primary d-block fs-6">{{item.headerName}}</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- <td>
+                                <div class="form-check form-switch form-check-custom form-check-solid ">
+                                    <input class="form-check-input h-20px w-30px " type="checkbox"
+                                        (change)="checkValueCheckbox(item)" [(ngModel)]="item.isCustom"
+                                        style="border:1px solid #d3d3d3;" />
+                                </div>
+                            </td> -->
+
+                            <td>
+                                <div class="">
+                                    <div class="d-md-flex justify-content-start ">
+                                        <div class="">
+                                            <select [(ngModel)]="item.valueType"
+                                                (change)="setOtherChargesAmountCal(i,null)"
+                                                class=" form-control selectpicker form-select w-150px min-w-100px">
+                                                <option [value]="1">Fix</option>
+                                                <option [value]="2">Percent</option>
+                                                <!-- <option [value]="''">Pcs.</option> -->
+
+                                            </select>
+                                        </div>
+
+                                        <div class="" *ngIf="item.valueType==2">
+                                            <input type="number" [ngClass]="" type="number" placeholder="Enter value"
+                                                [ngClass]="isInvalidate && item.isError ?'border border-danger':''"
+                                                (input)="setOtherChargesAmountCal(i,$event);item.isError=false"
+                                                class=" form-control form-control-lg  ms-2" [value]="item.amount">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- <td>
+                                <div class="form-check form-switch form-check-custom form-check-solid ">
+                                    <input class="form-check-input h-20px w-30px " type="checkbox"
+                                        (change)="changeIncludedValueItem()" [(ngModel)]="item.isIncluded"
+                                        style="border:1px solid #d3d3d3;" />
+                                </div>
+                            </td> -->
+
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <input (input)="item.isError = false"
+                                            [ngClass]="isInvalidate && item.isError ?'border border-danger':''"
+                                            type="number" [ngClass]="" [disabled]="item.valueType==2?true:false"
+                                            class=" form-control form-control-lg" placeholder="Enter value"
+                                            (input)="setOtherChargesAmountCal(i,$event)" [value]="item.totalAmount">
+                                    </div>
+                                </div>
+                            </td>
+
+
+                            <!-- <td>
+                                <div class="d-flex justify-content-end flex-shrink-0">
+                                    INR
+                                </div>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                    <!-- end::Table body -->
+                </table>
+                <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+        </div>
+        <!-- begin::Body -->
+
+        <!-- begin::Body -->
+        <div class="card-body py-3">
+            <!-- begin::Table container -->
+            <div class="table-responsive">
+                <!-- begin::Table -->
+                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                    <!-- begin::Table head -->
+                    <thead>
+                        <tr class="text-gray-800  fw-semibold">
+                            <th class="w-50px fw-bold">#</th>
+                            <th class=" w-200 min-w-200px fw-bold">Charges Code</th>
+                            <th class="min-w-300px fw-bold">Remark</th>
+                        </tr>
+                    </thead>
+                    <!-- end::Table head -->
+                    <!-- begin::Table body -->
+                    <tbody>
+                        <tr *ngFor="let item of this.itemAmountInfo?.pBLines;let i=index"
+                            [hidden]="item.headerType=='PriceBid'">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-gray-800 fs-6">
+                                            {{i+1}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a class="text-gray-800 text-hover-primary d-block fs-6">{{item.headerName}}</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <input (input)="item.isError = false"
+                                            [ngClass]="isInvalidate && item.isError ?'border border-danger':''"
+                                            type="text" placeholder="Enter remark" class=" form-control form-control-lg"
+                                            [(ngModel)]="item.valuebyVendor" [value]="item.valuebyVendor">
+                                    </div>
+                                </div>
+                            </td>
+
+
+                            <!-- <td>
+                                <div class="d-flex justify-content-end flex-shrink-0">
+                                    INR
+                                </div>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                    <!-- end::Table body -->
+                </table>
+                <!-- end::Table -->
+            </div>
+            <!-- end::Table container -->
+        </div>
+        <!-- begin::Body -->
+
+
+        <form class="form">
+            <div class="row mb-5">
+
+
+                <div class="col-md-12">
+                    <div class="mb-2 d-flex justify-content-end">
+                        <label class=" fw-bold fs-6 my-auto w-150px"><span>Gross Amount</span></label>
+                        <input disabled type="number" class=" w-150px form-control form-control-lg"
+                            [value]="itemAmountInfo.grossAmount" />
+                    </div>
+                    <!-- <div class="col-md-12 mb-1 d-flex">
+                        <label class="col-md-5 col-form-label  fw-bold fs-6">Assessable Value</label>
+                        <input disabled type="text" class=" form-control form-control-lg "
+                            [value]="itemAmountInfo.assessibleAmount" />
+                    </div> -->
+                    <div class="mb-2 d-flex justify-content-end">
+                        <!-- <label class="col-md-5 col-form-label fw-bold fs-6"><span>GST Amount</span></label> -->
+                        <div class="d-lg-flex">
+
+
+                            <div class=" me-2">
+                                <select (change)="changeTypeFunc($event)"
+                                    class="w-100px ms-auto  form-control selectpicker form-select fs-7">
+                                    <option *ngFor="let tax of taxList">{{tax.taxName}}</option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="taxChargesList && itemAmountInfo.taxCode" class="me-2">
+                                <!-- <select id="tax-charge-list" (change)="changeTax($event)"
+                                    class=" ms-auto form-control selectpicker form-select min-w-200px fs-7">
+                                    <option *ngFor="let taxChargeItem of taxChargesList" [value]="taxChargeItem.code">
+                                        {{taxChargeItem.code}}
+                                    </option>
+                                </select> -->
+                                <input type="text" class=" w-200px ms-auto form-control form-control-lg" disabled
+                                    [value]="itemAmountInfo.taxCode" />
+                            </div>
+
+                            <div class="me-3">
+                                <input type="number" class=" w-100px ms-auto form-control form-control-lg readonly"
+                                    disabled [value]="itemAmountInfo.gsT_VAT" />
+                            </div>
+
+
+                            <!-- <div>
+                                <button (click)="openEditTaxPopUp()"
+                                    class="border-0 bg-img-none shadow-none bg-opacity-0" type="button"
+                                    data-bs-auto-close="outside" title="update items">
+
+
+                                    
+                                    <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue"></span>
+
+                                   
+
+                                </button>
+                            </div> -->
+
+                        </div>
+                        <div class="">
+                            <input type="number" disabled class=" w-150px form-control form-control-lg "
+                                [value]="itemAmountInfo.totalTax" />
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="col-md-12 mb-1 d-flex">
+                        <label class="col-md-7 col-form-label  fw-bold fs-6">CST/VAT Amount</label>
+                        <input type="text" disabled class="  form-control form-control-lg "
+                            [value]="itemAmountInfo.totalTax" />
+                    </div> -->
+                    <div class="mb-2 d-flex justify-content-end">
+                        <label class="fw-bold fs-6 my-auto w-150px"><span>Net Amount</span></label>
+                        <input disabled type="number" class=" w-150px form-control form-control-lg "
+                            [value]="itemAmountInfo.netAmount" />
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="footer-button">
+        <div>
+            <button [disabled]="submitdisableCondition()" id="submitbtn2" type="button" (click)="saveButtonClicked(2)"
+                class="btn btn-light-primary btn-sm me-2">
+                <span class="indicator-label">
+                    Regret
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+
+            <button [disabled]="submitdisableCondition('INCLUDED')" id="submitbtn3" type="button"
+                (click)="saveButtonClicked(3)" class="btn btn-light-blue btn-sm">
+                <span class="indicator-label">
+                    Included
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+
+        </div>
+
+        <div>
+            <!-- <button [disabled]="loading" type="button" (click)="close()" class="btn btn-light btn-sm me-2"
+                data-bs-dismiss="modal">Close</button> -->
+            <button [disabled]="submitdisableCondition()" id="submitbtn1" type="button" (click)="saveButtonConditionCheck(1)"
+                class="btn btn-primary btn-sm">
+                <span class="indicator-label">
+                    Submit
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

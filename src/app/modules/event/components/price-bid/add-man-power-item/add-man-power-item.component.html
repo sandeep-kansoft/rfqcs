@@ -1,0 +1,118 @@
+<div class="modal-dialog-centered custom-dialog-modal modal-dialog-mobile" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Man Power Item</h3>
+
+            <!--begin::Close-->
+            <div (click)="close()" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                aria-label="Close">
+                <span class="svg-icon svg-icon-1 m-0">
+                    <!-- close-svg -->
+                    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon  m-0"> </span>
+                    <!-- close-svg -->
+
+                </span>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body pt-0">
+
+            <div>
+                <kendo-grid class="fixed-header" style="min-height:50vh" [loading]="loading"
+                    [data]="manPowerItemGridView" [reorderable]="true" [resizable]="true" [skip]="state.skip"
+                    [pageSize]="pageSize" [pageable]="false" [sortable]="{allowUnsort: true, mode: 'multiple' }"
+                    [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                    <ng-template kendoGridToolbarTemplate class="ps-0 ">
+                        <div
+                            class="cs-kend-grid-toolbar d-block d-sm-flex align-items-center mt-3 justify-content-between">
+                            <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+
+
+                        </div>
+
+                    </ng-template>
+                    <!-- Kendo Default Loader -->
+                    <ng-template kendoGridLoadingTemplate>
+                        <app-wonder-loader></app-wonder-loader>
+                    </ng-template>
+                    <!-- Kendo End Default Loader -->
+
+                    <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Action"
+                        [width]="76">
+                        <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+                            <ng-container>
+                                <div autoClose="'outside'" class="justify-content-between" container="body">
+
+                                    <div class="form-check form-switch form-check-custom form-check-solid d-flex justify-content-center align-items-center ">
+                                        <input class="form-check-input h-20px w-30px " type="checkbox"
+                                            (change)="checkBoxSelectedHandler(item,rowIndex)"
+                                            [(ngModel)]="item.isEnabled" style="border:1px solid #d3d3d3;" />
+
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-command-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" [filterable]="false" [sortable]="false"
+                        [columnMenu]="false" field="sno" title="#" [width]="50">
+                        <ng-template class="justify-content-between" kendoGridCellTemplate
+                            let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column cell [headerClass]="headerStyle" field="productNumber" title="Item Code"
+                        [width]="105"></kendo-grid-column>
+
+                    <kendo-grid-column [filterable]="false" field="productName" [headerClass]="headerStyle"
+                        title="Item Name">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                {{item.productName}}
+                            </ng-container>
+                        </ng-template></kendo-grid-column>
+
+
+                    <kendo-grid-command-column [headerClass]="headerStyle" title="Order Qty" [columnMenu]="false"
+                        [width]="150">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <div container="body"
+                                    class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                                    <div class="col-md-12 ">
+                                        <input type="number" [disabled]="!item.isEnabled" class="form-control form-control-lg"
+                                            [(ngModel)]="item.quantity" />
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-command-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="unitPrice" title="Unit Price"
+                        [width]="110"></kendo-grid-column>
+
+                    <!-- <kendo-grid-column [headerClass]="headerStyle" field="deliveryLocation" title="Delivery Location"
+                        [width]="150"></kendo-grid-column>
+
+                    <kendo-grid-column [headerClass]="headerStyle" field="deliveryAddress" title="Delivery Address"
+                        [width]="220"></kendo-grid-column> -->
+
+
+                </kendo-grid>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="close()" type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Close</button>
+            <button id="save-man-power" (click)="saveManpowerItemHandler()" type="button" class="btn btn-sm btn-primary">
+                <span class="indicator-label">
+                    Save
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+
+            </button>
+        </div>
+    </div>
+</div>

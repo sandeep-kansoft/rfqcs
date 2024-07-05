@@ -1,0 +1,73 @@
+<form [formGroup]="formGroup" (submit)="formSubmitHandler()" class="h-100">
+  <div class="modal-header">
+    <h3 class="modal-title">Change Status</h3>
+    <!--begin::Close-->
+    <div
+      class="btn btn-icon btn-sm btn-active-light-primary"
+      (click)="close()"
+      aria-label="Close"
+    >
+    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0">
+
+</span>
+    </div>
+    <!--end::Close-->
+  </div>
+  <div class="modal-body">
+    <h5 class="mb-3">Are you sure to regret ?</h5>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Event No.</label>
+      <input formControlName="eventNo" type="text" class="form-control" />
+    </div>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Event Name</label>
+      <input
+        formControlName="eventName"
+        type="text"
+        class="form-control"
+        placeholder="{{ eventTitle }}"
+      />
+    </div>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Project Name</label>
+      <input formControlName="projectName" type="text" class="form-control" />
+    </div>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Location</label>
+      <input formControlName="location" type="text" class="form-control" />
+    </div>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Regret Type</label>
+      <select
+        class="form-select"
+        aria-label="Select example"
+        [ngClass]="getValidation('regretType') ? 'border border-danger' : ''"
+        type="type"
+        name="type"
+        formControlName="regretType"
+      >
+        <option value="">Select Option</option>
+        <option value="1">Not Interested </option>
+        <option value="2">Interested But No Time</option>
+      </select>
+    </div>
+    <div class="d-block d-md-flex mb-2 align-items-center">
+      <label for="" class="w-150px">Comment </label>
+      <textarea
+        class="form-control"
+        [ngClass]="getValidation('comment') ? 'border border-danger' : ''"
+        type="text"
+        name="comment"
+        formControlName="comment"
+        placeholder="Leave a comment here"
+        id="floatingTextarea"
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light btn-sm" (click)="close()">
+      No
+    </button>
+    <button type="submit" class="btn btn-primary btn-sm" >Yes</button>
+  </div>
+</form>

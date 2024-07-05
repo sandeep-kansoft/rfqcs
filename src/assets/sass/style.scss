@@ -1,0 +1,443 @@
+//
+// Theme style
+//
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/custom-rfqcs";
+@import "components/components";
+
+
+// Layout
+@import "./core/layout/base/layout";
+@import "layout/layout";
+@import "custom/custom";
+
+// @media print {
+//   @import "custom/test.css";
+// } 
+// @media print {
+//   @import "/src/print.css";
+// } 
+
+@import "./variables";
+
+
+
+
+ /* Calendar UI Starts */
+ ngb-datepicker {
+    border: none !important;
+  }
+
+  .cs-calendar .arrow-btns {
+    border: none;
+  }
+
+  .cs-calendar label {
+    //font-family: $font-medium !important;
+    font-size: 16px !important;
+    font-weight: $fw-500 !important;
+    line-height: 24px !important;
+    color: #005693;
+  }
+
+  .cs-calendar .cs-date-input {
+    border: 1px solid;
+    box-shadow: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-right: 10px;
+    // background-color: $cs-calendar-date-input-bg;
+    // border: 1px solid $cs-calendar-date-input-border-color;
+    //font-family: $font-regular;
+    font-size: 16px;
+    // color: $cs-calendar-date-input-color;
+    line-height: 24px;
+    // background-color: $input-background-color;
+    // border-color: $input-border-color;
+    // color: $input-text !important;
+  }
+
+  .cs-calendar .cs-btn-outline {
+    border: 1px solid;
+    box-shadow: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    // background-color: $cs-calendar-btn-outline-bg;
+    // border: 1px solid $cs-calendar-btn-outline-border-color;
+    // color: $cs-calendar-btn-outline-color;
+    //font-family: $font-medium;
+    font-weight: $fw-500;
+    line-height: 24px;
+  }
+
+  .cs-calendar .btn-light.bg-primary {
+    // background-color: $cs-calendar-active-day-bg !important;
+    // color: $cs-calendar-active-day-color !important;
+  }
+
+  .ngb-dp-header {
+    background: #fff;
+  }
+
+  .ngb-dp-weekdays {
+    background: #fff;
+    border-bottom: none;
+    justify-content: space-between !important;
+  }
+
+  .cs-calendar .ngb-dp-month:last-child .ngb-dp-week {
+    padding-right: 0px !important;
+  }
+
+  .cs-calendar .ngb-dp-month+.ngb-dp-month .ngb-dp-month-name,
+  .cs-calendar .ngb-dp-month+.ngb-dp-month .ngb-dp-week {
+    padding-left: 0px !important;
+  }
+
+  .ngb-dp-weekday {
+    // color: $cs-calendar-weekday-color;
+    //font-family: $font-medium;
+    font-style: normal;
+    font-weight: $fw-500;
+  }
+
+  .ngb-dp-month-name {
+    display: none;
+  }
+
+  .ngb-dp-day,
+  .ngb-dp-weekday,
+  .ngb-dp-week-number {
+    width:2.31rem !important;
+    height: 2.31rem !important;
+    // width: 40px;
+    // height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 5px 0px;
+    // padding: 5px;
+    // background: $primary;
+  }
+
+  .ngb-dp-today {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    // background-color: $cs-calendar-ngb-dp-from-bg;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .ngb-dp-from {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    // background-color: $cs-calendar-ngb-dp-from-bg;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 0;
+  }
+
+  .ngb-dp-to {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    // background-color: $cs-calendar-ngb-dp-to-bg;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .singleDateSelect .ngb-dp-today {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background-color: transparent;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .singleDateSelect .ngb-dp-today [ngbDatepickerDayView] {
+    //font-family: $font-medium;
+  }
+
+  .custom-day.range,
+  .custom-day.range:hover {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    padding: 5px;
+    // top: -5px;
+    // left: -5px;
+    // background: $cs-calendar-active-day-bg;
+    color: #fff;
+  }
+
+  .custom-day:hover {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    padding: 5px;
+    // top: -5px;
+    // left: -5px;
+    // background-color: $cs-calendar-custom-day-hover-bg;
+    // color: $cs-calendar-custom-day-hover;
+  }
+
+  .custom-day.faded,
+  .custom-day.faded:hover {
+    // background-color: $cs-calendar-custom-day-faded-hover-bg;
+    // color: $cs-calendar-custom-day-faded-hover;
+    border-radius: 0;
+    //font-family: $font-medium;
+  }
+
+  [ngbDatepickerDayView] {
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    // line-height: 2.5rem;
+    border-radius: 50%;
+    background: transparent;
+    //font-family: $font-regular;
+    font-size: 14px;
+    // color: $cs-calendar-day-color;
+    line-height: 2.25rem;
+  }
+
+  [ngbDatepickerDayView]:hover:not(.bg-primary) {
+    // background-color: $cs-calendar-hover-day-bg;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    outline: none;
+    //font-family: $font-regular !important;
+    font-size: 14px;
+    // color: $cs-calendar-hover-day-color;
+  }
+
+  [ngbDatepickerDayView].outside {
+    opacity: 1;
+    // color: $cs-calendar-weekday-outside-color !important;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 2.5rem;
+    border-radius: 50%;
+    background: transparent;
+    //font-family: $font-regular;
+    font-size: 14px;
+  }
+
+  .cs-calendar .event-day {
+    // background-color: $cs-calendar-hover-day-bg;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    outline: none;
+    //font-family: $font-medium !important;
+    font-size: 14px;
+    // color: $cs-calendar-day-color;
+  }
+
+  .cs-calendar .event-day::before {
+    // background-color: $primary;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    position: relative;
+    right: -16px;
+    bottom: -30px;
+  }
+
+  .cs-calendar .dot {
+    // background-color: $cs-calendar-dot;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    right: 17px;
+    z-index: 99;
+  }
+
+  /* Range Calendar UI starts */
+  .range-calendar {
+    border: 1px solid #EAECF0;
+    padding: 0px 0px 0px 0px;
+    border-radius: 8px;
+  }
+
+  .range-calendar ngb-datepicker {
+    // border-left: 1px solid #EAECF0 !important;
+    // border-right: 1px solid #EAECF0 !important;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .range-calendar .ngb-dp-header {
+    padding: 0px;
+  }
+
+  .range-calendar .calendar-header {
+    // border: 1px solid #EAECF0;
+    // border-radius: 8px;
+    // border-bottom-left-radius: 0px;
+    // border-bottom-right-radius: 0px;
+    // border-bottom: none;
+    padding: 0px 0px 0px 0px;
+  }
+
+  .calendar-header .column-six {
+    padding: 12px 20px 12px 20px;
+    border: 1px solid #EAECF0;
+    border-left: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  .calendar-header .column-six:last-child {
+    border-right: 1px solid transparent;
+  }
+
+  .calendar-header .btn-sm {
+    padding: 8px 8px 8px 8px !important;
+  }
+
+  .calendar-header .btn.btn-sm.arrow-btns svg {
+    margin-right: 0px;
+    margin-bottom: 0px;
+  }
+
+  .range-calendar .calendar-footer {
+    border: 1px solid #EAECF0;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    padding: 0px 12px;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  .range-calendar .calendar-footer .column-six {
+    padding: 16px 12px 16px 12px;
+  }
+
+  .ngb-dp-month {
+    // border: 1px solid #EAECF0;
+    flex: 0 0 auto;
+    // width: 50%;
+  }
+
+  .cs-calendar.range-calendar .ngb-dp-month {
+    padding: 0px 10px;
+    border: 1px solid #EAECF0;
+    border-left: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  .cs-calendar.range-calendar .ngb-dp-month:last-child {
+    border-right: 1px solid transparent;
+  }
+
+  .ngb-dp-month:first-child .ngb-dp-week {
+    padding-left: 0px !important;
+  }
+
+  // .ngb-dp-month:first-child {
+  //   border-right: 1px solid #EAECF0 !important;
+  // }
+
+  // .ngb-dp-month {
+  //   border-right: none !important;
+  // }
+
+  .range-calendar .cs-date-input {
+    max-width: 130px;
+    border: 1px solid;
+    box-shadow: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-right: 0px;
+    // background-color: $cs-calendar-date-input-bg;
+    // border: 1px solid $cs-calendar-date-input-border-color;
+    //font-family: $font-regular;
+    font-size: 12px;
+    font-weight: 400;
+    // color: $cs-calendar-date-input-color;
+    line-height: 24px;
+    background: #fff;
+  }
+
+  /* range Calendar UI Ends */
+
+  /* Calendar UI Ends */
+
+  .desktop-view-calendar {
+    display: block;
+}
+.mobile-view-calendar {
+    display: none;
+}
+  @media (max-width: 767px) {
+    .desktop-view-calendar {
+        display: none;
+    }
+    .mobile-view-calendar {
+        display: block;
+    }
+  }
+
+
+  .selectedItemList-box{
+    align-items: start;
+    justify-content: space-between;
+margin-right: 20px;
+    .form-control{
+      padding: 0;
+      width: 89%;
+      margin: 0px 10px;
+
+    }
+    .selection{
+       ul{
+          li{
+             color: #009ef7!important;;
+             background-color: #f1faff!important;
+             border: rgba(0,158,247,.25) 1px solid!important;
+             .select2-selection__choice__remove{
+                right: -5px!important;
+                left: auto;
+                width: 20px!important;
+                color: #fff!important;
+                background-color: #009ef7;
+             }
+             span:nth-child(2){
+                display: block!important;
+                margin-right: 20px!important;
+             }
+          }
+       }
+    }
+  }

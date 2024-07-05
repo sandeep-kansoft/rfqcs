@@ -1,0 +1,13 @@
+
+.excel-export {
+    display: flex;
+    flex: 1;
+  
+    justify-content: flex-end;
+  }
+  a {
+    cursor: pointer;
+  }
+  .dropdown-toggle::after {
+    display:none;
+}

@@ -1,0 +1,67 @@
+
+
+
+<div class="card over-view-box">
+  <div class="card-body  py-3 cs-kendo-grid">
+
+      <kendo-grid  class="fixed-header" [loading]="isLoading" [columnMenu]="{ filter: true, sort: true }"
+      [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+      [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+        pageSizes: true,
+        info: true
+      }" [sortable]="{
+        allowUnsort: true,
+        mode: 'multiple'
+      }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+      
+      <ng-template kendoGridToolbarTemplate>
+        <div class="d-block d-md-flex w-100 justify-content-between mb-3 btn-box">
+          <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+            <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"></app-filter-view>
+          </div>
+            <div class="d-block d-md-flex excel-export" style="flex-shrink: unset;">
+              <button  (click)="saveViewersbutton()" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEWER_AND_ADMINSTRATOR_VIEWER_SAVE_CHANGES_BUTTON)"
+                class="btn btn-primary btn-sm me-3 mb-3 mb-md-0 ">Save</button>
+            </div>
+          </div>
+        </ng-template>
+          <ng-template kendoGridLoadingTemplate>
+              <app-wonder-loader></app-wonder-loader>
+          </ng-template>
+
+
+          <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+          [width]="ExtraSmallColumnWidth">
+          <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{ rowIndex + 1
+            }}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column [headerClass]="headerStyle" title="Action" [columnMenu]="false" [width]="50">
+          <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+            <ng-container>
+              <div autoClose="'outside'" container="body">
+  
+                <div class="form-check form-switch form-check-custom form-check-solid justify-content-center ">
+                  <input class="form-check-input h-20px w-30px " type="checkbox" [disabled]="!checkPermission(permissionEnum.DASHBOARD_VIEWER_AND_ADMINSTRATOR_VIEWER_SELECT_BUTTON_ENABLED)"
+                    (change)="checkBoxSelectedHandler($event,item,rowIndex)" [(ngModel)]="item.isSelected"
+                    style="border:1px solid #d3d3d3;" />
+  
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+        </kendo-grid-command-column>
+     
+  
+        <!-- <kendo-grid-column [filterable]="true" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+          field="userId" title="Buyer Name" [width]="140">
+        </kendo-grid-column> -->
+  
+  
+       
+  
+        <kendo-grid-column [headerClass]="headerStyle" [sortable]="false" [columnMenu]="false" field="userName"
+          title="Viewer Name" [width]="300">
+        </kendo-grid-column>
+      </kendo-grid>
+  </div>
+</div>

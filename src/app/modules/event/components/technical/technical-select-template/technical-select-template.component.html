@@ -1,0 +1,90 @@
+<!-- <div class="container-fluid overflow-auto shadow-none p-0">
+    <div class="modal-content shadow-none mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">Select {{ type === 'Technical' ? "Techanical Parameters" : "Terms &amp; Condition"}}
+            Template</h3>
+    </div>
+    <div class="card-title m-0" (click)="closeModel()">
+        <span class="justify-content-center " [inlineSVG]="'assets/media/wonder/cross.svg'"></span>
+    </div>
+</div>
+<!-- <p class="text-danger">{{errorMessage}}</p> -->
+<div class="modal-body shadow-none">
+    <div id="purchaseRequisitionLine" class="fs-6 collapse show ">
+        <div class="bg-white ">
+            <kendo-grid class="fixed-header kendo-grid-height" [loading]="loading" [data]="gridView" [resizable]="true"
+                [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                 pageSizes:true,
+                 info: true
+                 }" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+                <ng-template kendoGridToolbarTemplate>
+                    <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                        <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                            (closeFilterEmitter)="closeFilter()"></app-filter-view>
+
+                    </div>
+
+                </ng-template>
+                <!-- Kendo Default Loader -->
+                <ng-template kendoGridLoadingTemplate>
+                    <app-wonder-loader></app-wonder-loader>
+                </ng-template>
+                <!-- Kendo End Default Loader -->
+                    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno"
+                    title="#" [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate
+                        let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+                </kendo-grid-column>
+                <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="Select" [width]="90">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div class="d-flex justify-content-center align-content-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10 ">
+                                    <input class="form-check-input h-20px w-30px " [(ngModel)]="item.isChecked"
+                                        type="checkbox" style="border:1px solid #d3d3d3;" />
+
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-command-column>
+
+
+
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="prid" title="PR NO" [width]="columnWidth"></kendo-grid-column> -->
+
+                <kendo-grid-column [filterable]="true" field="templateName" [headerClass]="headerStyle"
+                    title="Template Name" [width]="200">
+                </kendo-grid-column>
+
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+
+                <!-- <kendo-grid-column [headerClass]="headerStyle" field="ApprovedDate" title="APPROVED DATE" [width]="130"></kendo-grid-column> -->
+
+                <kendo-grid-column cell [headerClass]="headerStyle" field="templateValue" title="Template Value">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <a>{{showTemplateValue(item.templateValue)}}</a>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+            </kendo-grid>
+
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div class="card-footer mx-5 text-end site-draw-form" id="kt_activities_footer">
+        <button type="button" (click)="closeModel()" class="btn me-5 btn-light-dark btn-sm">Cancel</button>
+        <button (click)="saveButtonHandler()" class="btn btn-submit btn-sm">
+            <span class="indicator-label">Submit</span>
+        </button>
+    </div>
+</div>
+<!-- </div>
+
+</div> -->

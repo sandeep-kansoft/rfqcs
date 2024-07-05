@@ -1,0 +1,102 @@
+.toast {
+    margin-left: 40% !important;
+    margin-right: 40% !important;
+    bottom: 5vh !important;
+    // width: fit-content !important;
+    width: 25%;
+    border-radius: 8px;
+    z-index: 9999;
+    position: fixed !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 991.98px) {
+    .toast {
+        margin-left: 10% !important;
+        margin-right: 10% !important;
+        bottom: 5% !important;
+        width: 80% !important;
+        border-radius: 8px;
+        z-index: 9999;
+        position: fixed !important;
+        word-break: break-all;
+    }
+}
+
+@media (min-width: 1400px) {
+    .toast {
+        width: auto;
+        // left: 47vw !important;
+        // right: auto !important;
+    }
+
+    .toast-message {
+        margin-left: 5px;
+        margin-right: 10px !important;
+    }
+}
+
+.toast-message {
+    word-break: break-word;
+}
+
+/* Success */
+.toast.cs-success-bg-light {
+    border-color: #6ce9a6ff !important;
+    background: #ffffff;
+}
+
+.toast.cs-text-success svg path {
+    stroke: #039855ff !important;
+}
+
+.toast.cs-text-success .toast-message-icon svg path {
+    stroke: #039855ff !important;
+}
+
+.toast.cs-text-success .toast-message {
+    color: #027a48ff !important;
+    font-size: 0.875rem;
+    font-family: 'Raleway-Medium';
+}
+
+.toast.cs-text-success .toast-close-icon svg path {
+    stroke: #027a48ff !important;
+}
+
+/* Error */
+.toast.cs-danger-bg-light {
+    border-color: #fda29bff !important;
+    background: #ffffff;
+}
+
+.toast.cs-border-danger {
+    border-color: #fda29bff !important;
+}
+
+.toast.cs-text-danger svg path {
+    stroke: #d92d20ff !important;
+}
+
+.toast.cs-text-danger .toast-message-icon svg path {
+    stroke: #d92d20ff !important;
+}
+
+.toast.cs-text-danger .toast-message {
+    color: #b42318ff !important;
+    font-size: 0.875rem;
+    font-family: 'Raleway-Medium';
+}
+
+.toast.cs-text-danger .toast-close-icon svg path {
+    stroke: #b42318ff !important;
+}
+
+.toast-container {
+    pointer-events: auto !important
+}
+
+.toast-body {
+    word-wrap: break-word;
+    //word-break: break-all;
+}

@@ -1,0 +1,359 @@
+<div class="card">
+  <div class="card-body technical-tab-box over-view-box py-3">
+    <!-- <div class="card-header p-5 hh-50px align-items-center "><label class="col-form-label text-right d-block"><h3 class="card-title flex-column my-0"><span class="card-label fw-bold text-gray-800 py-0">Technical</span></h3></label></div> -->
+    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-4">
+      <li class="nav-item">
+        <a class="nav-link active me-5 " data-bs-toggle="tab" href="#kt_tab_pane_10">Technical Documents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link m-0 " data-bs-toggle="tab" href="#kt_tab_pane_20">Item Technical Parameters</a>
+      </li>
+      <!-- <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_30">Link 3</a></li> -->
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="kt_tab_pane_10" role="tabpanel">
+
+        <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+          <li *ngFor="let techAttachItem  of technicalAttachmentTab" class="nav-item cursor-pointer">
+            <a (click)="setCurrentSelectedTab(techAttachItem)"
+              [ngClass]="{'active': currentTabSelected ===techAttachItem}" class="nav-link" data-bs-toggle="tab">
+              <span class="me-3 text-gray-700">
+                {{techAttachItem}}
+              </span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+                        <a class="nav-link text-gray-700" data-bs-toggle="tab" href="#kt_tab_pane_2">Link 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-700" data-bs-toggle="tab" href="#kt_tab_pane_3">Link 3</a>
+                    </li> -->
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" role="tabpanel">
+            <kendo-grid class="fixed-header mb-5" [loading]="loading" [data]="gridView" [group]="state.group"
+              [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+                     pageSizes:true,
+                     info: true
+                     }" [sortable]="{
+            allowUnsort: true,           mode: 'multiple' }" (dataStateChange)="onStateChange($event)"
+              class="grid-padding">
+              <!-- <ng-template kendoGridToolbarTemplate>
+                        <div class="d-flex excel-export">
+                            <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between">
+                                <app-filter-view (closeFilterEmitter)="closeFilter()"></app-filter-view>
+                                <div class="d-flex excel-export">
+                                    <button type="button" class="btn btn-danger btn-sm" icon="file-excel">Upload New
+                                        Document</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </ng-template> -->
+              <ng-template kendoGridToolbarTemplate let-item>
+                <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between mb-3">
+                  <app-filter-view (onFilterAllFieldEmitter)="onFilterAllField($event)"
+                    (closeFilterEmitter)="closeFilter()"></app-filter-view>
+
+                  <div class="d-flex align-items-end align-self-end excel-export">
+                    <button aria-role-check="yes" *ngIf="uploadButtonCondition() && (checkPermission(permissionEnum.DASHBOARD_TECHNICAL_TECHNICAL_DOCUMENTS_UPLOAD_NEW_DOCUMENT) || this.authData?.userRole == 'Vendor' )" [disabled]="!checkPermission(permissionEnum.DASHBOARD_TECHNICAL_TECHNICAL_DOCUMENTS_UPLOAD_NEW_DOCUMENT_ENABLED)  && !(this.authData?.userRole == 'Vendor')" (click)="uploadNewDocumentModel()"
+                      type="button" class="btn btn-light-success btn-sm me-3 " icon="file-excel"
+                      title="Upload New Document">
+                      <!-- upload-svg -->
+                      <span [inlineSVG]="'./assets/media/svg/upload.svg'" class="svg-icon  m-0"></span>
+                      <!-- upload-svg -->
+                      <!-- <span class="svg-icon    m-0 ">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24" />
+                                                        <path
+                                                            d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                                            fill="currentcolor" fill-rule="nonzero" opacity="0.7" />
+                                                        <rect fill="currentcolor" opacity="0.7" x="11" y="2" width="2"
+                                                            height="14" rx="1" />
+                                                        <path
+                                                            d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
+                                                            fill="currentcolor" fill-rule="nonzero" />
+                                                    </g>
+                                                </svg>
+                                            </span> -->
+
+                    </button>
+                    <button *ngIf="isDownloadButtonVisible" (click)="downloadAllTechnicalAttachment(item)" type="button"
+                      class="btn btn-light-blue btn-sm" title="Download All">
+                      <ng-container *ngIf="downloadAllAttachmentloading">
+                        <span class="indicator-progress" [style.display]="'block'">
+                          Please wait...
+                          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                      </ng-container>
+                      <ng-container *ngIf="!downloadAllAttachmentloading">
+                        <!-- download-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  m-0"></span>
+                        <!-- sownload-svg -->
+
+                        <!--
+                                                <span class="svg-icon   m-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                        height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                            fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path
+                                                                d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                                                fill="currentcolor" fill-rule="nonzero" opacity="0.7" />
+                                                            <rect fill="currentcolor" opacity="0.7"
+                                                                transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+                                                                x="11" y="1" width="2" height="14" rx="1" />
+                                                            <path
+                                                                d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+                                                                fill="currentcolor" fill-rule="nonzero"
+                                                                transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+                                                        </g>
+                                                    </svg></span> -->
+
+                      </ng-container></button>
+                  </div>
+                </div>
+
+              </ng-template>
+              <!-- Kendo Default Loader -->
+
+              <ng-template kendoGridLoadingTemplate>
+                <app-wonder-loader></app-wonder-loader>
+              </ng-template>
+              <!-- Kendo End Default Loader -->
+              <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+                [width]="60"><ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+              </kendo-grid-column>
+              <kendo-grid-command-column [headerClass]="headerStyle" [columnMenu]="false" title="actions" [width]="120">
+                <ng-template kendoGridCellTemplate let-item>
+                  <ng-container>
+
+
+
+                    <div class="d-flex justify-content-center">
+
+                      <span (click)="downloadAttachment(item.attachmentURL)"
+                        class=" bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                        <!-- download-svg -->
+                        <span [inlineSVG]="'./assets/media/svg/download.svg'" class="svg-icon  me-3 text-blue"
+                          title="Download"></span>
+                        <!-- download-svg -->
+
+                        <!-- <span class="svg-icon  svg-icon-primary m-0 cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                        height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                            fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path
+                                                                d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+                                                                fill="#36acf9" fill-rule="nonzero" opacity="0.7" />
+                                                            <rect fill="#36acf9" opacity="0.7"
+                                                                transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+                                                                x="11" y="1" width="2" height="14" rx="1" />
+                                                            <path
+                                                                d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+                                                                fill="#36acf9" fill-rule="nonzero"
+                                                                transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+                                                        </g>
+                                                    </svg>
+                                                </span> -->
+
+                      </span>
+
+                      <span aria-role-check="yes" *ngIf="uploadButtonCondition() && checkPermission(permissionEnum.DASHBOARD_TECHNICAL_TECHNICAL_DOCUMENT_ACTION_DELETE_HANDLER) "
+                        (click)="deleteHandlerConfirm(item.attachmentId)"
+                        class="bg-img-none border-0 shadow-none bg-opacity-0 cursor-pointer-imp cursor-pointer">
+                        <span class="svg-icon  text-primary m-0">
+                          <!-- delete-svg -->
+                          <span [inlineSVG]="'./assets/media/svg/delete.svg'" class="svg-icon text-primary  "
+                            title="Delete item"></span>
+                          <!-- delete-svg -->
+                          <!-- <svg xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                        height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                            fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path
+                                                                d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z"
+                                                                fill="currentcolor" fill-rule="nonzero" />
+                                                            <path
+                                                                d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
+                                                                fill="currentcolor" opacity="0.3" />
+                                                        </g>
+                                                    </svg> -->
+                          <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+
+                                                        <path
+                                                            d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+                                                            stroke="currentcolor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                        <path
+                                                            d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+                                                            stroke="currentcolor" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            opacity="0.7" />
+
+                                                        <path
+                                                            d="M18.8504 9.13965L18.2004 19.2096C18.0904 20.7796 18.0004 21.9996 15.2104 21.9996H8.79039C6.00039 21.9996 5.91039 20.7796 5.80039 19.2096L5.15039 9.13965"
+                                                            stroke="currentcolor" opacity="0.7" stroke-width="1.5"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+
+                                                        <path d="M10.3301 16.5H13.6601" stroke="currentcolor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                        <path d="M9.5 12.5H14.5" stroke="currentcolor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+
+                                                    </svg> -->
+                        </span>
+                      </span>
+                    </div>
+
+                  </ng-container>
+                </ng-template>
+              </kendo-grid-command-column>
+
+              <kendo-grid-column [filterable]="true" [columnMenu]="false" field="documentName"
+                [headerClass]="headerStyle" [width]="210" title="Document Name">
+
+              </kendo-grid-column>
+
+              <kendo-grid-column [filterable]="true" [headerClass]="headerStyle" field="remarks" title="Remarks">
+
+              </kendo-grid-column>
+              <!-- <kendo-grid-column [headerClass]="headerStyle" field="prid" title="PR NO" [width]="columnWidth"></kendo-grid-column> -->
+
+              <kendo-grid-column [filterable]="true" field="userRole" [headerClass]="headerStyle" title="User Type"
+                [width]="120">
+              </kendo-grid-column>
+              <!-- <kendo-grid-column cell [headerClass]="headerStyle" field="\"
+                                title="Uploaded By" [width]="90"></kendo-grid-column> -->
+              <!-- <kendo-grid-column [headerClass]="headerStyle" field="CREATION_DATE" title="CREATED DATE" [width]="130"></kendo-grid-column> -->
+              <kendo-grid-column [headerClass]="headerStyle" [width]="150" field="createdDate" format="dd-MMM-yyyy"
+                filter="date" title="Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  {{dataItem.createdDate | date: 'dd-MMM-yyyy H:mm'}}
+                </ng-template>
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="kt_tab_pane_20" role="tabpanel">
+        <kendo-grid class="fixed-header" [loading]="technicalParameterLineloading" [data]="parameterGridView"
+          [group]="technicalParameterLineState.group" [filter]="technicalParameterLineState.filter" [filterable]="false" [reorderable]="true" [resizable]="true"
+          [skip]="technicalParameterLineState.skip" [pageSize]="technicalParameterLineState.take" [pageable]="{
+                       pageSizes:true,
+                       info: true
+                       }" [sortable]="{allowUnsort: true,mode: 'multiple' }" [sort]="technicalParameterLineState.sort"
+          (dataStateChange)="StatechangeofItemtechnicalParameter($event)">
+          <!-- Kendo Default Loader -->
+          <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+          </ng-template>
+          <!-- Kendo End Default Loader -->
+          <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+            [width]="60">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-command-column *ngIf="addColumnCondition()" [headerClass]="headerStyle " [columnMenu]="false"
+            title="Actions" [width]="100">
+            <ng-template kendoGridCellTemplate let-item>
+              <ng-container>
+                <div class="d-flex justify-content-center pe-2" *ngIf="checkActionButton()">
+                  <span (click)="openTechnicalParameterActionPopUp(item)" class="  cursor-pointer-imp cursor-pointer"
+                    title="Add Technical Remark">
+                    <span class="svg-icon bg-light-blue text-blue fs-7  p-1 m-0 ">
+                      <!-- add-svg -->
+                      <span *ngIf="checkActionButton()" [inlineSVG]="'./assets/media/svg/add.svg'"
+                        class="svg-icon text-blue "></span>
+                      <!-- Click Here -->
+                      <!-- add-svg -->
+                    </span>
+                  </span>
+                </div>
+
+                <div class="d-flex justify-content-center pe-2" *ngIf="!checkActionButton()">
+                  <span (click)="openTechnicalParameterActionPopUp(item)" class="  cursor-pointer-imp cursor-pointer"
+                    title="Fill Technical Details in Remark/Confirmation">
+                    <span class="svg-icon bg-light-blue text-blue fs-7  p-1 m-0 ">
+                      <!-- add-svg -->
+                      <!-- <span *ngIf="checkActionButton()" [inlineSVG]="'./assets/media/svg/add.svg'"
+                                                class="svg-icon text-blue "></span> -->
+                      Click Here
+                      <!-- add-svg -->
+                    </span>
+                  </span>
+                </div>
+              </ng-container>
+            </ng-template>
+          </kendo-grid-command-column>
+          <!-- Kendo End Default Loader -->
+          <kendo-grid-column [headerClass]="headerStyle" field="itemCode" title="Item Code"
+            [width]="80"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="itemName" title="Item Name"
+            [width]="200"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="oty" title="Qty" [width]="50"></kendo-grid-column>
+          <kendo-grid-column [headerClass]="headerStyle" field="uom" title="UOM" [width]="50"></kendo-grid-column>
+          <kendo-grid-command-column *ngIf="checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_REMARKS)" [headerClass]="headerStyle" title="Remark" [width]="180">
+            <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+              <div class="remark-box">
+                <div class="form-check form-switch form-check-custom form-check-solid  ">
+                  <div class="">
+                    <input aria-role-check-input="yes" [disabled]="!dataItem.isEditedMode && !checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_REMARKS_ENABLED)"
+                      [ngClass]=" dataItem.tech_Remark && dataItem.tech_Remark.length > 500 ?'border border-danger':'' "
+                      [(ngModel)]="dataItem.tech_Remark" class="form-control form-control-lg" />
+                  </div>
+                  <div *ngIf="editButtonCondition()">
+
+
+                    <a class="cursor-pointer" *ngIf="dataItem.isEditedMode"
+                      (click)="parameterCancelButton(rowIndex,'Save')">
+                      <svg fill="#50cd89" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path
+                          d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                      </svg>
+                    </a>
+                    <a class="cursor-pointer" *ngIf="dataItem.isEditedMode"
+                      (click)="parameterCancelButton(rowIndex,'Cancel')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                      </svg>
+                    </a>
+                    <a aria-role-check="yes"  class="cursor-pointer text-blue" *ngIf="!dataItem.isEditedMode && checkPermission(permissionEnum.DASHBOARD_TECHNICAL_ITEM_TECHNICAL_PARAMETERS_REMARKS_EDIT_BUTTON)"
+                      (click)="parameterCancelButton(rowIndex,'Edit')">
+                      <!-- edit-svg -->
+                      <span [inlineSVG]="'./assets/media/svg/edit.svg'" class="svg-icon text-blue "></span>
+                      <!-- edit-svg -->
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </kendo-grid-command-column>
+        </kendo-grid>
+      </div>
+
+    </div>
+    <!-- tab end? -->
+  </div>
+</div>

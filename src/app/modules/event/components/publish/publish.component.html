@@ -1,0 +1,139 @@
+<div class="card mb-5 ">
+
+
+    <!-- card header -->
+    <!-- <div class="card-header pt-0 hh-50px align-items-center">
+        <h3 class="card-title flex-column my-0">
+            <span class="card-label fw-bold text-gray-800">Publish</span>
+        </h3>
+
+        <div class="card-toolbar my-0">
+            <div class="d-flex align-items-center my-3">
+
+            </div>
+        </div>
+    </div> -->
+    <!-- card header -->
+    <div class="card-body py-3">
+
+        <div class="d-flex justify-content-between mb-3">
+            <!-- <button type="button" class="btn btn-light-blue btn-sm btn-active-icon-white"> <i
+                     class="bi bi-printer fs-5"></i> Print</button> -->
+
+
+            <!-- <button *ngIf="isTemplateAddPage" (click)="resetHandler()" type="button"
+                class="btn btn-light btn-sm btn-active-icon-dark"><i class="bi bi-eraser fs-5"></i>
+                Reset Content</button> -->
+
+            <button *ngIf="isTemplateAddPage" (click)="nextButtonHandler();" type="button"
+                class="btn btn-light-blue btn-sm  btn-active-icon-white">
+                <i class="bi bi-arrow-right-short fs-5"></i> Next Step</button>
+
+            <button *ngIf="!isTemplateAddPage" (click)="this.isTemplateAddPage =true" type="button"
+                class="btn btn-light btn-sm  ">
+                <i class="bi bi-arrow-left-short fs-5"></i> Back</button>
+
+            <div _ngcontent-dfp-c206="" *ngIf="!isTemplateAddPage" class="d-flex flex-stack">
+                <a aria-role-check="yes" (click)="publishEvent()" class="btn btn-primary btn-sm">
+                    <ng-container *ngIf="publishEventLoader">
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="!publishEventLoader">
+                        <span class="indicator-label">Publish</span>
+                    </ng-container>
+                </a>
+            </div>
+
+
+        </div>
+        <div *ngIf="isTemplateAddPage">
+            <form [formGroup]="publishFormGroup">
+
+                <!-- <div class=" mb-5 w-100 me-5 mt-5 mt-md-0">
+                    <label class="required text-gray-800 mb-2">Select Template </label>
+                    <select [ngClass]="getErrorMessage('template')?  'border-danger':''" formControlName="template"
+                        class="form-select" aria-label="Select example">
+                        <option value="" >------Select------</option>
+                        <option *ngFor="let template of invitationDropDown" [value]="template.templateName">
+                            {{template.templateName}}</option>
+                    </select>
+
+                    <span class="text-primary">{{getErrorMessage('template')}}</span>
+                </div> -->
+                <!-- <div class="mb-5">
+                    <label for="" class="text-gray-800 form-label-text mb-2">Select Template </label>
+                    <select class="form-select">
+                        <option selected>Open this select menu</option>
+                        <option value="1">Select Template One</option>
+                        <option value="2">Select Template Two</option>
+                        <option value="3"> Select Template Three</option>
+                    </select>
+
+                </div> -->
+                <div class="mb-5 w-100">
+                    <label class="text-gray-800 form-label-text mb-2">Subject </label>
+                    <input [ngClass]="getErrorMessage('subject')?  'border-danger':''" type="name"
+                        formControlName="subject" class="form-control" placeholder="" />
+                </div>
+
+                <ckeditor [ngClass]="getErrorMessage('body')?  'border-danger':''" formControlName="body"
+                    class="form-control" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"
+                    [config]="ckEditorConfig" (ready)="onCkEditorReady($event)"></ckeditor>
+            </form>
+        </div>
+        <div *ngIf="!isTemplateAddPage" class="table-responsive">
+            <!-- <div *ngIf="publishEventLoader">
+                <app-wonder-loader></app-wonder-loader>
+            </div> -->
+            <table *ngIf="!publishEventLoader" class="table table-striped table-striped border gy-7 gs-7">
+                <thead>
+                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                        <th class="min-w-200px text-primary py-2">Particular</th>
+                        <th class="min-w-400px text-primary py-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="publishEventData">
+                    <tr>
+                        <td class="py-2  ">Technical</td>
+                        <td [ngClass]="publishEventData.technical ==='Yes' ? 'text-success' :'text-danger' "
+                            class="py-2">
+                            {{publishEventData.technical}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-2  ">Terms And Condition</td>
+                        <td [ngClass]="publishEventData.tnc ==='Yes' ? 'text-success' :'text-danger' " class="py-2">
+                            {{publishEventData.tnc}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-2  ">Price Bid</td>
+                        <td [ngClass]="publishEventData.priceBid ==='Yes' ? 'text-success' :'text-danger' "
+                            class="py-2">
+                            {{publishEventData.priceBid}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-2  ">Vendor</td>
+                        <td [ngClass]="publishEventData.vendors ==='Yes' ? 'text-success' :'text-danger' " class="py-2">
+                            {{publishEventData.vendors}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-2  ">Schedule</td>
+                        <td [ngClass]="publishEventData.scheduled ==='Yes' ? 'text-success' :'text-danger' "
+                            class="py-2">
+                            {{publishEventData.scheduled}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>

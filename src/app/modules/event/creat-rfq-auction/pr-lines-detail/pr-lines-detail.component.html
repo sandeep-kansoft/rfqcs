@@ -1,0 +1,57 @@
+<kendo-grid [loading]="linesDataLoading" [data]="gridView" [group]="state.group" [filter]="state.filter"
+    [filterable]="false" [reorderable]="false" [resizable]="true" [skip]="state.skip" [pageable]="false"
+    [sortable]="{allowUnsort: true,mode: 'multiple'}" [navigable]="true" scrollable="none" [sort]="state.sort">
+
+    <ng-template kendoGridToolbarTemplate>
+        <div class="cs-kend-grid-toolbar d-flex align-items-center justify-content-between padding-x-0">
+            <div class="d-flex align-items-center justify-content-between">
+
+
+            </div>
+            <div class="d-flex align-items-end align-self-end excel-export">
+                <button (click)="submitPrLine()" class="k-button"
+                    class="btn btn-light-primary btn-sm ml-2">Save</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <kendo-grid-command-column title="Select" [columnMenu]="false" [width]="65">
+        <ng-template kendoGridCellTemplate let-item let-rowIndex="rowIndex">
+            <ng-container>
+                <div autoClose="'outside'" container="body">
+
+                    <div class="form-check form-switch form-check-custom form-check-solid me-10 ">
+                        <input class="form-check-input h-20px w-30px " type="checkbox" (change)="checkValueCheckbox(rowIndex)"
+                            [(ngModel)]="item.isEnabled" style="border:1px solid #d3d3d3;" />
+
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-command-column>
+
+    <kendo-grid-column field="prtransid" title="PR Line" [width]="80">
+    </kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="itemcode" title="Item Code"
+        [width]="100"></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="iteM_DESCRIPTION" title="Item Description"
+        [width]="400"></kendo-grid-column>
+    <kendo-grid-command-column title="Enter Qty" [width]="130">
+        <ng-template kendoGridCellTemplate let-item>
+            <ng-container>
+                <div container="body"
+                    class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                    <div class="col-md-12 ">
+                        <input [disabled]="!item.isEnabled" type="number"
+                            [ngClass]="getValidation(item)?'border border-danger':'' "
+                            class="form-control form-control-lg" [(ngModel)]="item.enterQty" />
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </kendo-grid-command-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="uom" title="UOM" [width]="80"></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="quantity" title="Qty" [width]="60"></kendo-grid-column>
+    <kendo-grid-column headerClass="grid-header-menu" field="remqty" title="Rem Qty" [width]="80">
+    </kendo-grid-column>
+</kendo-grid>

@@ -1,0 +1,72 @@
+<!-- <div class="container-fluid overflow-auto">
+    <div class="card mb-5 mb-xl-10 over-view-box"> -->
+<div class="modal-header cursor-pointer" role="button" data-bs-target="#kt_account_profile_details" aria-expanded="true"
+    aria-controls="kt_account_profile_details">
+    <div class="modal-title m-0">
+        <h3 class="fw-bolder m-0">PR Status</h3>
+    </div>
+    <div class="card-title m-0" (click)="closeModel()">
+        <div class=" btn btn-icon btn-sm btn-active-light-primary">
+
+
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2 m-0">
+
+        </span>
+    </div>
+    </div>
+</div>
+<div class="modal-body pr-history-table">
+    <kendo-grid class="fixed-header" [loading]="isLoading" [columnMenu]="{ filter: true ,sort : true  }"
+        [groupable]="true" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="true" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="true"
+        (dataStateChange)="onStateChange($event)" [sortable]="{
+        allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <kendo-grid-column field="round" title="round" [width]="columnWidth"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="pR_No" title="PR no" [width]="columnWidth"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column title="status" [width]="columnWidth" field="status" [filterable]="true"
+            [headerClass]="headerStyle">
+            <ng-template kendoGridCellTemplate let-item>
+                <ng-container>
+                    <span [ngClass]="showBadgeStatusColorClass(item.status)" class="badge">{{item.status}}</span>
+                </ng-container>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="pR_Description" title="PR Description" [width]="250"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="wF_No" title="WF no" [width]="columnWidth"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="level" title="level" [width]="columnWidth"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="required_By" title="approval required by" [width]="250"
+            [headerClass]="headerStyle"></kendo-grid-column>
+        <kendo-grid-column field="assigned_Date" title="assigned date" filter="date" [width]="250"
+            [headerClass]="headerStyle">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem?.assigned_Date | date: 'dd-MMM-yyyy'}}
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="action_Taken_By" title="action taken by" [width]="250" [headerClass]="headerStyle">
+        </kendo-grid-column>
+        <kendo-grid-column field="action_Taken_Date" title="action taken date" filter="date" [width]="250"
+            [headerClass]="headerStyle">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem?.action_Taken_Date | date: 'dd-MMM-yyyy'}}
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="remarks" title="remarks" [width]="columnWidth"
+            [headerClass]="headerStyle"></kendo-grid-column>
+
+    </kendo-grid>
+</div>
+
+<!-- </div>
+
+</div> -->

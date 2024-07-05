@@ -1,0 +1,16 @@
+//card spacing here
+.card-spacing{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-form-control{
+    padding: 2px 10px!important;
+  }
+
+
+  .footer-button{
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+  }

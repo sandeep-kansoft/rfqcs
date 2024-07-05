@@ -1,0 +1,145 @@
+<div class="modal-header">
+  <h3 class="modal-title">CS Item List</h3>
+
+  <!--begin::Close-->
+  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="CloseModel()" data-bs-dismiss="modal"
+    aria-label="Close">
+    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+  </div>
+  <!--end::Close-->
+</div>
+<div class="modal-body">
+
+
+  <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: true ,sort : true  }" (dataStateChange)="onStateChange($event)"
+    [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+    [reorderable]="false" [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [pageable]="{
+ pageSizes:true,
+ info: true
+ }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort"
+
+
+>
+
+    <!-- Kendo Default Loader -->
+    <ng-template kendoGridLoadingTemplate>
+      <app-wonder-loader></app-wonder-loader>
+    </ng-template>
+    <!-- Kendo End Default Loader -->
+
+
+    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+      [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+        {{rowIndex+1}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" [headerClass]="headerStyle"
+      field="action" title="Action" [width]="90">
+      <ng-template kendoGridCellTemplate let-item>
+        <ng-container>
+          <div class="d-flex justify-content-center ">
+            <button aria-role-check="yes"  id="kt_drawer_example_basic_button" (click)="confirmationModal(item)"
+              class="btn ms-2 btn-sm btn-light-blue p-1" type="button" data-bs-auto-close="outside"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="PO Creation" *ngIf="item.isCreatePO">
+
+
+
+              <span class="svg-icon">
+                <svg enable-background="new 0 0 24 24" height="15px" id="Layer_1" version="1.1" viewBox="0 0 48 48"
+                  width="15px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path clip-rule="evenodd"
+                    d="M37,47H11c-2.209,0-4-1.791-4-4V8c0-2.209,1.791-4,4-4h3l0,0c0.553,0,1,0.448,1,1
+                                  s-0.447,1-1,1l0,0h-3C9.896,6,9,6.896,9,8v35c0,1.104,0.896,2,2,2h26c1.104,0,2-0.896,2-2V8c0-1.104-0.896-2-2-2h-3l0,0
+                                   c-0.553,0-1-0.448-1-1s0.447-1,1-1c0,0,0,0,0.001,0H37c2.209,0,4,1.791,4,4v35C41,45.209,39.209,47,37,47z M35,9
+                                   c0,0.552-0.447,1-1,1H14c-0.553,0-1-0.448-1-1s0.447-1,1-1c0,0,1.125-0.125,2-1l2-2c0,0,0.781-1,2-1h1c0-1.657,1.344-3,3-3
+                                    c1.657,0,3,1.343,3,3h1c1.312,0,2,1,2,1l2,2c0.875,0.875,2,1,2,1C34.553,8,35,8.448,35,9z M24,3c-0.553,0-1,0.448-1,1h2
+                                     C25,3.448,24.553,3,24,3z M29.363,7c0,0-0.679-1-1.817-1h-7.091c-1.14,0-1.818,1-1.818,1l-0.909,1h12.545L29.363,7z"
+                    fill-rule="evenodd" fill="currentcolor"></path>
+                </svg>
+              </span>
+
+
+
+
+            </button>
+
+            <button aria-role-check="yes"  *ngIf="item.isShortclose" (click)="openShortcloseModel(item)" id="kt_drawer_example_basic_button43" class="btn ms-2 btn-sm btn-light p-1" type="button"
+              data-bs-auto-close="outside" data-bs-toggle="tooltip" data-bs-placement="top">
+
+              <span class="svg-icon">
+                <span [inlineSVG]="'assets/media/svg/short-close.svg'" class="svg-icon m-0 p-0 text-primary">
+                </span>
+              </span>
+
+            </button>
+
+            <button aria-role-check="yes" id="kt_drawer_example_basic_button" (click)="confirmationModal(item)"
+              class="btn ms-2 btn-sm btn-light p-1" type="button" data-bs-auto-close="outside" data-bs-toggle="tooltip"
+              data-bs-placement="top" *ngIf="!item.isCreatePO" disabled>
+
+              <span class="svg-icon">
+                <svg enable-background="new 0 0 24 24" height="15px" id="Layer_1" version="1.1" viewBox="0 0 48 48"
+                  width="15px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path clip-rule="evenodd"
+                    d="M37,47H11c-2.209,0-4-1.791-4-4V8c0-2.209,1.791-4,4-4h3l0,0c0.553,0,1,0.448,1,1
+                                  s-0.447,1-1,1l0,0h-3C9.896,6,9,6.896,9,8v35c0,1.104,0.896,2,2,2h26c1.104,0,2-0.896,2-2V8c0-1.104-0.896-2-2-2h-3l0,0
+                                   c-0.553,0-1-0.448-1-1s0.447-1,1-1c0,0,0,0,0.001,0H37c2.209,0,4,1.791,4,4v35C41,45.209,39.209,47,37,47z M35,9
+                                   c0,0.552-0.447,1-1,1H14c-0.553,0-1-0.448-1-1s0.447-1,1-1c0,0,1.125-0.125,2-1l2-2c0,0,0.781-1,2-1h1c0-1.657,1.344-3,3-3
+                                    c1.657,0,3,1.343,3,3h1c1.312,0,2,1,2,1l2,2c0.875,0.875,2,1,2,1C34.553,8,35,8.448,35,9z M24,3c-0.553,0-1,0.448-1,1h2
+                                     C25,3.448,24.553,3,24,3z M29.363,7c0,0-0.679-1-1.817-1h-7.091c-1.14,0-1.818,1-1.818,1l-0.909,1h12.545L29.363,7z"
+                    fill-rule="evenodd" fill="currentcolor"></path>
+                </svg>
+              </span>
+
+            </button>
+            <!-- <button class="btn btn-sm btn  btn-sm  p-1 px-2 py-1" title="Short Close">
+                        <span [inlineSVG]="'./assets/media/svg/short-close.svg'" class="svg-icon  text-primary">
+                       </span>
+                    </button> -->
+          </div>
+        </ng-container>
+
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="itemCode"
+      title="Item Id" [width]="130">
+
+    </kendo-grid-column>
+
+    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="Item Name" field="itemName"
+      [width]="250">
+
+    </kendo-grid-column>
+
+    <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="itemDesc"
+      title="Description" [width]="300">
+
+    </kendo-grid-column>
+
+    <kendo-grid-column [filterable]="true" [columnMenu]="false" field="uom" [headerClass]="headerStyle" [width]="110"
+      title="UOM">
+
+    </kendo-grid-column>
+
+    <kendo-grid-column [filterable]="true" [columnMenu]="false" field="quantity" [headerClass]="headerStyle"
+      [width]="130" title="Quantity">
+
+    </kendo-grid-column>
+
+    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="netAmount" title="Net Amount"
+      [width]="columnWidth"></kendo-grid-column>
+
+    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="unitPrice" title="Unit Price"
+      [width]="130"></kendo-grid-column>
+    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="headerCharges" title="Header Charges"
+      [width]="columnWidth"></kendo-grid-column>
+    <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="unitLineCharges"
+      title="Unit Line Charges" [width]="columnWidth"></kendo-grid-column>
+
+  </kendo-grid>
+
+
+</div>
+<br><br><br><br><br><br>

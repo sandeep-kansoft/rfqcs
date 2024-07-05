@@ -1,0 +1,52 @@
+.price-bid-card {
+    display: grid;
+    grid-template-columns: [center-start] 1fr [center-end];
+  
+    &>* {
+      grid-column: center;
+    }
+  }
+  
+  .cards-wrapper {
+    grid-column: center-start / -1;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1rem;
+    overflow: auto;
+    padding-bottom: 1rem;
+    // padding-right: var(--page-margin);
+  
+    .inner-card {
+      display: grid;
+      //   place-content: center;
+      //   background-color: #d0f0ee;
+      //   color: #15928A;
+      //   font-size: 1.5rem;
+      height: 20rem;
+      min-width: 27rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .cards-wrapper .inner-card {
+      width: 26rem;
+    }
+  }
+  
+  .height-h4 {
+    height: 45px;
+    padding-top: 11px;
+    margin:0px !important;
+  }
+
+
+
+  //card spacing here
+.card-spacing{
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-form-control{
+  padding: 2px 10px!important;
+}

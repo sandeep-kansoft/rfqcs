@@ -1,0 +1,175 @@
+<div class="modal-header">
+    <h3 class="modal-title">CS Item List</h3>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="CloseModel()" data-bs-dismiss="modal"
+        aria-label="Close">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+    </div>
+    <!--end::Close-->
+</div>
+<div class="modal-body">
+
+
+    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: false ,sort : false  }"
+        [groupable]="false" [data]="gridView" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="false" [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+ pageSizes:true,
+ info: true
+ }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort" (dataStateChange)="onStateChange($event)">
+
+        <!-- Kendo Default Loader -->
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <!-- Kendo End Default Loader -->
+
+
+        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+            [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                {{rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="itemId"
+            title="Item Id" [width]="columnWidth">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="Prodcut Name" field="productName"
+            [width]="600">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="event_Qty"
+            title="Quantity" [width]="columnWidth">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" format="dd-MMM-yyyy" filter="date" field="unit"
+            [headerClass]="headerStyle" [width]="columnWidth" title="UOM">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" field="unitPrice"
+            [headerClass]="headerStyle" [width]="columnWidth" title="Unit Price">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="otherCharges" title="Other Charges"
+            [width]="columnWidth"></kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="totalDiscount" title="Discount (In %)"
+            [width]="columnWidth"></kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="totalTax" title="Tax (In %)"
+            [width]="columnWidth"></kendo-grid-column>
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="totalPrice" title="Net Amount"
+            [width]="columnWidth"></kendo-grid-column>
+
+            <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="remark" title="Remark"
+            [width]="columnWidth"></kendo-grid-column>
+
+    </kendo-grid>
+
+
+    <div class="row text-end justify-content-end my-4">
+
+        <div class="bg-light-blue p-4 w-300px">
+            <div class="d-flex align-items-center justify-content-between">
+
+
+                <h5 class="mb-0"> Item Sub Total</h5>
+                <span id="lblGT" class=" ms-5 d-block">{{ itemSubTotal}}</span>
+            </div>
+        </div>
+    </div>
+
+    <kendo-grid class="fixed-header" [loading]="loading" [columnMenu]="{ filter: false ,sort : false  }"
+        [groupable]="false" [data]="gridView1" [group]="state.group" [filter]="state.filter" [filterable]="false"
+        [reorderable]="false" [resizable]="false" [skip]="state.skip" [pageSize]="pageSize" [pageable]="{
+ pageSizes:true,
+ info: true
+ }" [sortable]="{
+allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+        <!-- Kendo Default Loader -->
+        <ng-template kendoGridLoadingTemplate>
+            <app-wonder-loader></app-wonder-loader>
+        </ng-template>
+        <!-- Kendo End Default Loader -->
+
+
+        <kendo-grid-column [filterable]="false" [sortable]="false" [columnMenu]="false" field="sno" title="#"
+            [width]="ExtraSmallColumnWidth"><ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                {{rowIndex+1}}</ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [filterable]="true" [columnMenu]="false" [headerClass]="headerStyle" field="chargesName"
+            title="Other Charges" [width]="columnWidth">
+
+        </kendo-grid-column>
+
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" title="Percentage" field="chargePercent"
+            [width]="columnWidth">
+
+        </kendo-grid-column>
+
+
+
+
+
+
+
+
+        <kendo-grid-column [headerClass]="headerStyle" [columnMenu]="false" field="amount" title="Amount"
+            [width]="columnWidth"></kendo-grid-column>
+
+
+
+    </kendo-grid>
+    <div class="row justify-content-end  my-4">
+        <div class="bg-light-blue p-4 w-300px">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+                <h5 class="mb-0">Other Charges Sub Total
+                </h5>
+                <span id="lblGT" class="d-block">{{otherChargesSubTotal}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-1">
+                <h5 class="mb-0">Total CS Value
+                </h5>
+                <span id="lblGT" class="d-block">{{totalCsValue }}</span>
+            </div>
+
+        </div>
+    </div>
+    <!-- <div>
+        <div class="row">
+            <div class="col-8">
+                <span></span>
+            </div>
+            <div class="col-md-2" style="padding: 0px; text-align: right">
+                <h5>Sub Total
+                </h5>
+            </div>
+            <div class="col-md-2">
+                <span id="lblGT" style="text-align: left; padding-left: 70px;">38899.00</span>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <span></span>
+            </div>
+            <div class="col-md-2" style="padding: 0px; text-align: right">
+                <h5>Total CS Value
+                </h5>
+            </div>
+            <div class="col-md-2">
+                <span id="lblGT" style="text-align: left; padding-left: 70px;">39352</span>
+
+            </div>
+        </div>
+    </div> -->
+    <!-- <app-no-data-found></app-no-data-found> -->
+
+</div>

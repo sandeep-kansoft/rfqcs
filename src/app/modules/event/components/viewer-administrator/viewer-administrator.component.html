@@ -1,0 +1,30 @@
+<div class="card mb-5 ">
+    <div class="card-body py-3">
+  
+      <div class="">
+        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-4">
+  
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Viewer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  data-bs-toggle="tab" href="#kt_tab_pane_2">Administrator</a>
+          </li>
+     
+        </ul>
+  
+        <div class="tab-content collaboration-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+            <app-viewer [rfqDetail]="rfqDetail" ></app-viewer>
+          </div>
+  
+          <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+ <app-adminstrator (updateCheckList$)="updateCheckList()" [rfqDetail]="rfqDetail"></app-adminstrator>
+          </div>
+        </div>
+  
+  
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,69 @@
+<form [formGroup]="formGroup" (submit)="formSubmitHandler()">
+    <div class="">
+        <!-- <div class="card-header" id="kt_activities_header">
+            <h3 class="card-title fw-bolder text-dark"></h3>
+            <div class="card-toolbar">
+                <button (click)="cancelButtonClick()" type="button"
+                    class="btn btn-sm btn-icon btn-active-light-primary me-n5">
+                    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr061.svg'"
+                        class="svg-icon svg-icon-1"></span>
+                </button>
+            </div>
+        </div> -->
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Deviation</h3>
+        
+            <!--begin::Close-->
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"(click)="cancelButtonClick()" aria-label="Close">
+              <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+            </div>
+            <!--end::Close-->
+          </div>
+        <div class="modal-body " id="kt_activities_body">
+            
+                <div class="form-sidebar w-100 h-100">
+                    <div class=" mb-5 w-100 me-5">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2 ">
+                            Clause No</label>
+                        <input [ngClass]="getValidation('clauseNo') ? 'border border-danger' : '' "
+                            formControlName="clauseNo" type="clauseNo" class="form-control" placeholder=""
+                            [disabled]="true" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2 ">Contacted Clause
+                            Information</label>
+                        <textarea style="height: 200px;" [disabled]="true"
+                            [ngClass]="getValidation('clauseInformation') ? 'border border-danger' : '' " type="text"
+                            class="form-control form-control-lg " formControlName="clauseInformation"
+                            name="clauseInformation"></textarea>
+                    </div>
+                    <div class="mb-5 ">
+                        <label for="floatingname" class="text-gray-800 form-label-text mb-2 required">Contacted Clause
+                            Information</label>
+                        <textarea [ngClass]="getValidation('deviation') ? 'border border-danger' : '' " type="text"
+                            class="form-control form-control-lg " formControlName="deviation"
+                            name="clauseInformation"></textarea>
+                    </div>
+
+
+
+                </div>
+           
+        </div>
+        <div class="modal-footer py-5 text-end site-draw-form" id="kt_activities_footer">
+            <button (click)="cancelButtonClick()" type="button"
+                class="btn me-5 btn-light-dark btn-sm">Cancel</button>
+            <button type="submit" class="btn btn-submit btn-sm">
+                <ng-container *ngIf="formSubmitLoader">
+                    <span class="indicator-progress" [style.display]="'block'">
+                        Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="!formSubmitLoader">
+                    <span class="indicator-label">Submit</span>
+                </ng-container>
+            </button>
+        </div>
+    </div>
+</form>

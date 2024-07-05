@@ -1,0 +1,142 @@
+<div data-kt-drawer="true" data-kt-drawer-name="chat" data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
+    data-kt-drawer-width="{default:'', 'md': '500px'}" data-kt-drawer-direction="end"
+    data-kt-drawer-toggle="#filter2-toggle" data-kt-drawer-close="#kt_drawer_chat_close"
+    class="bg-body drawer drawer-end drawer-on" style="width: 425px;">
+
+    <div id="kt_drawer_chat_messenger" class="card w-100 rounded-0">
+        <div id="kt_drawer_chat_messenger_header" class="card-header pe-5">
+            <div class="card-title">
+                <div class="d-flex justify-content-center flex-column me-3"><a
+                        class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-0 lh-1 cursor-pointer">Filter
+                        By</a>
+                </div>
+            </div>
+            <div class="card-toolbar">
+                <div id="kt_drawer_chat_close" (click)="close()" class="btn btn-sm btn-icon btn-active-light-primary">
+                    <span class="svg-icon svg-icon-2"></span>
+                    <span class="svg-icon svg-icon-2" ng-reflect-inline-s-v-g="./assets/media/icons/duotune/a">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor"></rect>
+                        </svg>
+                    </span>
+                    <!--container-->
+                </div>
+            </div>
+        </div>
+        <div id="kt_chat_messenger_body" class="card-body">
+            <div class="">
+                <div class="form-group mb-5">
+                    <div class="">
+                        <select (change)="dateRangeTypeChange($event)" [(ngModel)]="rangeType" class="form-control py-0 h-40px form-select selectpicker">
+                            <option *ngFor="let dateRangeType of dateRangeList" [value]="dateRangeType.rangeType">
+                                {{dateRangeType.rangeName +getCustomDateRange(dateRangeType.rangeType)}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="rangeType==='CUSTOM_RANGE'" class="mb-5">
+                <!-- <app-calender-range-view></app-calender-range-view> -->
+                <kendo-multiviewcalendar kendoDateRangeSelection [selectionRange]="range"
+                    (selectionRangeChange)="onChange($event)"></kendo-multiviewcalendar>
+            </div>
+            <!--end::Menu separator-->
+
+            <!-- <div class="px-7 mb-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-form-label fw-bold fs-6">From:</label>
+                            <input formControlName="startDate" type="date" class="form-control form-control-lg "
+                                placeholder="Start Date" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-form-label  fw-bold fs-6">To:</label>
+                            <input formControlName="endDate" type="date" class="form-control form-control-lg "
+                                placeholder="End Date" />
+                        </div>
+                    </div>
+                </div> -->
+
+            <div class="mb-5">
+                <!--begin::Input group-->
+                <div *ngIf="customFilterHere.isPrFieldVisible" class="mb-5">
+                    <!--begin::Label-->
+                    <label class="form-label fw-semibold">PR No.:</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input [(ngModel)]="customFilterHere.prNo" type="text" class="form-control form-control-lg "
+                        placeholder="" [value]="customFilterHere.prNo" />
+                    <!--end::Input-->
+                </div>
+
+                <div *ngIf="customFilterHere.isSiteVisible" class="mb-5">
+                    <!--begin::Label-->
+                    <label class="form-label fw-semibold">Site :</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input [(ngModel)]="customFilterHere.site" type="text" class="form-control form-control-lg "
+                        placeholder="" [value]="customFilterHere.site" />
+                    <!--end::Input-->
+                </div>
+
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div *ngIf="customFilterHere.isDepartmentVisible" class="mb-5">
+                    <!--begin::Label-->
+                    <label class="form-label fw-semibold">Department:</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input [(ngModel)]="customFilterHere.department" type="text" class="form-control form-control-lg "
+                        placeholder="" [value]="customFilterHere.department" />
+
+                    <!--end::Input-->
+                </div>
+
+                <div *ngIf="customFilterHere.isSearchByPPONumber" class="mb-5">
+                    <!--begin::Label-->
+                    <label class="form-label fw-semibold">PPO Number:</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input [(ngModel)]="customFilterHere.ppoNumber" type="text" class="form-control form-control-lg "
+                        placeholder="" [value]="customFilterHere.ppoNumber" />
+
+                    <!--end::Input-->
+                </div>
+
+                <div *ngIf="customFilterHere.isSearchItemNumber" class="mb-5">
+                    <!--begin::Label-->
+                    <label class="form-label fw-semibold">Item Code:</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input [(ngModel)]="customFilterHere.ItemNumber" type="text" class="form-control form-control-lg "
+                        placeholder="" [value]="customFilterHere.ItemNumber" />
+
+                    <!--end::Input-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Actions-->
+                <!-- <div class="d-flex justify-content-end">
+                 <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
+                     data-kt-menu-dismiss="true">Reset</button>
+                 <button type="submit" class="btn btn-sm btn-primary"
+                     data-kt-menu-dismiss="true">Apply</button>
+             </div> -->
+                <!--end::Actions-->
+            </div>
+
+            <div class="card-footer pt-4 px-0 d-flex flex-end" id="kt_drawer_chat_messenger_footer">
+                <button (click)="filterButton(true)" type="reset"
+                    class="btn btn-sm btn-light btn-active-light-primary me-2"
+                    data-kt-menu-dismiss="true">Reset</button>
+                <button (click)="filterButton()" type="submit" class="btn btn-sm btn-primary"
+                    data-kt-menu-dismiss="true">Apply</button>
+            </div>
+        </div>
+    </div>
+
+</div>

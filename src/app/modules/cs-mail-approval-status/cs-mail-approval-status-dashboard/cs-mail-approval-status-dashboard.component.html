@@ -1,0 +1,38 @@
+<!-- Approve Mail -->
+<div class="d-flex flex-column flex-center text-center p-10 ">
+  <!--begin::Wrapper-->
+  <div *ngIf="!errorMessage" class="card">
+    <div class="card-body text-center">
+        <h3 class="fs-3 text-gray-900 mb-4"> {{resultStatus}} 
+           </h3></div></div>
+  
+  <!-- <div class="card card-flush  w-lg-650px py-5">
+        <div *ngIf="resultStatus == 'SuccessfullApproved'" class="card-body py-15 py-lg-20">
+            <h3 class=" fs-2hx text-gray-900 mb-4">
+                CS : <span class="fw-bold text-blue"> {{payload?.AwardId}} </span> has been <span
+                    class="text-success fw-bolder">
+                    Approved</span> Successfully
+            </h3>
+            <img alt="Logo" src="./assets/media/auth/approved.png" class=" h-300px w-300px my-20" />
+
+        </div>
+        <div *ngIf="resultStatus == 'SuccessfullRejected'" class="card-body py-15 py-lg-20">
+            <h3 class=" fs-2hx text-gray-900 mb-4">
+                CS : <span class="fw-bold text-blue"> {{payload?.AwardId}} </span> has been <span
+                    class="text-primary fw-bolder">Rejected</span> Successfully
+            </h3>
+            <img alt="Logo" src="./assets/media/auth/reject.png" class=" h-300px w-300px my-20" />
+
+
+        </div> -->
+  <div *ngIf="errorMessage" class="card-body py-15 py-lg-20">
+    <div class="card">
+      <div class="card-body text-center">
+          <h3 class="fs-3 text-gray-900 mb-4"> {{errorMessage}}
+              </h3></div></div>
+    <h3 class=" fs-2hx text-gray-900 mb-4"></h3>
+    <!-- <img alt="Logo" src="./assets/media/auth/errorimg.png" class=" h-300px w-300px my-20" /> -->
+  </div>
+</div>
+<!-- </div> -->
+

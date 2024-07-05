@@ -1,0 +1,131 @@
+<div class="broadcast-box">
+
+
+<div class="card">  
+    <div class="card-header">
+        <h3 class="card-title">Broadcast</h3>
+        <div class="card-toolbar">
+          <div (click)="close()" class="m-0 btn btn-icon btn-sm btn-active-light-primary ">
+            <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+          </div>
+        </div>
+    </div>
+    <div #scrollChatMe class="card-body d-block" [class.broadcast-box-view]="readOnly">
+        <div>
+            <div *ngFor="let reply of broadcastMessageList">
+                <!--begin::Message(in)-->
+                <div *ngIf="reply.userId != _userId" class="d-flex justify-content-start mb-5">
+                  <!--begin::Wrapper-->
+                  <div class="d-flex flex-column align-items-start">
+                    <!--begin::User-->
+                    <div class="d-flex align-items-center mb-2">
+                      <!--begin::Avatar-->
+                      <div class="symbol symbol-35px symbol-circle">
+                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{reply.shortName}}</span>
+                      </div>
+                      <!--end::Avatar-->
+                      <!--begin::Details-->
+                      <div class="ms-3">
+                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{reply.userName}}</a>
+                        <span class="text-muted fs-7 mb-1">{{reply.replyDateTime | date : 'dd MMM yyyy hh:mm a'}}</span>
+                      </div>
+                      <!--end::Details-->
+                    </div>
+                    <!--end::User-->
+                    <!--begin::Text-->
+                    <div *ngIf="reply.messageType === 'T'">
+                      <div class="py-1 px-3 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start"
+                        data-kt-element="message-text">{{reply.text}}</div>
+                    </div>
+                    <div *ngIf="reply.messageType === 'F'">
+                      <div (click)="downloadFile(reply.fileURL?reply.fileURL:'')"
+                        class="py-1 px-3 rounded bg-light-info text-dark fw-bold mw-lg-400px show-pointer">
+                        {{reply.fileName}}
+                        <i class="fa fa-download"></i>
+                      </div>
+                    </div>
+                    <div *ngIf="reply.messageType === 'I'">
+                      <!-- <div (click)="downloadFile(reply.fileURL?reply.fileURL:'')" class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px show-pointer" >
+                        {{reply.fileName}} 
+                        <i class="fa fa-download"></i>
+                      </div> -->
+                      <div class="d-flex justify-content-start">
+                        <img (click)="downloadFile(reply.fileURL?reply.fileURL:'')"
+                          class="py-1 px-3 rounded bg-light-primary text-dark fw-bold mw-lg-400px show-pointer"
+                          src="{{reply.fileURL?reply.fileURL:''}}" height="150px" width="150px" />
+                      </div>
+                    </div>
+                    <!--end::Text-->
+                  </div>
+                  <!--end::Wrapper-->
+                </div>
+                <!--end::Message(in)-->
+                <!--begin::Message(out)-->
+                <div *ngIf="reply.userId == _userId" class="d-flex justify-content-end mb-10">
+                  <!--begin::Wrapper-->
+                  <div class="d-flex flex-column align-items-end">
+                    <!--begin::User-->
+                    <div class="d-flex align-items-center mb-2">
+                      <!--begin::Details-->
+                      <div class="me-3">
+                        <span class="text-muted fs-7 mb-1">{{reply.replyDateTime | date : 'dd MMM yyyy hh:mm a'}}</span>
+                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">You</a>
+                      </div>
+                      <!--end::Details-->
+                      <!--begin::Avatar-->
+                      <div class="symbol symbol-35px symbol-circle">
+                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{reply.shortName}}</span>
+                      </div>
+                      <!--end::Avatar-->
+                    </div>
+                    <!--end::User-->
+                    <!--begin::Text-->
+                    <div *ngIf="reply.messageType === 'T'">
+                      <div class="py-1 px-3 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end"
+                        data-kt-element="message-text">{{reply.text}}</div>
+                    </div>
+                    <div *ngIf="reply.messageType === 'F'">
+                      <div (click)="downloadFile(reply.fileURL?reply.fileURL:'')"
+                        class="py-1 px-3 rounded bg-light-info text-dark fw-bold mw-lg-400px text-end show-pointer">
+                        {{reply.fileName}}
+                        <i class="fa fa-download"></i>
+                      </div>
+                    </div>
+                    <div *ngIf="reply.messageType === 'I'">
+                      <!-- <div (click)="downloadFile(reply.fileURL?reply.fileURL:'')" class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end show-pointer" >
+                        {{reply.fileName}} 
+                        <i class="fa fa-download"></i>
+                      </div> -->
+                      <div class="d-flex justify-content-end">
+                        <img (click)="downloadFile(reply.fileURL?reply.fileURL:'')"
+                          class="py-1 px-3 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end show-pointer"
+                          src="{{reply.fileURL?reply.fileURL:''}}" height="150px" width="150px" />
+                      </div>
+                    </div>
+                    <!--end::Text-->
+                  </div>
+                  <!--end::Wrapper-->
+                </div>
+                <!--end::Message(out)-->
+              </div>
+        </div>
+
+        
+    </div>
+    <div *ngIf="!readOnly" class="card-footer border-0 text-end py-2 ">
+        <div *ngIf="!readOnly" class="w-100">
+            <select [(ngModel)]="selectedTemplate" class="form-select" aria-label="Select example" (change)="onTemplateSelection()">
+                <option *ngFor="let msg of templateList" [value]="msg.templateId">{{ msg.templateName }}</option>
+            </select>
+
+            <div class="input-group mt-3">
+                <span class="input-group-text">Your msg</span>
+                <!-- <textarea (keyup.enter)="sendBroadcast()" class="form-control" aria-label="With textarea" [(ngModel)]="broadcastText"></textarea> -->
+                <textarea  class="form-control" aria-label="With textarea" [(ngModel)]="broadcastText"></textarea>
+            </div>
+        </div>
+        <!-- <button class="btn btn-sm btn-light-blue me-4">Edit & Sent</button> -->
+       <button aria-role-check="yes" *ngIf="checkPermission(permissionEnum.DASHBOARD_VIEW_AUCTION_BRODCAST_SEND_BUTTON)" class="btn btn-sm btn-light-primary mt-3" (click)="sendBroadcast()" type="submit" data-kt-element="send">Send</button>
+    </div>
+</div>
+</div>

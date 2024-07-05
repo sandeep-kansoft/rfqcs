@@ -1,0 +1,229 @@
+<div class="accordion pdf-box" id="kt_accordion_11">
+
+    <div class="accordion-item" *ngIf="addColumnCondition()">
+        <!-- <h2 class="accordion-header" id="kt_accordion_1_header_66">
+            <button class="accordion-button fs-4 fw-semibold py-3" type="button" data-bs-toggle="collapse"
+                data-bs-target="#kt_accordion_1_body_66" aria-expanded="false" aria-controls="kt_accordion_1_body_66">
+                <h6 class="">Other Charges</h6>
+            </button>
+        </h2> -->
+        <div  id="kt_accordion_1_body_66"
+            class="accordion-collapse collapse show " aria-labelledby="kt_accordion_1_header_66"
+            data-bs-parent="#kt_accordion_11">
+            <div class="accordion-body px-0 comparison-box">
+                <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="otherChargesParamGrid"
+                    [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"
+                    [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+            allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+                    <kendo-grid-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                        title="Other Charges" [width]="100">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <div class="text-start"> {{item.value}} </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column-group *ngFor="let vendorItem of otherChargesData"
+                        [title]="vendorItem.vendorName">
+                        <kendo-grid-column [title]="bidRounds.roundName" [width]="roundWidth"
+                            [hidden]="hiddenColumns.indexOf(bidRounds.roundName) > -1"
+                            *ngFor="let bidRounds of vendorItem.bidRounds">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div>{{getComparisionVendorParam(item,bidRounds.comparisonVendorParams)}}</div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+
+
+
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item" *ngIf="addColumnCondition()">
+        <!-- <h2 class="accordion-header" id="kt_accordion_1_header_11">
+            <button class="accordion-button fs-4 fw-semibold py-3" type="button" data-bs-toggle="collapse"
+                data-bs-target="#kt_accordion_1_body_11" aria-expanded="false" aria-controls="kt_accordion_1_body_11">
+                <h6 class=""></h6>
+            </button>
+        </h2> -->
+        <div id="kt_accordion_1_body_11" class="accordion-collapse collapse show"
+            aria-labelledby="kt_accordion_1_header_11" data-bs-parent="#kt_accordion_11">
+            <div class="accordion-body px-0 comparison-box">
+                <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="changesComParamGrid"
+                    [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"
+                    [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+            allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+                    <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                        title="Non Pricing, Incoterms, Payment Term " [width]="comparisionWidth">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <div class="text-start"> {{item.value}} </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-command-column>
+
+                    <kendo-grid-column-group *ngFor="let vendorItem of chargesAndTermsData"
+                        [title]="vendorItem.vendorName">
+                        <kendo-grid-column [title]="bidRounds.roundName" [width]="roundWidth"
+                            [hidden]="hiddenColumns.indexOf(bidRounds.roundName) > -1"
+                            *ngFor="let bidRounds of vendorItem.bidRounds">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div>{{getComparisionVendorParam(item,bidRounds.comparisonVendorParams)}}</div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                    </kendo-grid-column-group>
+
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+
+
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <!-- <h2 class="accordion-header" id="kt_accordion_1_header_22">
+            <button class="accordion-button fs-4 fw-semibold py-3" type="button" data-bs-toggle="collapse"
+                data-bs-target="#kt_accordion_1_body_22" aria-expanded="false" aria-controls="kt_accordion_1_body_22">
+                <h6 class=" "> </h6>
+            </button>
+        </h2> -->
+        <div id="kt_accordion_1_body_22" class="accordion-collapse collapse" [ngClass]="{ 'show': isExpandAll }"
+            aria-labelledby="kt_accordion_1_header_22" data-bs-parent="#kt_accordion_11">
+            <div class="accordion-body comparison-box px-0">
+                <kendo-grid class="fixed-header" [loading]="loading" [groupable]="false" [data]="commercialTNCGrid"
+                    [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"
+                    [resizable]="true" [skip]="state.skip" [pageSize]="state.take" [sortable]="{
+            allowUnsort: true,           mode: 'multiple' }" [sort]="state.sort">
+
+                    <kendo-grid-command-column [headerClass]="headerStyle" [sticky]="true" [columnMenu]="false"
+                        title="Commercial T & C" [width]="100">
+                        <ng-template kendoGridCellTemplate let-item>
+                            <ng-container>
+                                <div class="text-start"> {{item.value}} </div>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-command-column>
+
+                    <kendo-grid-column-group *ngFor="let vendorItem of commercialTNCData"
+                        [title]="vendorItem.vendorName">
+                        <kendo-grid-column [title]="bidRound.roundName" [width]="roundWidth"
+                            [hidden]="hiddenColumns.indexOf(bidRound.roundName) > -1"
+                            *ngFor="let bidRound of vendorItem.bidRounds">
+                            <ng-template kendoGridCellTemplate let-item>
+                                <ng-container>
+                                    <div>{{getComparisionVendorParam(item,bidRound.comparisonVendorParams)}}</div>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                    </kendo-grid-column-group>
+
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="">
+                        <kendo-grid-column title="" *ngFor="let vendorItem of [1,2,3]" [width]="150">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+
+
+                    <!-- <kendo-grid-column-group title="Vendor 1">
+                        <kendo-grid-column title="R1">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group> -->
+
+                    <!-- 
+
+                    <kendo-grid-column-group title="Vendor 2">
+                        <kendo-grid-column [width]="100" title="R1">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="Vendor 3" [width]="100">
+                        <kendo-grid-column [width]="100" title="R1">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="Vendor 4" [width]="100">
+                        <kendo-grid-column [width]="100" title="R1">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="Vendor 5" [width]="100">
+                        <kendo-grid-column [width]="100" title="R1">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group title="Vendor 7" [width]="100">
+                        <kendo-grid-column [width]="100" title="R1">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group> <kendo-grid-column-group title="Vendor 8" [width]="100">
+                        <kendo-grid-column [width]="100" title="R1">
+
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R2">
+                        </kendo-grid-column>
+                        <kendo-grid-column [width]="100" title="R3">
+                        </kendo-grid-column>
+                    </kendo-grid-column-group> -->
+
+
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,27 @@
+
+     
+
+<div class="modal-header">
+    <h3 class="modal-title">Description</h3>
+
+
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="closeModel()" aria-label="Close">
+        <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon svg-icon-2  "> </span>
+    </div>
+
+</div>
+
+<div class="modal-body info-pricebid">
+
+    <!-- <textarea [innerHTML]="TechnicalSpecification" type="text" class="form-control mb-2" disabled></textarea> -->
+    <div [innerHTML]="TechnicalSpecification">
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-sm" (click)="closeModel()">Close</button>
+
+</div>
+
+

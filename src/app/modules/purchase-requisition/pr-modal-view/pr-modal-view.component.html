@@ -1,0 +1,79 @@
+<!-- <div class="overflow-auto "> -->
+    <!-- container-fluid overflow-auto p-0 -->
+    <!-- <div class=" mb-5 mb-xl-10 card-gray modal-content"> -->
+        <div class="modal-header cursor-pointer " role="button" data-bs-target="#kt_account_profile_details"
+            aria-expanded="true" aria-controls="kt_account_profile_details" style="background-color: #fff5f8;">
+            <div class="modal-title">
+                <div>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span (click)="closeModel()"
+                            class=" justify-content-center fullscreen-back-icon pr-modal-backIcon"
+                            [inlineSVG]="'../../../../assets/media/wonder/arrow-left.svg'"></span>
+                        </div>
+                       <div class="ms-5">
+                        <span class=" fs-3 fw-semibold card-label fw-bold text-gray-800" >Purchase Requisition</span>
+
+                   
+                        <h3  *ngIf="prNumber" class=" fw-semibold m-0  text-gray-400 mt-1 fw-semibold fs-6">NO :
+                            {{prNumber}}</h3>
+                       </div>
+                       
+                    </div>
+                </div>
+
+            </div>
+            <div class=" m-0 btn btn-icon btn-sm btn-active-light-primary " (click)="closeModel()" >
+                <span [inlineSVG]="'./assets/media/svg/close.svg'"
+                class="svg-icon m-0 svg-icon-2"></span>
+                <!-- <span class="justify-content-center " [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span> -->
+            </div>
+        </div>
+
+        <div class="modal-body ">
+            <div class="tab-form">
+                <!-- <h3 class="text-primary mb-10 fs-2 ls-2 fw-semibold">Purchase Requisition</h3> -->
+                <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5  border-0 fs-6 ">
+                    <li class="nav-item">
+                        <a [ngClass]="" [ngClass]="{'active': currentTabSelected ==='Header'}"
+                            (click)="onTabItemClick('Header')"
+                            class="nav-link  fw-semibold  me-5  my-1 form-heading fs-4 ">PR
+                            Header</a>
+                    </li>
+                    <li class="nav-item">
+                        <a (click)="onTabItemClick('Line')" [ngClass]="{'active': currentTabSelected ==='Line'}"
+                            class="nav-link fw-semibold me-3 my-1 form-heading fs-4 ">PR
+                            Line</a>
+                    </li>
+
+                </ul>
+
+                <div>
+                    <div *ngIf="currentTabSelected ==='Header'" class="tab-pane fade show" role="tabpanel">
+                        <app-pr-header-form [prId]="prId"></app-pr-header-form>
+                    </div>
+                    <div *ngIf="currentTabSelected ==='Line'" role="tabpanel">
+                        <app-pr-line-grid-view [type]="isPrNumberClick" [prId]="prId" [prnum]="prNumber"></app-pr-line-grid-view>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <app-pr-detail-view [prid]="prId" [PrheaderDetail]="PrheaderDetail"
+                [PrLinesDetail]="PrLinesDetail"></app-pr-detail-view> -->
+        </div>
+        <!-- View form End -->
+
+
+
+
+
+
+    <!-- </div>
+
+</div> -->
+<!-- 
+<div class="container-fluid overflow-auto p-0">
+    <div class="card mb-5 mb-xl-10 card-gray">
+
+    </div>
+</div> -->

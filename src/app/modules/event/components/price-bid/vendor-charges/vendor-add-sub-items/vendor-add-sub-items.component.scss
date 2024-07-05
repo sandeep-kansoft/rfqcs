@@ -1,0 +1,29 @@
+.padding-class {
+    padding: 10px 20px;
+}
+
+.main-column-class {
+    .row-class {
+        justify-content: space-between;
+    }
+}
+
+
+//card spacing here
+.card-spacing {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-form-control {
+    padding: 2px 10px !important;
+}
+.click-msg{
+    display: block;
+    background: #ffffff;
+    color: #c90c0f;
+    padding: 7px;
+    font-size: 12px;
+    margin-right: 6px;
+    border-radius: 6px;
+  }

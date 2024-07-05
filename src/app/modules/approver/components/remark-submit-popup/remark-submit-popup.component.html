@@ -1,0 +1,62 @@
+<div  id="kt_modal_1456">
+    <div class="modal-dialog modal-dialog-centered  my-0 modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Remark</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="CloseModel()" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <span [inlineSVG]="'./assets/media/svg/close.svg'" class="svg-icon m-0 svg-icon-2"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+             
+                    <div>
+                        <h4 class="fs-5">Buyer Remark</h4>
+                        <textarea [(ngModel)]="buyerRemark" class="form-control" placeholder="" id="floatingTextarea" disabled></textarea>
+                    </div>
+                    <br>
+                    <div *ngIf="ReasonRemark">
+                        <h4 class="fs-5">Reason Remark</h4>
+                        <textarea [(ngModel)]="ReasonRemark" class="form-control" placeholder="" id="floatingTextarea" disabled></textarea>
+                    </div>
+                    <!-- <div class="d-flex ">
+                        <div class="d-block me-5">
+                            <select class="form-select form-select-sm" aria-label="Select example">
+                                <label for=""> records</label>
+                               
+                                <option value="2">5</option>
+                                <option value="3">20</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center ">
+                                <span class="svg-icon svg-icon-2 position-absolute ms-3"
+                                    [inlineSVG]="'./assets/media/svg/search.svg'">
+
+                                </span>
+                                <input _type="text" id="" placeholder="Search"
+                                    class="form-control form-control-solid border-body w-100px btn btn-sm ps-10"
+                                    style="background-color: #f1f1f1;">
+                            </div>
+                        </div>
+                    </div> -->
+        
+              
+
+
+
+                <!-- <app-no-data-found></app-no-data-found> -->
+
+            </div>
+
+            <!-- <div class="modal-footer">
+                <button type="button" (click)="SubmitRemark()" class="btn btn-srimary btn-sm" >Close</button>
+
+            </div> -->
+        </div>
+    </div>
+</div>

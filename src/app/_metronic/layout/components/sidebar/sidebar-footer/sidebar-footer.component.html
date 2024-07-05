@@ -1,0 +1,29 @@
+<!-- <a target="_blank" [href]="appPreviewChangelogUrl"
+  class="btn btn-flex flex-center btn-custom btn-light overflow-hidden text-nowrap px-0 h-40px w-100"
+  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="Metronic Docs & Components">
+
+  <span class="btn-label">
+    Signout
+  </span>
+  <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr096.svg'" class="svg-icon btn-icon svg-icon-2 m-0"></span>
+</a> -->
+<!-- <a target="_blank"
+  class="btn btn-flex flex-center btn-custom  btn-secondary overflow-hidden text-nowrap px-0 h-40px w-100"
+  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="Metronic Docs & Components">
+
+  <span (click)="logout()" class="btn-label ">
+    Log out 
+  </span>
+  <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr096.svg'" class="svg-icon btn-icon svg-icon-2 m-0"></span>
+</a> -->
+<div *ngIf="showPreviousLoginBtn">
+  <a target="_blank"
+  class="btn btn-flex flex-center btn-custom  btn-secondary overflow-hidden text-nowrap px-0 h-40px w-100"
+  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="Metronic Docs & Components">
+
+  <span (click)="PreviousUserLogin()" class="btn-label ">
+    Login as {{previousUserName}}
+  </span>
+  <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr096.svg'" class="svg-icon btn-icon svg-icon-2 m-0"></span>
+</a>
+</div>

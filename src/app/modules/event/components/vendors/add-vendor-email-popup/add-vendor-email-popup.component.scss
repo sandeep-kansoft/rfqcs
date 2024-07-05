@@ -1,0 +1,12 @@
+.modal-body-height-scroll{
+    max-height: 57vh;
+    overflow-y: scroll;
+}
+
+.label-margin{
+    margin-left: 18px;
+}
+
+input:disabled + label {
+    color: initial;
+  }

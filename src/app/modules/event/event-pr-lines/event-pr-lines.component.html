@@ -1,0 +1,84 @@
+<div class="container-fluid overflow-auto p-0">
+    <div class="card mb-5 mb-xl-10 card-gray">
+        <div class="card-header cursor-pointer border-0" role="button" data-bs-target="#kt_account_profile_details"
+            aria-expanded="true" aria-controls="kt_account_profile_details">
+            <div class="card-title m-0">
+                <span (click)="closeLineModel()" class=" justify-content-center fullscreen-back-icon"
+                    [inlineSVG]="'../../../../assets/media/wonder/arrow-left.svg'"></span>
+                <h3 class="fw-bolder m-0 ms-5">PR NO : {{prNumber}}</h3>
+            </div>
+            <div class="card-title m-0" (click)="closeLineModel()">
+                <span class="justify-content-center " [inlineSVG]="'../../../../assets/media/wonder/cross.svg'"></span>
+            </div>
+        </div>
+
+        <div class="card-body over-view-box">
+            <div *ngIf="isError" class="error-message-div">
+                <p>
+                    <span class="fw-400 font-size-12 "
+                        [ngClass]="errorMessage ? 'mat-error-text' : '' ">{{errorMessage}}</span>
+                </p>
+            </div>
+
+            <kendo-grid [loading]="linesDataLoading" [data]="gridView" [columnMenu]="{ filter: true ,sort : true  }"
+                [group]="state.group" [filter]="state.filter" [filterable]="false" [reorderable]="true"
+                [resizable]="true" [skip]="state.skip" [pageSize]="pageSize" [pageable]="true" [sortable]="{
+allowUnsort: true,
+mode: 'multiple'}" [sort]="state.sort">
+
+                <kendo-grid-command-column title="actions" [width]="110">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div autoClose="'outside'" container="body">
+                                <div class="col-md-3 form-check form-check-custom d-flex flex-1 justify-content-center align-middle"
+                                    style="display: flex; height: 40px;white-space:nowrap;margin-bottom: 8px; align-items: center; justify-content: center;">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="item.isEnabled"
+                                        id="flexCheckDefault" />
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-command-column>
+                <kendo-grid-column field="sno" title="LINE NO" [width]="100">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex+1}}</ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="grid-header-menu" field="itemcode" title="item code"
+                    [width]="columnWidth"></kendo-grid-column>
+                <kendo-grid-column headerClass="grid-header-menu" field="iteM_DESCRIPTION" title="item description"
+                    [width]="350"></kendo-grid-column>
+                <kendo-grid-column headerClass="grid-header-menu" field="uom" title="UOM"
+                    [width]="columnWidth"></kendo-grid-column>
+                <kendo-grid-command-column title="Enter Qty" [width]="110">
+                    <ng-template kendoGridCellTemplate let-item>
+                        <ng-container>
+                            <div container="body"
+                                class="d-flex flex-fill justify-content-center align-items-center align-content-center ">
+                                <div class="col-md-12 ">
+                                    <input  [disabled]="!item.isEnabled" type="number"
+                                        [ngClass]="getValidation(item)?'border border-danger':'' "
+                                        class="form-control form-control-lg" [(ngModel)]="item.enterQty" />
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-command-column>
+                <kendo-grid-column headerClass="grid-header-menu" field="quantity" title="quantity"
+                    [width]="columnWidth"></kendo-grid-column>
+                <kendo-grid-column headerClass="grid-header-menu" field="remQty" title="remaning quantity"
+                    [width]="columnWidth">
+                </kendo-grid-column>
+                <!-- WHEN NAVIGATED FROM PR NUMBER END -->
+
+            </kendo-grid>
+
+            <div class=" card-footer py-5 text-end site-draw-form">
+                <div class="mb-5 w-100 me-5">
+                    <button (click)="submitPrLine()" class="btn btn-primary btn-sm hover-elevate-up">Select</button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

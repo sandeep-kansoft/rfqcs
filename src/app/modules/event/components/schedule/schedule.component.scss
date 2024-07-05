@@ -1,0 +1,37 @@
+.datepicker {
+    align-items: center;
+    justify-content: space-between;
+    // display: flex;
+
+    .date-box {
+        // display: flex;
+        justify-content: space-between !important;
+    }
+
+}
+
+#div1 {
+    // display: flex;
+    // margin-left: 1.9cm;
+    // margin-bottom: 1rem;
+
+}
+
+#div2 {
+    // display: flex;
+
+    // margin-top: auto;
+}
+
+// .heading{
+//     margin-right: auto;
+//     margin-left: auto;
+// }
+// .dategrid{
+//     margin-right:auto;
+// }
+
+.date-box .heading {
+    margin-right: 10px;
+    text-transform: capitalize;
+}
